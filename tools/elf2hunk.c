@@ -49,6 +49,10 @@ Copyright © 1995-2001, The AROS Development Team. All rights reserved.
 #define ATTRIBUTE_UNUSED __attribute__((unused))
 #endif
 
+#if !defined(O_BINARY)
+#define O_BINARY 0
+#endif
+
 #if (defined(__GNUC__))&&defined(WIN32)
 #include <winsock2.h>
 #define mkdir(path, mode) mkdir(path)
