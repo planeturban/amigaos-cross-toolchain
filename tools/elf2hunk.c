@@ -1,5 +1,5 @@
 /*
-    Copyright Â© 1995-2001, The AROS Development Team. All rights reserved.
+    Copyright © 1995-2001, The AROS Development Team. All rights reserved.
 */
 
 #define PROTOTYPES
@@ -591,7 +591,7 @@ static int relocate
 
                 symptr->shindex = htons(bssIndex);
                 symptr->value = htonl(value);
-            break;
+                break;
             case SHN_ABS:
 		hunk = ~0; value = sym.value;
                 break;
