@@ -22,3 +22,6 @@
 [submodule "submodules/python-lhafile"]
 	path = submodules/python-lhafile
 	url = git://github.com/FrodeSolheim/python-lhafile
+[submodule "submodules/binutils-2.14"]
+	path = submodules/binutils-2.14
+	url = https://github.com/bebbodl/amigaos-binutils-2.14
