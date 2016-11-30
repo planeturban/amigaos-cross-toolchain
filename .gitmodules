@@ -28,6 +28,7 @@
 [submodule "submodules/gcc-6.2.0"]
 	path = submodules/gcc-6.2.0
 	url = git@github.com:bebbodl/gcc.git
+	branch = gcc-6-branch
 [submodule "submodules/fd2pragma"]
 	path = submodules/fd2pragma
 	url = git://github.com/adtools/fd2pragma.git
