@@ -458,7 +458,7 @@ def make(name, target=None, makefile=None, **makevars):
   info('running make "%s"', target)
 
   with cwd(path.join('{build}', name)):
-    args = ['%s=%s' % item for item in makevars.items()]
+    args = ['%s=%s' % item for item in makevars.items()] + ["-j7"]
     if target is not None:
       args = [target] + args
     if makefile is not None:
