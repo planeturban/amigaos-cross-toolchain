@@ -8,6 +8,8 @@ AmigaOS cross compiler for Linux / MacOSX / Windows
 
 **Author:** [Krystian Bacławski](mailto:krystian.baclawski@gmail.com)
 
+**Co-Author:** [Stefan "Bebbo" Franke](mailto:bebbo@bejy.net)
+
 **Short description:** Cross toolchain build script for AmigaOS m68k and ppc targets. Supported host platforms are Linux, MacOSX and Windows (with [MSYS2](https://msys2.github.io/)).
 
 ### Overview
@@ -19,7 +21,7 @@ Build process should produce following set of tools for **m68k-amigaos** target:
  * gcc 2.95.3
  * g++ 2.95.3
  * libstdc++ 2.10
- * binutils 2.9.1 (assembler, linker, etc.)
+ * binutils 2.9.1 or 2.14 (assembler, linker, etc.)
  * libnix 2.2 (standard ANSI/C library replacement for AmigaOS)
  * libm 5.4 (provides math library implementation for non-FPU Amigas)
  * AmigaOS headers & libraries & autodocs (for AmigaOS 3.9)
