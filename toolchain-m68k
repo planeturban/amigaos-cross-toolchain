@@ -20,7 +20,7 @@ URLS = \
    'ftp://ftp.gnu.org/gnu/bison/bison-1.35.tar.gz',
    'ftp://ftp.gnu.org/gnu/texinfo/texinfo-4.12.tar.gz',
    'ftp://ftp.gnu.org/gnu/automake/automake-1.15.tar.gz',
-   ('http://downloads.sf.net/project/flex/flex/2.5.4.a/flex-2.5.4a.tar.gz',
+   ('http://pkgs.fedoraproject.org/repo/pkgs/flex/flex-2.5.4a.tar.gz/bd8753d0b22e1f4ec87a553a73021adf/flex-2.5.4a.tar.gz',
     'flex-2.5.4.tar.gz'),
    ('http://www.haage-partner.de/download/AmigaOS/NDK39.lha', 'NDK_3.9.lha'),
    ('ftp://ftp.exotica.org.uk/mirrors/geekgadgets/amiga/m68k/snapshots/' +
