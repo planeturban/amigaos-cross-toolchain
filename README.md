@@ -18,12 +18,12 @@ AmigaOS cross compiler for Linux / MacOSX / Windows
 
 Build process should produce following set of tools for **m68k-amigaos** target:
 
- * gcc 6 (recent version vom gcc-6-branch)
+ * gcc 6 (recent version vom gcc-6-branch) **[default]**
  * gcc 2.95.3
  * g++ 2.95.3
  * libstdc++ 2.10
  * binutils 2.9.1 (assembler, linker, etc.)
- * binutils 2.14 (assembler, linker, etc.) - patched to work with gcc6
+ * binutils 2.14 (assembler, linker, etc.) - patched to work with gcc6 **[default]**
  * libnix 2.2 (standard ANSI/C library replacement for AmigaOS)
  * libm 5.4 (provides math library implementation for non-FPU Amigas)
  * AmigaOS headers & libraries & autodocs (for AmigaOS 3.9)
@@ -105,7 +105,7 @@ Follow steps listed below:
 2. Run `toolchain-m68k` or `toolchain-ppc` script (with `--prefix` option to specify where to install the toolchain). Note, that the destination directory must be writable by the user. 
 
     ```
-# ./toolchain-m68k --prefix=/opt/m68k-amigaos --binutils 2.14 --gcc 6 build
+# ./toolchain-m68k --prefix=/opt/m68k-amigaos build
 ```
 
 3. Restart on error and wait for the results :-)
@@ -113,7 +113,7 @@ Follow steps listed below:
 4. *(optional)* Install additional SDKs (e.g. AHI, CyberGraphX, Magic User Interface, etc.):
 
     ```
-# ./toolchain-m68k --prefix=/opt/m68k-amigaos --binutils 2.14 --gcc 6 install-sdk ahi cgx mui
+# ./toolchain-m68k --prefix=/opt/m68k-amigaos install-sdk ahi cgx mui
 ```
 
 #### What if something goes wrong?
@@ -122,7 +122,7 @@ If the build process fails, please write me an e-mail.  I'll try to help out. Do
 It's **vitally important** to send me a full log from build process. You can capture it by redirecting output to a file with following command:
 
 ```
-# ./toolchain-m68k --binutils 2.14 --gcc 6 build 2>&1 | tee build.log
+# ./toolchain-m68k build 2>&1 | tee build.log
 ```
 
 ... but remember to cleanup your build environment beforehand with:
