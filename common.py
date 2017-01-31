@@ -454,11 +454,11 @@ def configure(name, *confopts, **kwargs):
 
 
 @recipe('make', 2)
-def make(name, target=None, makefile=None, **makevars):
+def make(name, target=None, makefile=None, threads='-j1', **makevars):
   info('running make "%s"', target)
 
   with cwd(path.join('{build}', name)):
-    args = ['%s=%s' % item for item in makevars.items()] + ["-j7"]
+    args = ['%s=%s' % item for item in makevars.items()] + [threads]
     if target is not None:
       args = [target] + args
     if makefile is not None:
