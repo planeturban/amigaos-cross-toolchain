@@ -12,7 +12,7 @@
 	url = ssh://git@github.com/adtools/sfdc
 [submodule "submodules/libdebug"]
 	path = submodules/libdebug
-	url = ssh://git@github.com/cahirwpz/libdebug
+	url = ssh://git@github.com/bebbo/libdebug
 [submodule "submodules/python-lhafile"]
 	path = submodules/python-lhafile
 	url = ssh://git@github.com/FrodeSolheim/python-lhafile
