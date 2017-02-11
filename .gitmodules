@@ -3,7 +3,7 @@
 	url = git://github.com/cahirwpz/amigaos-binutils-2.9.1
 [submodule "submodules/clib2"]
 	path = submodules/clib2
-	url = git@github.com:adtools/clib2
+	url = git@github.com:bebbo/clib2
 [submodule "submodules/fd2sfd"]
 	path = submodules/fd2sfd
 	url = ssh://git@github.com/cahirwpz/fd2sfd
