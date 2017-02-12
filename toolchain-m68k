@@ -88,7 +88,7 @@ def install_ndk():
 def headers_install():
   info('installing ixemul header files')
 
-  copytree('{sources}/{ixemul}/include', '{target}/m68k-amigaos/include')
+  copytree('{sources}/{ixemul}/include', '{target}/m68k-amigaos/libnix/include')
 
 
 @recipe('tools-install')
@@ -103,7 +103,7 @@ def install_tools():
 def install_libamiga():
   info('installing libamiga')
 
-  copytree('{sources}/{libamiga}/lib', '{target}/m68k-amigaos/lib')
+  copytree('{sources}/{libamiga}/lib', '{target}/m68k-amigaos/libnix/lib')
 
 
 @recipe('{clib2}-install')
@@ -390,7 +390,7 @@ def build():
               '--host=i686-linux-gnu',
               '--build=i686-linux-gnu',
               '--target=m68k-amigaos',
-              '--enable-languages=c,c++',
+              '--enable-languages=c,c++,objc',
               '--enable-version-specific-runtime-libs',
               '--with-headers={sources}/{ixemul}/include',
               from_dir='{submodules}/{gcc}')
@@ -406,7 +406,7 @@ def build():
   install_libamiga()
 
   configure('{libnix}',
-            '--prefix={target}/m68k-amigaos',
+            '--prefix={target}/m68k-amigaos/libnix',
             '--host=i686-linux-gnu',
             '--target=m68k-amigaos',
             from_dir='{submodules}/{libnix}')
@@ -420,7 +420,7 @@ def build():
   make('{libnix}', 'install', threads='-j{numThreads}')
 
   copy('{submodules}/{libnix}/sources/headers/stabs.h',
-       '{target}/m68k-amigaos/include')
+       '{target}/m68k-amigaos/libnix/include')
 
   unpack('{libm}', top_dir='contrib/libm')
   update_autotools('{sources}/{libm}')
@@ -428,7 +428,7 @@ def build():
            AR='m68k-amigaos-ar',
            RANLIB='m68k-amigaos-ranlib'):
     configure('{libm}',
-              '--prefix={target}/m68k-amigaos/lib',
+              '--prefix={target}/m68k-amigaos/libnix',
               '--host=i686-linux-gnu',
               '--target=m68k-amigaos')
   make('{libm}', threads='-j{numThreads}')
@@ -438,7 +438,7 @@ def build():
            AR='m68k-amigaos-ar',
            RANLIB='m68k-amigaos-ranlib'):
     configure('{libdebug}',
-              '--prefix={target}/m68k-amigaos',
+              '--prefix={target}/m68k-amigaos/libnix',
               '--host=m68k-amigaos',
               from_dir='{submodules}/{libdebug}')
   make('{libdebug}', threads='-j{numThreads}')
@@ -447,6 +447,10 @@ def build():
   unpack('{clib2}', work_dir='{build}', top_dir='library')
   make('{clib2}', makefile='GNUmakefile.68k')
   install_clib2()
+
+  with env(CC=CC, CXX=CXX, CFLAGS='-g -O2 -Wall', CXXFLAGS='-g -O2 -Wall'):
+    make('{gcc}', 'all-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
+    make('{gcc}', 'install-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
 
   with env(CC=CC, CXX=CXX, CFLAGS='-g -O2 -Wall', CXXFLAGS='-g -O2 -Wall'):
     make('{gcc}', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
@@ -510,8 +514,8 @@ def add_stubs(src):
   obj = re.sub(r'\.c$', r'.o', src)
 
   for libdir, cflags in MULTILIB:
-    lib = path.join('{target}/m68k-amigaos/lib',
-                    libdir, 'libstubs.a')
+    lib = path.join('{target}/m68k-amigaos/libnix/lib',
+                    libdir, 'libnix/libstubs.a')
     info('stubs: "%s" -> "%s"', obj, lib)
     cflags = list(cflags) + ['-noixemul', '-c', '-o', obj, src]
     execute('m68k-amigaos-gcc', '-Wall', '-O3', '-fomit-frame-pointer', *cflags)
@@ -523,7 +527,7 @@ def add_lib(src, libname):
   obj = re.sub(r'\.a$', r'.o', libname)
 
   for libdir, cflags in MULTILIB:
-    lib = path.join('{target}/m68k-amigaos/lib', libdir, libname)
+    lib = path.join('{target}/m68k-amigaos/libnix/lib', libdir, libname)
     info('lib: "%s" -> "%s"', obj, lib)
     cflags = list(cflags) + ['-noixemul', '-c', '-o', obj, src]
     execute('m68k-amigaos-gcc', '-Wall', '-O3', '-fomit-frame-pointer', *cflags)
