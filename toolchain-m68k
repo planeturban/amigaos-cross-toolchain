@@ -88,7 +88,7 @@ def install_ndk():
 def headers_install():
   info('installing ixemul header files')
 
-  copytree('{sources}/{ixemul}/include', '{target}/m68k-amigaos/libnix/include')
+#  copytree('{sources}/{ixemul}/include', '{target}/m68k-amigaos/libnix/include')
 
 
 @recipe('tools-install')
@@ -419,8 +419,12 @@ def build():
        LD='m68k-amigaos-ld', threads='-j{numThreads}')
   make('{libnix}', 'install', threads='-j{numThreads}')
 
+  with env(CC=CC, CXX=CXX, CFLAGS='-g -O2 -Wall', CXXFLAGS='-g -O2 -Wall'):
+    make('{gcc}', 'all-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
+    make('{gcc}', 'install-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
+
   copy('{submodules}/{libnix}/sources/headers/stabs.h',
-       '{target}/m68k-amigaos/libnix/include')
+       '{target}/m68k-amigaos/sys-include')
 
   unpack('{libm}', top_dir='contrib/libm')
   update_autotools('{sources}/{libm}')
@@ -447,10 +451,6 @@ def build():
   unpack('{clib2}', work_dir='{build}', top_dir='library')
   make('{clib2}', makefile='GNUmakefile.68k')
   install_clib2()
-
-  with env(CC=CC, CXX=CXX, CFLAGS='-g -O2 -Wall', CXXFLAGS='-g -O2 -Wall'):
-    make('{gcc}', 'all-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
-    make('{gcc}', 'install-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
 
   with env(CC=CC, CXX=CXX, CFLAGS='-g -O2 -Wall', CXXFLAGS='-g -O2 -Wall'):
     make('{gcc}', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
