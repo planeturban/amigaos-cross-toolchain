@@ -371,7 +371,7 @@ def build():
   config.guess script knows nothing about x86-64 or darwin.
   """
 
-  with env(CC=CC, CXX=CXX, CFLAGS='-g -O2 -Wall', CXXFLAGS='-g -O2 -Wall'):
+  with env(CC=CC, CXX=CXX, CFLAGS='-O3 -Wall', CXXFLAGS='-O3 -Wall'):
     configure('{binutils}',
               '--prefix={target}',
               '--host=i686-linux-gnu',
@@ -384,7 +384,7 @@ def build():
   unpack('{ixemul}', top_dir='ixemul')
   patch('{ixemul}')
 
-  with env(CC=CC, CXX=CXX, CFLAGS='-g -O2 -Wall', CXXFLAGS='-g -O2 -Wall'):
+  with env(CC=CC, CXX=CXX, CFLAGS='-O3 -Wall', CXXFLAGS='-O3 -Wall'):
     configure('{gcc}',
               '--prefix={target}',
               '--host=i686-linux-gnu',
@@ -419,7 +419,7 @@ def build():
        LD='m68k-amigaos-ld', threads='-j{numThreads}')
   make('{libnix}', 'install', threads='-j{numThreads}')
 
-  with env(CC=CC, CXX=CXX, CFLAGS='-g -O2 -Wall', CXXFLAGS='-g -O2 -Wall'):
+  with env(CC=CC, CXX=CXX, CFLAGS='-O3 -Wall', CXXFLAGS='-O3 -Wall'):
     make('{gcc}', 'all-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
     make('{gcc}', 'install-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
 
@@ -452,7 +452,7 @@ def build():
   make('{clib2}', makefile='GNUmakefile.68k')
   install_clib2()
 
-  with env(CC=CC, CXX=CXX, CFLAGS='-g -O2 -Wall', CXXFLAGS='-g -O2 -Wall'):
+  with env(CC=CC, CXX=CXX, CFLAGS='-O3 -Wall', CXXFLAGS='-O3 -Wall'):
     make('{gcc}', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
     make('{gcc}', 'install', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
 
