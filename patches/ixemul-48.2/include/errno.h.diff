@@ -1,0 +1,14 @@
+*** .build-m68k/sources/ixemul-48.2/include/errno.h	1997-07-10 23:22:04.000000000 +0200
+--- m68k-amigaos/m68k-amigaos/sys-include/errno.h	2017-02-14 22:47:06.614119100 +0100
+***************
+*** 153,158 ****
+--- 153,161 ----
+  
+  #define	EFTYPE		79		/* Inappropriate file type or format */
+  
++ #define EILSEQ		80		/* illegal_byte_sequence */
++ #define ENOMSG		81		/* no_message */
++ 
+  #ifdef _KERNEL
+  /* pseudo-errors returned inside kernel to modify return to process */
+  #define	ERESTART	-1		/* restart syscall */
