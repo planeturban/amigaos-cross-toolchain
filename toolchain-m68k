@@ -390,8 +390,9 @@ def build():
               '--host=i686-linux-gnu',
               '--build=i686-linux-gnu',
               '--target=m68k-amigaos',
-              '--enable-languages=c,c++,objc',
+              '--enable-languages=c',
               '--enable-version-specific-runtime-libs',
+              '--disable-libssp',
               '--with-headers={sources}/{ixemul}/include',
               from_dir='{submodules}/{gcc}')
     touch_genfiles('{submodules}/{gcc}')
