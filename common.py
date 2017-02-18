@@ -6,7 +6,7 @@ from logging import debug, info, error
 from os import path
 import contextlib
 from distutils import spawn, sysconfig
-import os
+import os, glob
 import shutil
 import site
 import subprocess
@@ -344,15 +344,37 @@ def recipe(name, nargs=0):
     def wrapper(*args, **kwargs):
       target = [str(arg) for arg in args[:min(nargs, len(args))]]
       if len(target) > 0:
+        mtarget = target[0]
         target = [target[0], fill_in(name)] + target[1:]
         target = '-'.join(target)
       else:
         target = fill_in(name)
+        mtarget = target
       target = target.replace('_', '-')
       target = target.replace('/', '-')
       stamp = path.join('{stamps}', target)
+
       if not path.exists('{stamps}'):
         mkdir('{stamps}')
+      
+      if name == 'make' and path.exists(stamp):
+        print mtarget, target
+        mfile = ''
+        mmax = 0
+        for root, dirs, files in os.walk('submodules/' + mtarget):
+          for filename in files:
+            mf = os.path.join(root, filename)
+            mt = os.stat(mf).st_mtime
+            if mt > mmax:
+              mfile = mf
+              mmax = mt
+        print mfile, mmax
+        if mmax > os.stat(stamp).st_mtime:
+          mstamp = path.join('{stamps}', mtarget + '*')
+          info('removing stamp for "%s"', mstamp)
+          for f in glob.glob(mstamp):
+            remove(f)
+
       if not path.exists(stamp):
         fn(*args, **kwargs)
         touch(stamp)
