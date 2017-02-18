@@ -358,7 +358,6 @@ def recipe(name, nargs=0):
         mkdir('{stamps}')
       
       if name == 'make' and path.exists(stamp):
-        print mtarget, target
         mfile = ''
         mmax = 0
         for root, dirs, files in os.walk('submodules/' + mtarget):
@@ -368,7 +367,6 @@ def recipe(name, nargs=0):
             if mt > mmax:
               mfile = mf
               mmax = mt
-        print mfile, mmax
         if mmax > os.stat(stamp).st_mtime:
           mstamp = path.join('{stamps}', mtarget + '*')
           info('removing stamp for "%s"', mstamp)
