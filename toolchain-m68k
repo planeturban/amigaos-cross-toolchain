@@ -6,6 +6,7 @@ from fnmatch import fnmatch
 from glob import glob
 from logging import info
 from os import environ
+import os
 import argparse
 import logging
 import platform
@@ -210,10 +211,11 @@ def touch_genfiles(dst):
   """
   for name in find(dst, include=['*.l', '*.y']):
     basename = path.splitext(name)[0]
-    for c_file in glob(basename + '.c'):
-      touch(c_file)
-    for h_file in glob(basename + '.h'):
-      touch(h_file)
+    os.utime(name, (1, 1))
+#    for c_file in glob(basename + '.c'):
+#      touch(c_file)
+#    for h_file in glob(basename + '.h'):
+#      touch(h_file)
 
 
 def download():

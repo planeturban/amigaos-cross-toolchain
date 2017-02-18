@@ -6,7 +6,9 @@ from logging import debug, info, error
 from os import path
 import contextlib
 from distutils import spawn, sysconfig
-import os, glob
+import os
+import glob
+import datetime
 import shutil
 import site
 import subprocess
@@ -369,7 +371,9 @@ def recipe(name, nargs=0):
               mmax = mt
         if mmax > os.stat(stamp).st_mtime:
           mstamp = path.join('{stamps}', mtarget + '-make*')
-          info('removing stamp for "%s"', mstamp)
+          info('removing stamp for "%s"\n\tcaused by "%s" %s'
+               '\n\tstamp is "%s" %s', mstamp, mfile, datetime.datetime.fromtimestamp(mmax),
+               stamp, datetime.datetime.fromtimestamp(os.stat(stamp).st_mtime))
           for f in glob.glob(mstamp):
             remove(f)
 
