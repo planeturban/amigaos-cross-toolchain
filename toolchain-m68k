@@ -216,6 +216,18 @@ def touch_genfiles(dst):
       touch(h_file)
 
 
+def update():
+  with cwd('{archives}'):
+    for url in URLS:
+      if type(url) == tuple:
+        url, name = url[0], url[1]
+      else:
+        name = path.basename(url)
+      fetch(name, url)
+
+  execute('git', 'submodule', 'init');
+  execute('git', 'submodule', 'update');
+
 def build():
   for var in environ.keys():
     if var not in ['_', 'LOGNAME', 'HOME', 'SHELL', 'TMPDIR', 'PWD']:
@@ -230,16 +242,7 @@ def build():
   environ['LANG'] = 'C'
   environ['TERM'] = 'xterm'
 
-  with cwd('{archives}'):
-    for url in URLS:
-      if type(url) == tuple:
-        url, name = url[0], url[1]
-      else:
-        name = path.basename(url)
-      fetch(name, url)
-
-  execute('git', 'submodule', 'init');
-  execute('git', 'submodule', 'update');
+  update()
 
   add_site_dir('{host}')
 
@@ -669,7 +672,7 @@ if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='Build cross toolchain.')
   parser.add_argument('action',
                       choices=['build', 'list-sdk', 'install-sdk', 'clean',
-                               'test'],
+                               'test', 'update'],
                       default='build', help='perform action')
   parser.add_argument('args', metavar='ARGS', type=str, nargs='*',
                       help='action arguments')
