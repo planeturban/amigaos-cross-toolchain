@@ -576,6 +576,9 @@ def process_sdk(sdk, dirname, files):
         info('stubs: "%s" -> "%s"', filename, c_file)
         execute('sfdc', '--quiet', '--target=m68k-amigaos', '--mode=autoopen',
                 '--output=' + c_file, filename)
+        # remove d0 from clobber since it's the return value, also remove __inline
+        execute('perl', '-pi', '-e', 's/: \\"d0\\",/:/g', c_file)
+        execute('perl', '-pi', '-e', 's/__inline//g', c_file)
         add_stubs(c_file)
       elif kind == 'lib':
         filename = f[1]
@@ -585,6 +588,9 @@ def process_sdk(sdk, dirname, files):
         info('lib: %s -> %s', filename, c_file)
         execute('sfdc', '--quiet', '--target=m68k-amigaos', '--mode=stubs',
                 '--output=' + c_file, filename)
+        # remove d0 from clobber since it's the return value, also remove __inline
+        execute('perl', '-pi', '-e', 's/: \\"d0\\",/:/g', c_file)
+        execute('perl', '-pi', '-e', 's/__inline//g', c_file)
         add_lib(c_file, lib_file)
       elif kind == 'file':
         source = f[1]
