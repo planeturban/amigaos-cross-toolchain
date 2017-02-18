@@ -368,7 +368,7 @@ def recipe(name, nargs=0):
               mfile = mf
               mmax = mt
         if mmax > os.stat(stamp).st_mtime:
-          mstamp = path.join('{stamps}', mtarget + '*')
+          mstamp = path.join('{stamps}', mtarget + '-make*')
           info('removing stamp for "%s"', mstamp)
           for f in glob.glob(mstamp):
             remove(f)
