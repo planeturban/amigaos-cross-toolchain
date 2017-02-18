@@ -297,42 +297,44 @@ def build():
 
   unpack('{m4}')
   configure('{m4}', '--prefix={host}')
-  make('{m4}', threads='-j{numThreads}')
-  make('{m4}', 'install', 'Makefile', threads='-j{numThreads}')
+  make('{m4}')
+  make('{m4}', 'install', 'Makefile')
 
   unpack('{gawk}')
   update_autotools('{sources}/{gawk}')
   configure('{gawk}', '--prefix={host}')
-  make('{gawk}', threads='-j{numThreads}')
-  make('{gawk}', 'install', threads='-j{numThreads}')
+  make('{gawk}')
+  make('{gawk}', 'install')
 
   unpack('{flex}')
   configure('{flex}', '--prefix={host}')
+  setvar('1')
   make('{flex}')
   make('{flex}', 'install')
+  setvar(numThreads)
 
   unpack('{bison}')
   update_autotools('{sources}/{bison}/config')
   configure('{bison}', '--prefix={host}')
-  make('{bison}', threads='-j{numThreads}')
-  make('{bison}', 'install', threads='-j{numThreads}')
+  make('{bison}')
+  make('{bison}', 'install')
 
   unpack('{texinfo}')
   update_autotools('{sources}/{texinfo}/build-aux')
   configure('{texinfo}', '--prefix={host}')
-  make('{texinfo}', threads='-j{numThreads}')
-  make('{texinfo}', 'install', threads='-j{numThreads}')
+  make('{texinfo}')
+  make('{texinfo}', 'install')
 
   unpack('{autoconf}')
   update_autotools('{sources}/{autoconf}')
   configure('{autoconf}', '--prefix={host}')
-  make('{autoconf}', threads='-j{numThreads}')
-  make('{autoconf}', 'install', threads='-j{numThreads}')
+  make('{autoconf}')
+  make('{autoconf}', 'install')
 
   prepare_target()
 
   unpack('vasm', work_dir='{build}')
-  make('vasm', CPU='m68k', SYNTAX='mot', threads='-j{numThreads}')
+  make('vasm', CPU='m68k', SYNTAX='mot')
 
   unpack('vlink', work_dir='{build}')
   build_vlink()
@@ -348,14 +350,14 @@ def build():
   update_autotools('{submodules}/fd2sfd')
   unpack('fd2sfd', work_dir='{build}')
   configure('fd2sfd', '--prefix={target}', from_dir='{build}/fd2sfd')
-  make('fd2sfd', threads='-j{numThreads}')
-  make('fd2sfd', 'install', threads='-j{numThreads}')
+  make('fd2sfd')
+  make('fd2sfd', 'install')
 
   update_autotools('{submodules}/sfdc')
   unpack('sfdc')
   configure('sfdc', '--prefix={target}', copy_source=True)
-  make('sfdc', threads='-j{numThreads}')
-  make('sfdc', 'install', threads='-j{numThreads}')
+  make('sfdc')
+  make('sfdc', 'install')
 
   unpack('{NDK}')
   patch('{NDK}')
@@ -385,8 +387,8 @@ def build():
               '--target=m68k-amigaos',
               from_dir='{submodules}/{binutils}')
     touch_genfiles('{submodules}/{binutils}')
-    make('{binutils}', threads='-j{numThreads}')
-    make('{binutils}', 'install', threads='-j{numThreads}')
+    make('{binutils}')
+    make('{binutils}', 'install')
 
   unpack('{ixemul}', top_dir='ixemul')
   patch('{ixemul}')
@@ -403,9 +405,9 @@ def build():
               '--with-headers={sources}/{ixemul}/include',
               from_dir='{submodules}/{gcc}')
     touch_genfiles('{submodules}/{gcc}')
-    make('{gcc}', 'all-gcc', threads='-j{numThreads}', 
+    make('{gcc}', 'all-gcc', 
          MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
-    make('{gcc}', 'install-gcc', threads='-j{numThreads}',
+    make('{gcc}', 'install-gcc',
          MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
 
   headers_install()
@@ -424,8 +426,8 @@ def build():
        AR='m68k-amigaos-ar',
        AS='m68k-amigaos-as',
        RANLIB='m68k-amigaos-ranlib',
-       LD='m68k-amigaos-ld', threads='-j{numThreads}')
-  make('{libnix}', 'install', threads='-j{numThreads}')
+       LD='m68k-amigaos-ld')
+  make('{libnix}', 'install')
 
   with env(CC=CC, CXX=CXX, CFLAGS='-O3 -Wall', CXXFLAGS='-O3 -Wall'):
     make('{gcc}', 'all-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
@@ -443,8 +445,8 @@ def build():
               '--prefix={target}/m68k-amigaos/libnix',
               '--host=i686-linux-gnu',
               '--target=m68k-amigaos')
-  make('{libm}', threads='-j{numThreads}')
-  make('{libm}', 'install', threads='-j{numThreads}')
+  make('{libm}')
+  make('{libm}', 'install')
 
   with env(CC='m68k-amigaos-gcc -noixemul',
            AR='m68k-amigaos-ar',
@@ -453,8 +455,8 @@ def build():
               '--prefix={target}/m68k-amigaos/libnix',
               '--host=m68k-amigaos',
               from_dir='{submodules}/{libdebug}')
-  make('{libdebug}', threads='-j{numThreads}')
-  make('{libdebug}', 'install', threads='-j{numThreads}')
+  make('{libdebug}')
+  make('{libdebug}', 'install')
 
   unpack('{clib2}', work_dir='{build}', top_dir='library')
   make('{clib2}', makefile='GNUmakefile.68k')
