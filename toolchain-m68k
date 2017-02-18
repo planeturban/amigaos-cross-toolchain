@@ -216,7 +216,7 @@ def touch_genfiles(dst):
       touch(h_file)
 
 
-def update():
+def download():
   with cwd('{archives}'):
     for url in URLS:
       if type(url) == tuple:
@@ -225,6 +225,7 @@ def update():
         name = path.basename(url)
       fetch(name, url)
 
+def update():
   execute('git', 'submodule', 'init');
   execute('git', 'submodule', 'update');
 
@@ -242,6 +243,7 @@ def build():
   environ['LANG'] = 'C'
   environ['TERM'] = 'xterm'
 
+  download()
   update()
 
   add_site_dir('{host}')
@@ -655,6 +657,16 @@ def test():
     execute('make', 'clean')
     execute('make')
 
+def help():
+  print ('\n'
+        'build:       build the tool chain (use --threads n to speed up the build)\n'
+        'clean:       remove the build artifacts\n'
+        'update:      updates the submodules using git\n'
+        'download:    download the archives\n'
+        'list-sdk:    list the available sdks\n'
+        'install-sdk: install the specified sdk\n'
+        'test:        build the example files\n')
+
 
 if __name__ == "__main__":
   logging.basicConfig(level=logging.DEBUG, format='%(levelname)s: %(message)s')
@@ -671,9 +683,9 @@ if __name__ == "__main__":
 
   parser = argparse.ArgumentParser(description='Build cross toolchain.')
   parser.add_argument('action',
-                      choices=['build', 'list-sdk', 'install-sdk', 'clean',
-                               'test', 'update'],
-                      default='build', help='perform action')
+                      choices=['help', 'build', 'list-sdk', 'install-sdk', 'clean',
+                               'test', 'update', 'download'],
+                      default='build', help='perform an action')
   parser.add_argument('args', metavar='ARGS', type=str, nargs='*',
                       help='action arguments')
   parser.add_argument('--binutils', choices=['2.9.1', '2.14'], default='2.14',
