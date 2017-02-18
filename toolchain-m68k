@@ -308,10 +308,11 @@ def build():
 
   unpack('{flex}')
   configure('{flex}', '--prefix={host}')
-  setvar('1')
+  nt = '{numThreads}'
+  setvar(numThreads='1')
   make('{flex}')
   make('{flex}', 'install')
-  setvar(numThreads)
+  setvar(numThreads=nt)
 
   unpack('{bison}')
   update_autotools('{sources}/{bison}/config')
