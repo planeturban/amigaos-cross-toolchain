@@ -381,7 +381,7 @@ def build():
   config.guess script knows nothing about x86-64 or darwin.
   """
 
-  with env(CC=CC, CXX=CXX, CFLAGS='-O3 -Wall', CXXFLAGS='-O3 -Wall'):
+  with env(CC=CC, CXX=CXX, CFLAGS='-g -Wall', CXXFLAGS='-g -Wall'):
     configure('{binutils}',
               '--prefix={target}',
               '--host=i686-linux-gnu',
@@ -394,7 +394,7 @@ def build():
   unpack('{ixemul}', top_dir='ixemul')
   patch('{ixemul}')
 
-  with env(CC=CC, CXX=CXX, CFLAGS='-O3 -Wall', CXXFLAGS='-O3 -Wall'):
+  with env(CC=CC, CXX=CXX, CFLAGS='-g -Wall', CXXFLAGS='-g -Wall'):
     configure('{gcc}',
               '--prefix={target}',
               '--host=i686-linux-gnu',
