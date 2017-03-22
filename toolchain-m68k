@@ -60,6 +60,11 @@ def prepare_target():
     mkdir('bin', 'doc', 'etc', 'lib', 'm68k-amigaos', 'os-include',
           'os-include/lvo', 'os-lib', 'os-lib/fd', 'os-lib/sfd',
           'vbcc-include', 'vbcc-lib')
+  with cwd('{prefix}'):
+    mkdir('bin', 'etc', '{target}')
+  with cwd('{prefix}/{target}'):
+    mkdir('bin', 'ndk/include/inline', 'ndk/include/lvo',
+          'ndk/lib', 'ndk/lib/fd', 'ndk/lib/sfd')
 
 
 @recipe('{NDK}-install')
@@ -90,6 +95,25 @@ def headers_install():
   info('installing ixemul header files')
 
 #  copytree('{sources}/{ixemul}/include', '{target}/m68k-amigaos/libnix/include')
+
+
+@recipe('fd2sfd-install')
+def install_fd2sfd():
+  info('installing fd2sfd')
+
+  copy('{build}/fd2sfd/fd2sfd', '{prefix}/bin')
+  copy('{build}/fd2sfd/cross/share/{target}/alib.h',
+       '{prefix}/{target}/ndk/include/inline')
+
+
+@recipe('fd2pragma-install')
+def install_fd2pragma():
+  info('installing fd2pragma')
+
+  copy('{build}/fd2pragma/fd2pragma', '{prefix}/bin')
+  for header in ['macros.h', 'stubs.h']:
+      copy(path.join('{build}/fd2pragma/Include/inline', header),
+           '{prefix}/{target}/ndk/include/inline')
 
 
 @recipe('tools-install')
@@ -382,7 +406,7 @@ def _build(pull):
   unpack('fd2sfd', work_dir='{build}')
   configure('fd2sfd', '--prefix={target}', from_dir='{build}/fd2sfd')
   make('fd2sfd')
-  make('fd2sfd', 'install')
+  install_fd2sfd()
 
   update_autotools('{submodules}/sfdc')
   unpack('sfdc')
@@ -568,7 +592,7 @@ def add_lib(src, libname):
   obj = re.sub(r'\.a$', r'.o', libname)
 
   for libdir, cflags in MULTILIB:
-    lib = path.join('{target}/m68k-amigaos/libnix/lib', libdir, libname)
+    lib = path.join('{prefix}/{target}/lib', libdir, libname)
     info('lib: "%s" -> "%s"', obj, lib)
     cflags = list(cflags) + ['-noixemul', '-c', '-o', obj, src]
     execute('m68k-amigaos-gcc', '-Wall', '-O3', '-fomit-frame-pointer', *cflags)
@@ -577,8 +601,8 @@ def add_lib(src, libname):
 
 
 @recipe('install-sdk', 1)
-def process_sdk(sdk, dirname, files):
-  with cwd(path.join('{sources}', dirname)):
+def process_sdk(sdk, lib_name, files):
+  with cwd(path.join('{sources}', sdk)):
     for f in files:
       kind = f[0]
 
@@ -591,14 +615,14 @@ def process_sdk(sdk, dirname, files):
           sfd = sfd + '.sfd'
         info('fd2sfd: "%s" "%s" -> "%s"', fd, protos, sfd)
         execute('fd2sfd', '-o', sfd, fd, protos)
-        copy(sfd, path.join('{target}/os-lib/sfd', sfd))
+        copy(sfd, path.join('{prefix}/{target}/lib/sfd', sfd))
       elif kind == 'sfdc':
         source = f[1]
         basename = re.sub(r'_lib.sfd$', r'', path.basename(source))
 
-        proto = path.join('{target}/os-include/proto', basename + '.h')
-        inline = path.join('{target}/os-include/inline', basename + '.h')
-        lvo = path.join('{target}/os-include/lvo', basename + '.i')
+        proto = path.join('{prefix}/{target}/include/proto', basename + '.h')
+        inline = path.join('{prefix}/{target}/include/inline', basename + '.h')
+        lvo = path.join('{prefix}/{target}/include/lvo', basename + '.i')
 
         info('sfdc: "%s" -> "%s"', source, proto)
         execute('sfdc', '--quiet', '--target=m68k-amigaos', '--mode=proto',
@@ -623,7 +647,7 @@ def process_sdk(sdk, dirname, files):
       elif kind == 'lib':
         filename = f[1]
         c_file = re.sub(r'_lib.sfd$', r'.c', path.basename(filename))
-        lib_file = 'lib' + sdk + '.a'
+        lib_file = 'lib' + lib_name + '.a'
 
         info('lib: %s -> %s', filename, c_file)
         execute('sfdc', '--quiet', '--target=m68k-amigaos', '--mode=stubs',
@@ -640,21 +664,17 @@ def process_sdk(sdk, dirname, files):
           name = path.basename(f[1])
 
         if any(name.endswith(ext) for ext in ['.doc', '.html', '.pdf', '.ps']):
-          mkdir('{target}/doc')
-          copy(source, path.join('{target}/doc', name))
+          copy(source, path.join('{prefix}/{target}/doc', name))
         elif name.endswith('.guide'):
-          mkdir('{target}/guide')
-          copy(source, path.join('{target}/guide', name))
+          copy(source, path.join('{prefix}/{target}/guide', name))
         elif any(name.endswith(ext) for ext in ['.h', '.i']):
           lastdir = path.basename(path.dirname(f[1]))
-          mkdir(path.join('{target}/os-include', lastdir))
-          copy(source, path.join('{target}/os-include', lastdir, name))
+          mkdir(path.join('{prefix}/{target}/include', lastdir))
+          copy(source, path.join('{prefix}/{target}/include', lastdir, name))
         elif name.endswith('.fd'):
-          mkdir('{target}/os-lib/fd')
-          copy(source, path.join('{target}/os-lib/fd', name))
+          copy(source, path.join('{prefix}/{target}/lib/fd', name))
         elif name.endswith('.sfd'):
-          mkdir('{target}/os-lib/sfd')
-          copy(source, path.join('{target}/os-lib/sfd', name))
+          copy(source, path.join('{prefix}/{target}/lib/sfd', name))
 
 
 def install_sdk(*names):
@@ -664,6 +684,13 @@ def install_sdk(*names):
 
   add_site_dir('{host}')
 
+  with cwd('{prefix}/{target}'):
+    mkdir('doc', 'guide', 'include/proto', 'include/inline', 'include/lvo',
+          'lib/fd', 'lib/sfd')
+
+    for d, _ in MULTILIB:
+      mkdir(path.join('lib', d))
+
   for name in names:
     filename = path.join('{top}/sdk', name + '.sdk')
 
@@ -672,14 +699,18 @@ def install_sdk(*names):
 
     desc, files = read_sdk(filename)
 
+    pkg = name + '-' + desc['version']
+    _, ext = path.splitext(path.basename(desc['url']))
+
     with cwd('{archives}'):
-      fetch(path.basename(desc['url']), desc['url'])
+      fetch(pkg + ext, desc['url'])
 
-    basename = path.splitext(path.basename(desc['url']))[0]
+    unpack(pkg, top_dir='.')
 
-    unpack(basename, top_dir='.')
+    if path.isdir(path.join('{patches}', pkg)):
+      patch(pkg, work_dir=path.join('{sources}', pkg))
 
-    process_sdk(name, basename, files)
+    process_sdk(pkg, name, files)
 
 
 def test():
