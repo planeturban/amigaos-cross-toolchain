@@ -435,12 +435,19 @@ def removemodule(name):
 def checkstamps(name):
   target = fill_in(name)
   target = target.replace('_', '-')
-  target = target.replace('/', '-') + "-make"
-  stamp = path.join('{stamps}', target)
+  target = target.replace('/', '-')
+  stamp = path.join('{stamps}', target + '-make')
   info('checking %s with %s', name, stamp)
   mtime = 0       
   if path.exists(stamp):
     mtime = os.stat(stamp).st_mtime
+    
+  ins = None
+  for n in find('{stamps}', include=[target + '*install*']):
+    ins = n
+    break
+  if ins == None:
+    remove(stamp)
 
   submodule = path.join('submodules/', name)
   for root, dirs, files in os.walk(submodule):
@@ -448,6 +455,7 @@ def checkstamps(name):
       mf = os.path.join(root, filename)
       mt = os.stat(mf).st_mtime
       if mt > mtime:
+        touch(stamp)
         return True
   return False
 

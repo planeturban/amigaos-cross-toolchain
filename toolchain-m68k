@@ -4,7 +4,7 @@
 
 from fnmatch import fnmatch
 from glob import glob
-from logging import info
+from logging import info, getLogger
 from os import environ
 import os
 import argparse
@@ -21,8 +21,8 @@ URLS = \
    'ftp://ftp.gnu.org/gnu/bison/bison-1.35.tar.gz',
    'ftp://ftp.gnu.org/gnu/texinfo/texinfo-4.12.tar.gz',
    'ftp://ftp.gnu.org/gnu/automake/automake-1.15.tar.gz',
-   ('http://pkgs.fedoraproject.org/repo/pkgs/flex/flex-2.5.4a.tar.gz/bd8753d0b22e1f4ec87a553a73021adf/flex-2.5.4a.tar.gz',
-    'flex-2.5.4.tar.gz'),
+   ('ftp://ftp.uk.freesbie.org/sites/distfiles.gentoo.org/distfiles/' +
+    'flex-2.5.4a.tar.gz', 'flex-2.5.4.tar.gz'),
    ('http://www.haage-partner.de/download/AmigaOS/NDK39.lha', 'NDK_3.9.lha'),
    ('ftp://ftp.exotica.org.uk/mirrors/geekgadgets/amiga/m68k/snapshots/' +
     '990529/bin/libamiga-bin.tgz', 'libamiga.tar.gz'),
@@ -56,10 +56,6 @@ from common import * # NOQA
 def prepare_target():
   info('preparing target')
 
-  with cwd('{target}'):
-    mkdir('bin', 'doc', 'etc', 'lib', 'm68k-amigaos', 'os-include',
-          'os-include/lvo', 'os-lib', 'os-lib/fd', 'os-lib/sfd',
-          'vbcc-include', 'vbcc-lib')
   with cwd('{prefix}'):
     mkdir('bin', 'etc', '{target}')
   with cwd('{prefix}/{target}'):
@@ -71,30 +67,30 @@ def prepare_target():
 def install_ndk():
   info('installing ndk')
 
-  copytree('{sources}/{NDK}/Include/include_h', '{target}/os-include')
-  copytree('{sources}/{NDK}/Include/include_i', '{target}/os-include')
-  copytree('{sources}/{NDK}/Include/fd', '{target}/os-lib/fd')
-  copytree('{sources}/{NDK}/Include/sfd', '{target}/os-lib/sfd')
-  copytree('{sources}/{NDK}/Include/linker_libs', '{target}/os-lib',
+  copytree('{sources}/{NDK}/Include/include_h', '{prefix}/{target}/ndk/include')
+  copytree('{sources}/{NDK}/Include/include_i', '{prefix}/{target}/ndk/include')
+  copytree('{sources}/{NDK}/Include/fd', '{prefix}/{target}/ndk/lib/fd')
+  copytree('{sources}/{NDK}/Include/sfd', '{prefix}/{target}/ndk/lib/sfd')
+  copytree('{sources}/{NDK}/Include/linker_libs', '{prefix}/{target}/ndk/lib',
            exclude=['README'])
-  copytree('{sources}/{NDK}/Documentation/Autodocs', '{target}/doc')
+  copytree('{sources}/{NDK}/Documentation/Autodocs', '{prefix}/{target}/ndk/doc')
 
-  for name in find('{target}/os-lib/sfd', include=['*.sfd']):
+  for name in find('{prefix}/{target}/ndk/lib/sfd', include=['*.sfd']):
     base = path.basename(name).split('_')[0]
 
     execute('sfdc', '--target=m68k-amigaos', '--mode=proto',
-            '--output={target}/os-include/proto/' + base + '.h', name)
+            '--output={prefix}/{target}/ndk/include/proto/%s.h' % base, name)
     execute('sfdc', '--target=m68k-amigaos', '--mode=macros',
-            '--output={target}/os-include/inline/' + base + '.h', name)
+            '--output={prefix}/{target}/ndk/include/inline/%s.h' % base, name)
     execute('sfdc', '--target=m68k-amigaos', '--mode=lvo',
-            '--output={target}/os-include/lvo/' + base + '_lib.i', name)
+            '--output={prefix}/{target}/ndk/include/lvo/%s_lib.i' % base, name)
 
 
 @recipe('headers-install')
 def headers_install():
   info('installing ixemul header files')
 
-#  copytree('{sources}/{ixemul}/include', '{target}/m68k-amigaos/libnix/include')
+#  copytree('{sources}/{ixemul}/include', '{prefix}/{target}/libnix/include')
 
 
 @recipe('fd2sfd-install')
@@ -120,22 +116,22 @@ def install_fd2pragma():
 def install_tools():
   info('installing extra tools')
 
-  copy('{build}/ira/ira', '{target}/bin')
-  copy('{build}/vdam68k/vda68k', '{target}/bin')
+  copy('{build}/ira/ira', '{prefix}/bin')
+  copy('{build}/vdam68k/vda68k', '{prefix}/bin')
 
 
 @recipe('{libamiga}-install')
 def install_libamiga():
   info('installing libamiga')
 
-  copytree('{sources}/{libamiga}/lib', '{target}/m68k-amigaos/libnix/lib')
+  copytree('{sources}/{libamiga}/lib', '{prefix}/{target}/libnix/lib')
 
 
 @recipe('{clib2}-install')
 def install_clib2():
   info('installing clib2')
 
-  with cwd('{target}/m68k-amigaos/clib2'):
+  with cwd('{prefix}/{target}/clib2'):
     copytree('{build}/{clib2}/lib', 'lib')
     copytree('{build}/{clib2}/include', 'include')
 
@@ -155,7 +151,7 @@ def build_vbcc():
     'n', 'y', 'unsigned long long',
     'n', 'y', 'float',
     'n', 'y', 'double')
-  make('vbcc', TARGET='m68k', ETCDIR='\\"{target}/etc/\\"', CONFIG=config)
+  make('vbcc', TARGET='m68k', ETCDIR='\\"{prefix}/etc/\\"', CONFIG=config)
   remove(config)
 
 
@@ -169,57 +165,62 @@ def build_vlink():
 def install_vbcc_toolchain():
   info('installing vasm')
 
-  copy('{build}/vasm/vasmm68k_mot', '{target}/bin')
-  copy('{build}/vasm/vobjdump', '{target}/bin')
+  copy('{build}/vasm/vasmm68k_mot', '{prefix}/{target}/bin')
+  copy('{build}/vasm/vobjdump', '{prefix}/bin')
   vasm = textfile(
     '#!/bin/sh',
     '',
-    'vasmm68k_mot -I{target}/os-include "$@"')
+    '{prefix}/{target}/bin/vasmm68k_mot -I{prefix}/{target}/ndk/include "$@"')
   chmod(vasm, 0755)
-  move(vasm, '{target}/bin/vasm')
+  move(vasm, '{prefix}/bin/vasm')
 
   info('installing vlink')
 
-  copy('{build}/vlink/vlink', '{target}/bin')
+  copy('{build}/vlink/vlink', '{prefix}/bin')
 
   info('installing vbcc')
 
-  copy('{build}/vbcc/bin/vbccm68k', '{target}/bin')
-  copy('{build}/vbcc/bin/vc', '{target}/bin')
-  copy('{build}/vbcc/bin/vprof', '{target}/bin')
+  copy('{build}/vbcc/bin/vbccm68k', '{prefix}/{target}/bin')
+  copy('{build}/vbcc/bin/vc', '{prefix}/bin')
+  copy('{build}/vbcc/bin/vprof', '{prefix}/bin')
 
   info('installing vbcc_target_m68k-amigaos')
 
   copytree('{sources}/vclib/targets/m68k-amigaos/include',
-           '{target}/vbcc-include')
+           '{prefix}/{target}/vbcc/include')
   copytree('{sources}/vclib/targets/m68k-amigaos/lib',
-           '{target}/vbcc-lib')
+           '{prefix}/{target}/vbcc/lib')
   config = textfile(
-    ('-cc={target}/bin/vbccm68k -hunkdebug %s -o= %s %s -O=%ld' +
-     ' -quiet -I{target}/vbcc-include -I{target}/os-include'),
-    ('-ccv={target}/bin/vbccm68k -hunkdebug %s -o= %s %s -O=%ld' +
-     ' -I{target}/vbcc-include -I{target}/os-include'),
-    ('-as={target}/bin/vasmm68k_mot -Fhunk -phxass -opt-fconst -nowarn=62' +
-     ' -quiet -I{target}/os-include %s -o %s'),
-    ('-asv={target}/bin/vasmm68k_mot -Fhunk -phxass -opt-fconst -nowarn=62' +
-     ' -I{target}/os-include %s -o %s'),
+    ('-cc={prefix}/{target}/bin/vbccm68k -hunkdebug %s -o= %s %s -O=%ld' +
+     ' -quiet -I{prefix}/{target}/vbcc/include -I{prefix}/{target}/ndk/include'),
+    ('-ccv={prefix}/{target}/bin/vbccm68k -hunkdebug %s -o= %s %s -O=%ld' +
+     ' -I{prefix}/{target}/vbcc/include -I{prefix}/{target}/ndk/include'),
+    ('-as={prefix}/{target}/bin/vasmm68k_mot -Fhunk -phxass -opt-fconst' +
+     ' -nowarn=62 -quiet -I{prefix}/{target}/ndk/include %s -o %s'),
+    ('-asv={prefix}/{target}/bin/vasmm68k_mot -Fhunk -phxass -opt-fconst' +
+     ' -nowarn=62 -I{prefix}/{target}/ndk/include %s -o %s'),
     '-rm=rm %s',
     '-rmv=rm -v %s',
-    ('-ld={target}/bin/vlink -bamigahunk -x -Bstatic -Cvbcc -nostdlib' +
-     ' {target}/vbcc-lib/startup.o %s %s' +
-     ' -L{target}/vbcc-lib -L{target}/vbcc-include -lvc -o %s'),
-    ('-l2={target}/bin/vlink -bamigahunk -x -Bstatic -Cvbcc -nostdlib' +
-     ' %s %s -L{target}/vbcc-lib -L{target}/vbcc-include -o %s'),
-    ('-ldv={target}/bin/vlink -bamigahunk -t -x -Bstatic -Cvbcc -nostdlib' +
-     ' {target}/vbcc-lib/startup.o %s %s' +
-     ' -L{target}/vbcc-lib -L{target}/vbcc-include -lvc -o %s'),
-    ('-l2v={target}/bin/vlink -bamigahunk -t -x -Bstatic -Cvbcc -nostdlib' +
-     ' %s %s -L{target}/vbcc-lib -L{target}/vbcc-include -o %s'),
+    ('-ld={prefix}/bin/vlink -bamigahunk -x -Bstatic -Cvbcc -nostdlib' +
+     ' {prefix}/{target}/vbcc/lib/startup.o %s %s' +
+     ' -L{prefix}/{target}/vbcc/lib' +
+     ' -L{prefix}/{target}/vbcc/include -lvc -o %s'),
+    ('-l2={prefix}/bin/vlink -bamigahunk -x -Bstatic -Cvbcc -nostdlib' +
+     ' %s %s -L{prefix}/{target}/vbcc/lib' +
+     ' -L{prefix}/{target}/vbcc/include -o %s'),
+    ('-ldv={prefix}/bin/vlink -bamigahunk -t -x -Bstatic -Cvbcc -nostdlib' +
+     ' {prefix}/{target}/vbcc/lib/startup.o %s %s' +
+     ' -L{prefix}/{target}/vbcc/lib' +
+     ' -L{prefix}/{target}/vbcc/include -lvc -o %s'),
+    ('-l2v={prefix}/bin/vlink -bamigahunk -t -x -Bstatic -Cvbcc -nostdlib' +
+     ' %s %s -L{prefix}/{target}/vbcc/lib' +
+     ' -L{prefix}/{target}/vbcc/include -o %s'),
     '-ldnodb=-s -Rshort',
     '-ul=-l%s',
     '-cf=-F%s',
     '-ml=500')
-  move(config, '{target}/etc/vc.config')
+  chmod(config, 0644)
+  move(config, '{prefix}/etc/vc.config')
 
 
 def update_autotools(dst):
@@ -233,13 +234,10 @@ def touch_genfiles(dst):
   regenerated. Otherwise it can cause weird errors later in the build process
   (e.g. in ldexp.c:560)
   """
-  for name in find(dst, include=['*.l', '*.y']):
+  for name in find(dst, include=['*.l', '*.y', '*.in', '*.ac']):
     basename = path.splitext(name)[0]
+    # do not touch files - reset the src file stamp instead!
     os.utime(name, (1, 1))
-#    for c_file in glob(basename + '.c'):
-#      touch(c_file)
-#    for h_file in glob(basename + '.h'):
-#      touch(h_file)
 
 
 def download():
@@ -292,10 +290,17 @@ def _build(pull):
 
   CC = find_executable(CC)
   CXX = find_executable(CXX)
+  FLAGS = '-g -Os'
+
+  if getLogger().isEnabledFor(logging.DEBUG):
+    FLAGS += ' -Wall'
+  else:
+    FLAGS += ' -w'
+    environ['MAKEFLAGS'] = '--silent'  
 
   environ['CC'] = CC
   environ['CXX'] = CXX
-  environ['PATH'] = ':'.join([path.join('{target}', 'bin'),
+  environ['PATH'] = ':'.join([path.join('{prefix}', 'bin'),
                               path.join('{host}', 'bin'),
                               environ['PATH']])
 
@@ -307,7 +312,7 @@ def _build(pull):
   """
 
   if checkstamps('{binutils}'):
-    checkstamps('{binutils}')
+    removemodule('{binutils}')
 
   if checkstamps('{gcc}'):
       removemodule('{libnix}')
@@ -316,16 +321,16 @@ def _build(pull):
       removemodule('{libm}')
       
   if checkstamps('{libnix}'):
-    checkstamps('{libnix}')
+    removemodule('{libnix}')
 
   if checkstamps('{clib2}'):
-    checkstamps('{clib2}')
+    removemodule('{clib2}')
 
   if checkstamps('{libdebug}'):
-    checkstamps('{libdebug}')
+    removemodule('{libdebug}')
   
   if checkstamps('{libm}'):
-    checkstamps('{libm}')
+    removemodule('{libm}')
       
 
 
@@ -352,7 +357,7 @@ def _build(pull):
   unpack('{m4}')
   configure('{m4}', '--prefix={host}')
   make('{m4}')
-  make('{m4}', 'install', 'Makefile')
+  make('{m4}', 'install')
 
   unpack('{gawk}')
   update_autotools('{sources}/{gawk}')
@@ -362,6 +367,7 @@ def _build(pull):
 
   unpack('{flex}')
   configure('{flex}', '--prefix={host}')
+  # flex build is broken with multiple threads
   nt = '{numThreads}'
   setvar(numThreads='1')
   make('{flex}')
@@ -404,13 +410,16 @@ def _build(pull):
 
   update_autotools('{submodules}/fd2sfd')
   unpack('fd2sfd', work_dir='{build}')
-  configure('fd2sfd', '--prefix={target}', from_dir='{build}/fd2sfd')
+  configure('fd2sfd', '--prefix={prefix}', from_dir='{build}/fd2sfd')
   make('fd2sfd')
   install_fd2sfd()
 
-  update_autotools('{submodules}/sfdc')
+  unpack('fd2pragma', work_dir='{build}')
+  make('fd2pragma')
+  install_fd2pragma()
+
   unpack('sfdc')
-  configure('sfdc', '--prefix={target}', copy_source=True)
+  configure('sfdc', '--prefix={prefix}', copy_source=True)
   make('sfdc')
   make('sfdc', 'install')
 
@@ -430,27 +439,34 @@ def _build(pull):
   CXX = ' '.join([CXX, ARCH, '-std=gnu++11'])
 
   """
-  Older gcc compilers (i.e. 2.95.3, 3.4.6 and 6) and binutils have to be tricked
+  Older gcc compilers (i.e. 2.95.3, 3.4.6) and binutils have to be tricked
   into thinking that they're being compiled on Linux IA-32 machine. Theirs
   config.guess script knows nothing about x86-64 or darwin.
   """
 
-  with env(CC=CC, CXX=CXX, CFLAGS='-g -Os -Wall', CXXFLAGS='-g -Os -Wall'):
+  with env(CC=CC, CXX=CXX, CFLAGS=FLAGS, CXXFLAGS=FLAGS):
     configure('{binutils}',
-              '--prefix={target}',
+              '--prefix={prefix}',
+              '--infodir={prefix}/{target}/info',
+              '--mandir={prefix}/share/man',
               '--host=i686-linux-gnu',
               '--target=m68k-amigaos',
               from_dir='{submodules}/{binutils}')
     touch_genfiles('{submodules}/{binutils}')
     make('{binutils}')
-    make('{binutils}', 'install')
+    make('{binutils}', 'install-binutils')
+    make('{binutils}', 'install-gas')
+    make('{binutils}', 'install-ld')
+    make('{binutils}', 'install-info')
 
   unpack('{ixemul}', top_dir='ixemul')
   patch('{ixemul}')
 
-  with env(CC=CC, CXX=CXX, CFLAGS='-g -Wall', CXXFLAGS='-g -Wall'):
+  with env(CC=CC, CXX=CXX, CFLAGS=FLAGS, CXXFLAGS=FLAGS):
     configure('{gcc}',
-              '--prefix={target}',
+              '--prefix={prefix}',
+              '--infodir={prefix}/{target}/info',
+              '--mandir={prefix}/share/man',
               '--host=i686-linux-gnu',
               '--build=i686-linux-gnu',
               '--target=m68k-amigaos',
@@ -471,7 +487,7 @@ def _build(pull):
   install_libamiga()
 
   configure('{libnix}',
-            '--prefix={target}/m68k-amigaos/libnix',
+            '--prefix={prefix}/{target}/libnix',
             '--host=i686-linux-gnu',
             '--target=m68k-amigaos',
             from_dir='{submodules}/{libnix}')
@@ -484,12 +500,12 @@ def _build(pull):
        LD='m68k-amigaos-ld')
   make('{libnix}', 'install')
 
-  with env(CC=CC, CXX=CXX, CFLAGS='-O3 -Wall', CXXFLAGS='-O3 -Wall'):
+  with env(CC=CC, CXX=CXX, CFLAGS=FLAGS, CXXFLAGS=FLAGS):
     make('{gcc}', 'all-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
     make('{gcc}', 'install-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
 
   copy('{submodules}/{libnix}/sources/headers/stabs.h',
-       '{target}/m68k-amigaos/sys-include')
+       '{prefix}/{target}/libnix/include')
 
   unpack('{libm}', top_dir='contrib/libm')
   update_autotools('{sources}/{libm}')
@@ -497,7 +513,7 @@ def _build(pull):
            AR='m68k-amigaos-ar',
            RANLIB='m68k-amigaos-ranlib'):
     configure('{libm}',
-              '--prefix={target}/m68k-amigaos/libnix',
+              '--prefix={prefix}/{target}/libnix',
               '--host=i686-linux-gnu',
               '--target=m68k-amigaos')
   make('{libm}')
@@ -506,8 +522,9 @@ def _build(pull):
   with env(CC='m68k-amigaos-gcc -noixemul',
            AR='m68k-amigaos-ar',
            RANLIB='m68k-amigaos-ranlib'):
+    touch_genfiles('{submodules}/{libdebug}')
     configure('{libdebug}',
-              '--prefix={target}/m68k-amigaos/libnix',
+              '--prefix={prefix}/{target}/libnix',
               '--host=m68k-amigaos',
               from_dir='{submodules}/{libdebug}')
   make('{libdebug}')
@@ -517,9 +534,11 @@ def _build(pull):
   make('{clib2}', makefile='GNUmakefile.68k')
   install_clib2()
 
-  with env(CC=CC, CXX=CXX, CFLAGS='-O3 -Wall', CXXFLAGS='-O3 -Wall'):
-    make('{gcc}', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
-    make('{gcc}', 'install', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
+  with env(CC=CC, CXX=CXX, CFLAGS=FLAGS, CXXFLAGS=FLAGS):
+    make('{gcc}', 'all-target',
+         MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
+    make('{gcc}', 'install-target',
+         MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
 
   unpack('ira', top_dir='.', work_dir='{build}')
   patch('ira', work_dir='{build}')
@@ -579,7 +598,7 @@ def add_stubs(src):
   obj = re.sub(r'\.c$', r'.o', src)
 
   for libdir, cflags in MULTILIB:
-    lib = path.join('{target}/m68k-amigaos/libnix/lib',
+    lib = path.join('{prefix}/{target}/libnix/lib',
                     libdir, 'libnix/libstubs.a')
     info('stubs: "%s" -> "%s"', obj, lib)
     cflags = list(cflags) + ['-noixemul', '-c', '-o', obj, src]
@@ -678,7 +697,7 @@ def process_sdk(sdk, lib_name, files):
 
 
 def install_sdk(*names):
-  environ['PATH'] = ":".join([path.join('{target}', 'bin'),
+  environ['PATH'] = ":".join([path.join('{prefix}', 'bin'),
                               path.join('{host}', 'bin'),
                               environ['PATH']])
 
@@ -716,14 +735,14 @@ def install_sdk(*names):
 def test():
   install_sdk('mmu', 'mui')
 
-  environ['PATH'] = ":".join([path.join('{target}', 'bin'),
+  environ['PATH'] = ":".join([path.join('{prefix}', 'bin'),
                               environ['PATH']])
 
   with cwd(path.join('{top}', 'examples')):
     execute('make', 'clean')
     execute('make')
 
-def help():
+def __help_actions():
   print ('\n'
         'build:       download, update and build the tool chain (use --threads n to speed up the build)\n'
         'xbuild:      build the tool chain (use --threads n to speed up the build)\n'
@@ -748,9 +767,12 @@ if __name__ == "__main__":
   if platform.machine() not in ['i686', 'x86_64']:
     panic('Build on %s architecture not supported!', platform.machine())
 
+  if sys.argv[1] == '--help':
+    __help_actions()
+
   parser = argparse.ArgumentParser(description='Build cross toolchain.')
   parser.add_argument('action',
-                      choices=['help', 'build', 'xbuild', 'list-sdk', 'install-sdk', 'clean',
+                      choices=['build', 'xbuild', 'list-sdk', 'install-sdk', 'clean',
                                'test', 'update', 'download'],
                       default='build', help='perform an action')
   parser.add_argument('args', metavar='ARGS', type=str, nargs='*',
@@ -759,6 +781,7 @@ if __name__ == "__main__":
                       help='desired binutils version')
   parser.add_argument('--gcc', choices=['2.95.3', '3.4.6', '6'], default='6',
                       help='desired gcc version')
+  parser.add_argument('-q', '--quiet', action='store_true')
   parser.add_argument('--prefix', type=str, default=None,
                       help='installation directory')
   parser.add_argument('--threads', type=str, default='1',
@@ -787,21 +810,25 @@ if __name__ == "__main__":
          binutils='binutils-{binutils_ver}',
          gcc='gcc-{gcc_ver}',
          gpp='g++-{gcc_ver}',
+         target='m68k-amigaos',
          patches=path.join('{top}', 'patches'),
          stamps=path.join('{top}', '.build-m68k', 'stamps'),
          build=path.join('{top}', '.build-m68k', 'build'),
          sources=path.join('{top}', '.build-m68k', 'sources'),
          host=path.join('{top}', '.build-m68k', 'host'),
          tmpdir=path.join('{top}', '.build-m68k', 'tmp'),
-         target=path.join('{top}', 'm68k-amigaos'),
+         prefix=path.join('{top}', 'm68k-amigaos'),
          archives=path.join('{top}', '.build-m68k', 'archives'),
          submodules=path.join('{top}', 'submodules'))
 
-  if args.prefix is not None:
-    setvar(target=args.prefix)
+  if args.quiet:
+    getLogger().setLevel(logging.INFO)
 
-  if not path.exists('{target}'):
-    mkdir('{target}')
+  if args.prefix is not None:
+    setvar(prefix=args.prefix)
+
+  if not path.exists('{prefix}'):
+    mkdir('{prefix}')
 
   action = args.action.replace('-', '_')
   globals()[action].__call__(*args.args)
