@@ -232,6 +232,12 @@ def update():
   execute('git', 'submodule', 'update');
 
 def build():
+  _build(True)
+
+def xbuild():
+  _build(False)
+
+def _build(pull):
   for var in environ.keys():
     if var not in ['_', 'LOGNAME', 'HOME', 'SHELL', 'TMPDIR', 'PWD']:
       del environ[var]
@@ -245,8 +251,9 @@ def build():
   environ['LANG'] = 'C'
   environ['TERM'] = 'xterm'
 
-  download()
-  update()
+  if pull:
+    download()
+    update()
 
   add_site_dir('{host}')
 
@@ -274,6 +281,29 @@ def build():
   When we have a working compiler in our path, we shoule also check if the
   required programs, headers and libraries are present.
   """
+
+  if checkstamps('{binutils}'):
+    checkstamps('{binutils}')
+
+  if checkstamps('{gcc}'):
+      removemodule('{libnix}')
+      removemodule('{clib2}')
+      removemodule('{libdebug}')
+      removemodule('{libm}')
+      
+  if checkstamps('{libnix}'):
+    checkstamps('{libnix}')
+
+  if checkstamps('{clib2}'):
+    checkstamps('{clib2}')
+
+  if checkstamps('{libdebug}'):
+    checkstamps('{libdebug}')
+  
+  if checkstamps('{libm}'):
+    checkstamps('{libm}')
+      
+
 
   find_executable('perl')
   find_executable('pod2text')
@@ -381,7 +411,7 @@ def build():
   config.guess script knows nothing about x86-64 or darwin.
   """
 
-  with env(CC=CC, CXX=CXX, CFLAGS='-g -Wall', CXXFLAGS='-g -Wall'):
+  with env(CC=CC, CXX=CXX, CFLAGS='-g -Os -Wall', CXXFLAGS='-g -Os -Wall'):
     configure('{binutils}',
               '--prefix={target}',
               '--host=i686-linux-gnu',
@@ -664,7 +694,8 @@ def test():
 
 def help():
   print ('\n'
-        'build:       build the tool chain (use --threads n to speed up the build)\n'
+        'build:       download, update and build the tool chain (use --threads n to speed up the build)\n'
+        'xbuild:      build the tool chain (use --threads n to speed up the build)\n'
         'clean:       remove the build artifacts\n'
         'update:      updates the submodules using git\n'
         'download:    download the archives\n'
@@ -688,7 +719,7 @@ if __name__ == "__main__":
 
   parser = argparse.ArgumentParser(description='Build cross toolchain.')
   parser.add_argument('action',
-                      choices=['help', 'build', 'list-sdk', 'install-sdk', 'clean',
+                      choices=['help', 'build', 'xbuild', 'list-sdk', 'install-sdk', 'clean',
                                'test', 'update', 'download'],
                       default='build', help='perform an action')
   parser.add_argument('args', metavar='ARGS', type=str, nargs='*',
