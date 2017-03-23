@@ -547,7 +547,7 @@ def _build(pull):
   patch('ira', work_dir='{build}')
   make('ira')
 
-  unpack('vdam68k', top_dir='.', work_dir='{build}')
+  unpack('vdam68k', top_dir='vda/M68k', work_dir='{build}')
   make('vdam68k')
 
   install_tools()
