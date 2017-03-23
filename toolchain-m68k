@@ -85,12 +85,13 @@ def install_ndk():
     execute('sfdc', '--target=m68k-amigaos', '--mode=lvo',
             '--output={prefix}/{target}/ndk/include/lvo/%s_lib.i' % base, name)
 
+  copytree('{prefix}/{target}/ndk/include', '{prefix}/os-include')
 
 @recipe('headers-install')
 def headers_install():
   info('installing ixemul header files')
 
-#  copytree('{sources}/{ixemul}/include', '{prefix}/{target}/libnix/include')
+  copytree('{sources}/{ixemul}/include', '{prefix}/{target}/libnix/include')
 
 
 @recipe('fd2sfd-install')
@@ -290,8 +291,10 @@ def _build(pull):
 
   CC = find_executable(CC)
   CXX = find_executable(CXX)
-  FLAGS = '-g -Os'
-
+  
+  FLAGS = os.path.expandvars('$FLAGS')
+  if FLAGS == '$FLAGS':
+    FLAGS = '-g'
   if getLogger().isEnabledFor(logging.DEBUG):
     FLAGS += ' -Wall'
   else:
@@ -368,7 +371,7 @@ def _build(pull):
   unpack('{flex}')
   configure('{flex}', '--prefix={host}')
   # flex build is broken with multiple threads
-  nt = '{numThreads}'
+  nt = fill_in('{numThreads}')
   setvar(numThreads='1')
   make('{flex}')
   make('{flex}', 'install')

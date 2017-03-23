@@ -534,7 +534,7 @@ def require_header(headers, lang='c', errmsg='', symbol=None, value=None):
   panic(errmsg)
 
 
-__all__ = ['setvar', 'panic', 'cmpver', 'find_executable', 'chmod', 'execute',
+__all__ = ['setvar', 'fill_in', 'panic', 'cmpver', 'find_executable', 'chmod', 'execute',
            'rmtree', 'mkdir', 'copy', 'copytree', 'unarc', 'fetch', 'cwd',
            'symlink', 'remove', 'move', 'find', 'textfile', 'env', 'path',
            'add_site_dir', 'find_site_dir', 'python_setup', 'recipe',
