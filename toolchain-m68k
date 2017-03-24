@@ -91,7 +91,7 @@ def install_ndk():
 def headers_install():
   info('installing ixemul header files')
 
-#  copytree('{sources}/{ixemul}/include', '{prefix}/{target}/libnix/include')
+  copytree('{prefix}/{target}/ndk/include', '{prefix}/{target}/libnix/include')
 
 
 @recipe('fd2sfd-install')
