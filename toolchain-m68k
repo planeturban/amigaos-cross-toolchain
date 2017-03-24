@@ -85,13 +85,13 @@ def install_ndk():
     execute('sfdc', '--target=m68k-amigaos', '--mode=lvo',
             '--output={prefix}/{target}/ndk/include/lvo/%s_lib.i' % base, name)
 
-  copytree('{prefix}/{target}/ndk/include', '{prefix}/os-include')
+  copytree('{prefix}/{target}/ndk/include', '{prefix}/{target}/sys-include')
 
 @recipe('headers-install')
 def headers_install():
   info('installing ixemul header files')
 
-  copytree('{sources}/{ixemul}/include', '{prefix}/{target}/libnix/include')
+#  copytree('{sources}/{ixemul}/include', '{prefix}/{target}/libnix/include')
 
 
 @recipe('fd2sfd-install')
@@ -250,8 +250,42 @@ def download():
         name = path.basename(url)
       fetch(name, url)
 
+def shallowCheckout(murl, mpath, mbranch):
+  if murl == None:
+    return
+
+  if path.exists(path.join(mpath, '.git')):
+    return 
+  
+  if mbranch == None:
+    execute('git', 'clone', murl, '--depth', '1', mpath)
+  else:
+    execute('git', 'clone', murl, '--depth', '1', '-b', mbranch, mpath) 
+
 def update():
   execute('git', 'submodule', 'init');
+  
+  with open('.gitmodules') as f:
+    content = f.readlines()
+    
+  mpath = None
+  murl = None
+  mbranch = None
+
+  for x in content:
+    x = x.strip()
+    if x.startswith('['):
+      shallowCheckout(murl, mpath, mbranch)
+      mpath = None
+      murl = None
+      mbranch = None
+    elif x.startswith('url'):
+      murl = x.partition('=')[2].strip()
+    elif x.startswith('path'):
+      mpath = x.partition('=')[2].strip()
+    elif x.startswith('branch'):
+      mbranch = x.partition('=')[2].strip()
+       
   execute('git', 'submodule', 'update');
 
 def build():
@@ -314,26 +348,27 @@ def _build(pull):
   required programs, headers and libraries are present.
   """
 
-  if checkstamps('{binutils}'):
-    removemodule('{binutils}')
-
-  if checkstamps('{gcc}'):
+  if not args.nodeps:
+    if checkstamps('{binutils}'):
+      removemodule('{binutils}')
+    
+    if checkstamps('{gcc}'):
+        removemodule('{libnix}')
+        removemodule('{clib2}')
+        removemodule('{libdebug}')
+        removemodule('{libm}')
+        
+    if checkstamps('{libnix}'):
       removemodule('{libnix}')
+    
+    if checkstamps('{clib2}'):
       removemodule('{clib2}')
+    
+    if checkstamps('{libdebug}'):
       removemodule('{libdebug}')
+    
+    if checkstamps('{libm}'):
       removemodule('{libm}')
-      
-  if checkstamps('{libnix}'):
-    removemodule('{libnix}')
-
-  if checkstamps('{clib2}'):
-    removemodule('{clib2}')
-
-  if checkstamps('{libdebug}'):
-    removemodule('{libdebug}')
-  
-  if checkstamps('{libm}'):
-    removemodule('{libm}')
       
 
 
@@ -789,6 +824,7 @@ if __name__ == "__main__":
                       help='installation directory')
   parser.add_argument('--threads', type=str, default='1',
                       help='number of threads for make')
+  parser.add_argument('--nodeps', action='store_true', help='disable dependency checking')
   args = parser.parse_args()
 
   setvar(top=path.abspath(path.dirname(sys.argv[0])),
