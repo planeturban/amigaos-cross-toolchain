@@ -89,9 +89,10 @@ def install_ndk():
 
 @recipe('headers-install')
 def headers_install():
-  info('installing ixemul header files')
+  info('installing libnix + NDK header files')
 
   copytree('{prefix}/{target}/ndk/include', '{prefix}/{target}/libnix/include')
+  copytree('submodules/libnix/sources/headers', '{prefix}/{target}/libnix/include')
 
 
 @recipe('fd2sfd-install')
@@ -360,6 +361,10 @@ def _build(pull):
         
     if checkstamps('{libnix}'):
       removemodule('{libnix}')
+      rmtree(path.join('{build}', '{gcc}', '{target}'))
+      for f in glob(path.join('{stamps}', '{gcc}' + '-make*')):
+        remove(f)
+      remove(path.join('{stamps}', 'headers-install'))
     
     if checkstamps('{clib2}'):
       removemodule('{clib2}')
@@ -508,16 +513,16 @@ def _build(pull):
               '--host=i686-linux-gnu',
               '--build=i686-linux-gnu',
               '--target=m68k-amigaos',
-              '--enable-languages=c',
+              '--enable-languages=c,c++',
               '--enable-version-specific-runtime-libs',
               '--disable-libssp',
               '--with-headers={sources}/{ixemul}/include',
               from_dir='{submodules}/{gcc}')
     touch_genfiles('{submodules}/{gcc}')
     make('{gcc}', 'all-gcc', 
-         MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
+         MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul -Ofast')
     make('{gcc}', 'install-gcc',
-         MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
+         MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul -Ofast')
 
   headers_install()
 
@@ -539,8 +544,8 @@ def _build(pull):
   make('{libnix}', 'install')
 
   with env(CC=CC, CXX=CXX, CFLAGS=FLAGS, CXXFLAGS=FLAGS):
-    make('{gcc}', 'all-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
-    make('{gcc}', 'install-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul')
+    make('{gcc}', 'all-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul -Ofast')
+    make('{gcc}', 'install-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul -Ofast')
 
   copy('{submodules}/{libnix}/sources/headers/stabs.h',
        '{prefix}/{target}/libnix/include')

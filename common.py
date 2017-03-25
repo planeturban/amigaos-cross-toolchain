@@ -436,6 +436,8 @@ def checkstamps(name):
   target = fill_in(name)
   target = target.replace('_', '-')
   target = target.replace('/', '-')
+  if not path.exists('{stamps}'):
+    mkdir('{stamps}')
   stamp = path.join('{stamps}', target + '-make')
   info('checking %s with %s', name, stamp)
   mtime = 0       
