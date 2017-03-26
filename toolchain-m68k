@@ -91,7 +91,6 @@ def install_ndk():
 def headers_install():
   info('installing libnix + NDK header files')
 
-  copytree('{prefix}/{target}/ndk/include', '{prefix}/{target}/libnix/include')
   copytree('submodules/libnix/sources/headers', '{prefix}/{target}/libnix/include')
 
 
@@ -513,7 +512,7 @@ def _build(pull):
               '--host=i686-linux-gnu',
               '--build=i686-linux-gnu',
               '--target=m68k-amigaos',
-              '--enable-languages=c,c++',
+              '--enable-languages=c,c++,objc',
               '--enable-version-specific-runtime-libs',
               '--disable-libssp',
               '--with-headers={sources}/{ixemul}/include',
