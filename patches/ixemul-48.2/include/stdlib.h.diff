@@ -1,5 +1,5 @@
-*** .build-m68k/sources/ixemul-48.2/include/stdlib.h	2017-03-26 11:05:36.300503000 +0200
---- m68k-amigaos/m68k-amigaos/sys-include/stdlib.h	2017-03-26 20:43:22.476974600 +0200
+--- ixemul-48.2.orig/include/stdlib.h	2017-03-26 11:05:36.300503000 +0200
++++ ixemul-48.2/include/stdlib.h	2017-03-26 20:43:22.476974600 +0200
 ***************
 *** 49,55 ****
 --- 49,58 ----
