@@ -12,7 +12,7 @@ AmigaOS cross compiler for Linux / Windows ( OSX not working atm)
 
 **Author:** [Krystian Bacławski](mailto:krystian.baclawski@gmail.com) - check out https://github.com/cahirwpz/amigaos-cross-toolchain for a stable toolchain.
 
-**Contributor:** [Stefan "Bebbo" Franke](mailto:bebbo@bejy.net) - wasting my time with newer binutils and gcc 6.2.
+**Contributor:** [Stefan "Bebbo" Franke](mailto:bebbo@bejy.net) - wasting my time with newer binutils and gcc 6.3.
 
 ### Overview
 
@@ -54,15 +54,13 @@ I am using funny symbols in my commits:
  * @I : internal redesign
  * @D : debugging related changes
  * @C : comments added / remove / changed
+ * @S : see submodule
 
 
 ### Downloads
 
-There are no binary downloads provided for the time being. I do as much as possible to make the toolchain portable among Unix-like environments. Following platforms were tested and the toolchain is known to work for them:
+There are no binary downloads provided for the time being. I do as much as possible to make the toolchain portable among Unix-like environments.
 
- * Windows 10 64-bit with Cygwin 32bit.
- * Ubuntu 16.04 LTS 32-bit (gcc 5.4.0)
- 
 ### Documentation
 
 Documentation from Free Software Fundation:
@@ -100,6 +98,19 @@ You have to have following packages installed in your system:
 
 *For MacOSX users*: you'll likely need to have [MacPorts](http://www.macports.org) or [Homebrew](http://brew.sh) installed in order to build the toolchain.
 
+##### Windows 10 64-bit with Cygwin 32bit.
+
+Install cygwin via setup.exe and add wget. Then open cygwin shell and:
+
+    wget https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg
+    install apt-cyg /bin
+    apt-cyg install gcc-core gcc-g++ python git perl-Pod-Simple gperf patch automake make makedepend bison flex libncurses-devel python-devel gettext-devel libgmp-devel libmpc-devel libmpfr-devel
+
+##### Ubuntu 16.04 LTS 32-bit (gcc 5.4.0)
+   
+    sudo apt-get install git gcc g++ python-dev gperf patch automake make bison libncurses-dev gettext libgmp-dev libmpc-dev libmpfr-dev
+    git clone https://github.com/bebbo/amigaos-cross-toolchain
+
 #### How to build?
 
 **Warning:** *Building with `sudo` is not recommended. I'm not responsible for any damage to your system.*
@@ -108,16 +119,12 @@ Follow steps listed below:
 
 1. Fetch *amigaos-cross-toolchain* project to your local drive:  
 
-    ```
-# git clone git://github.com/bebbo/amigaos-cross-toolchain.git
-# cd amigaos-cross-toolchain
-```
+    git clone git://github.com/bebbo/amigaos-cross-toolchain.git
+    cd amigaos-cross-toolchain
 
 2. Run `toolchain-m68k` or `toolchain-ppc` script (with `--prefix` option to specify where to install the toolchain). Note, that the destination directory must be writable by the user. 
 
-    ```
-# ./toolchain-m68k --prefix=/opt/m68k-amigaos build
-```
+    ./toolchain-m68k --prefix=/opt/m68k-amigaos build
 
 I also suggest to use the option **--threads <n>** to speedup your build.
 
@@ -125,21 +132,16 @@ I also suggest to use the option **--threads <n>** to speedup your build.
 
 4. *(optional)* Install additional SDKs (e.g. AHI, CyberGraphX, Magic User Interface, etc.):
 
-    ```
-# ./toolchain-m68k --prefix=/opt/m68k-amigaos install-sdk ahi cgx mui
-```
+    ./toolchain-m68k --prefix=/opt/m68k-amigaos install-sdk ahi cgx mui
 
 #### What if something goes wrong?
 
 If the build process fails, please write me an e-mail.  I'll try to help out. Don't forget to put into e-mail as much data about your environment as possible! 
 It's **vitally important** to send me a full log from build process. You can capture it by redirecting output to a file with following command:
 
-```
-# ./toolchain-m68k build 2>&1 | tee build.log
-```
+    ./toolchain-m68k build 2>&1 | tee build.log
 
 ... but remember to cleanup your build environment beforehand with:
 
-```
-# rm -rf .build-m68k
-```
+    rm -rf .build-m68k
+    rm -rf /opt/m68k-amigaos
