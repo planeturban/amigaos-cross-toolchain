@@ -476,7 +476,7 @@ def _build(pull):
   Just compile everything in 32-bit mode and forget about the issues.
   """
 
-  ARCH = '-m32' if platform.machine() == 'x86_64' else ''
+  ARCH = '-m32' if args.m32 else ''
   CC = ' '.join([CC, ARCH, '-std=gnu11'])
   CXX = ' '.join([CXX, ARCH, '-std=gnu++11'])
 
@@ -491,7 +491,7 @@ def _build(pull):
               '--prefix={prefix}',
               '--infodir={prefix}/{target}/info',
               '--mandir={prefix}/share/man',
-              '--host=i686-linux-gnu',
+              '--host=i686-linux-gnu' if fill_in('{binutils}') != 'binutils-2.14' or platform.system() == 'Darwin' else '',
               '--target=m68k-amigaos',
               from_dir='{submodules}/{binutils}')
     touch_genfiles('{submodules}/{binutils}')
@@ -509,8 +509,8 @@ def _build(pull):
               '--prefix={prefix}',
               '--infodir={prefix}/{target}/info',
               '--mandir={prefix}/share/man',
-              '--host=i686-linux-gnu',
-              '--build=i686-linux-gnu',
+              '--host=i686-linux-gnu' if fill_in('{gcc}') != 'gcc-6' or args.m32 else '',
+              '--build=i686-linux-gnu' if fill_in('{gcc}') != 'gcc-6' or args.m32 else '',
               '--target=m68k-amigaos',
               '--enable-languages=c,c++,objc',
               '--enable-version-specific-runtime-libs',
@@ -829,6 +829,7 @@ if __name__ == "__main__":
   parser.add_argument('--threads', type=str, default='1',
                       help='number of threads for make')
   parser.add_argument('--nodeps', action='store_true', help='disable dependency checking')
+  parser.add_argument('--m32', action='store_true', help='force compiling with 32bit (add -m32)')
   args = parser.parse_args()
 
   setvar(top=path.abspath(path.dirname(sys.argv[0])),
