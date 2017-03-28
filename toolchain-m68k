@@ -491,7 +491,7 @@ def _build(pull):
               '--prefix={prefix}',
               '--infodir={prefix}/{target}/info',
               '--mandir={prefix}/share/man',
-              '--host=i686-linux-gnu' if fill_in('{binutils}') != 'binutils-2.14' or platform.system() == 'Darwin' else '',
+              '--host=i686-linux-gnu' if fill_in('{binutils}') != 'binutils-2.14' or platform.system() == 'Darwin' else '--prefix={prefix}',
               '--target=m68k-amigaos',
               from_dir='{submodules}/{binutils}')
     touch_genfiles('{submodules}/{binutils}')
@@ -509,8 +509,8 @@ def _build(pull):
               '--prefix={prefix}',
               '--infodir={prefix}/{target}/info',
               '--mandir={prefix}/share/man',
-              '--host=i686-linux-gnu' if fill_in('{gcc}') != 'gcc-6' or args.m32 else '',
-              '--build=i686-linux-gnu' if fill_in('{gcc}') != 'gcc-6' or args.m32 else '',
+              '--host=i686-linux-gnu' if fill_in('{gcc}') != 'gcc-6' or args.m32 else '--prefix={prefix}',
+              '--build=i686-linux-gnu' if fill_in('{gcc}') != 'gcc-6' or args.m32 else '--prefix={prefix}',
               '--target=m68k-amigaos',
               '--enable-languages=c,c++,objc',
               '--enable-version-specific-runtime-libs',
