@@ -238,7 +238,8 @@ def touch_genfiles(dst):
   for name in find(dst, include=['*.l', '*.y', '*.in', '*.ac']):
     basename = path.splitext(name)[0]
     # do not touch files - reset the src file stamp instead!
-    os.utime(name, (1, 1))
+    if not ('/isl' in name or '/gmp' in name or '/mpfr' in name or '/mpc' in name):
+      os.utime(name, (1, 1))
 
 
 def download():
