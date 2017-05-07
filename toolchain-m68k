@@ -529,18 +529,18 @@ def _build(pull):
   unpack('{libamiga}', top_dir='.')
   install_libamiga()
 
-  configure('{libnix}',
-            '--prefix={prefix}/{target}/libnix',
-            '--host=i686-linux-gnu',
-            '--target=m68k-amigaos',
-            from_dir='{submodules}/{libnix}')
-  make('{libnix}',
-       CC='m68k-amigaos-gcc',
+  with env(CC='m68k-amigaos-gcc',
        CPP='m68k-amigaos-gcc -E',
        AR='m68k-amigaos-ar',
        AS='m68k-amigaos-as',
        RANLIB='m68k-amigaos-ranlib',
-       LD='m68k-amigaos-ld')
+       LD='m68k-amigaos-ld'):
+         configure('{libnix}',
+            '--prefix={prefix}/{target}/libnix',
+            '--host=i686-linux-gnu',
+            '--target=m68k-amigaos',
+            from_dir='{submodules}/{libnix}')
+  make('{libnix}')
   make('{libnix}', 'install')
 
   with env(CC=CC, CXX=CXX, CFLAGS=FLAGS, CXXFLAGS=FLAGS):
