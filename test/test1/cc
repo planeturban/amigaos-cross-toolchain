@@ -1,0 +1,5 @@
+m68k-amigaos-gcc -S -Ofast test.c -fomit-frame-pointer -noixemul -mcpu=68000 -m68000 -mregparm=2 || exit 1
+m68k-amigaos-gcc -S -Ofast test.c -fomit-frame-pointer -noixemul -mcpu=68000 -m68000 -mregparm=2 -otestno.s || exit 1
+r="$(diff golden.s test.s)"
+[ "$r" == "" ] || echo $r
+[ "$r" == "" ] || exit 1

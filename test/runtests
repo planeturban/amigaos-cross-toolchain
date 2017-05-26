@@ -1,0 +1,3 @@
+for t in test* ; do
+  [ -d $t ] && (pushd $t; ./cc || exit 1; popd)
+done
