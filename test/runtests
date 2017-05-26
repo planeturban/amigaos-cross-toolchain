@@ -1,3 +1,8 @@
 for t in test* ; do
-  [ -d $t ] && (pushd $t; ./cc || exit 1; popd)
+  if [ -d $t ]; then
+    echo cc $t
+	pushd $t
+	./cc || { popd; echo $t failed; exit 1; }
+	popd
+  fi
 done

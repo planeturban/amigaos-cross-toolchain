@@ -7,7 +7,8 @@ _strcpy:
 	move.l a0,d0
 	move.l a0,a2
 .L2:
-	move.b (a1)+,(a2)+
+	move.b (a1)+,d1
+	move.b d1,(a2)+
 	jne .L2
 	move.l (sp)+,a2
 	rts
@@ -30,7 +31,8 @@ _hiscore_addScore:
 	lea (4,a2),a1
 	lea (-4,a2),a0
 .L9:
-	move.b (a0)+,(a1)+
+	move.b (a0)+,d1
+	move.b d1,(a1)+
 	jne .L9
 	subq.l #1,d2
 	subq.l #8,a2
@@ -51,20 +53,23 @@ _hiscore_addScore:
 	add.l #_hiscore+12,a0
 	move.l d0,a1
 .L13:
-	move.b (a1)+,(a0)+
+	move.b (a1)+,d1
+	move.b d1,(a0)+
 	jeq .L6
-	move.b (a1)+,(a0)+
+	move.b (a1)+,d1
+	move.b d1,(a0)+
 	jne .L13
 	jra .L6
 .L8:
 	lea .LC0,a0
 	jsr _hiscore_prompt
 	lea _hiscore+4,a0
-	move.l d0,a1
 .L11:
-	move.b (a1)+,(a0)+
-	jne .L11
+	move.l d0,a1
+	move.b (a1)+,d1
 	move.l a1,d0
+	move.b d1,(a0)+
+	jne .L11
 	move.l (sp)+,d2
 	move.l (sp)+,a2
 	rts
