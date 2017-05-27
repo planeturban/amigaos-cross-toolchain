@@ -1,0 +1,51 @@
+v0.3.6beta
+info depth 12 seldepth 13 (86.40%, NULLMOVES: 8495 LMR: 109599 (1321910/4) nodes 8357309 qnodes 4273752 time 3577 nps 6038518 score cp 20 pv e4 e5 Nf3 Nc6 d4 exd4 Nxd4 Nf6 Nxc6 bxc6 Nc3 d5 (e4 e5 Nf3 Nc6 d4 exd4 Nxd4 Nf6 Nxc6 dxc6 Qxd8+ Kxd8 )
+Hash - Exact:471 Alpha: 115091 Beta: 458020  -- Hits: 182063 Misses: 3901467
+bestmove e2e4
+Time taken: 3577
+v0.3.2
+info depth 12 seldepth 13 (86.18%, NULLMOVES: 8936 LMR: 110738 (1381165/5) nodes 5840759 time 3771 nps 3896436 score cp 20 pv e4 e5 Nf3 Nc6 d4 exd4 Nxd4 Nf6 Nxc6 bxc6 Nc3 d5 (e4 e5 Nf3 Nc6 d4 exd4 Nxd4 Nf6 Nxc6 dxc6 Qxd8+ Kxd8 )
+Hash - Exact:501 Alpha: 119132 Beta: 474708  -- Hits: 182285 Misses: 4052388
+bestmove e2e4
+Time taken: 3772
+
+v0.3.1(.1)
+info depth 12 seldepth 16 (88.59%, NULLMOVES: 9162 LMR: 119955 (2201787/3) nodes 9281131 time 5926 nps 3073222 score cp 20 pv e4 e5 Nf3 Nf6 Nc3 Nc6 d4 exd4 Nxd4 d5 Nxc6 bxc6 (e4 e5 Nf3 Nf6 Nc3 Nc6 d4 )
+Hash - Exact:423 Alpha: 152163 Beta: 1105349  -- Hits: 375424 Misses: 5540376
+bestmove e2e4
+Time taken: 5926
+
+v0.3.1
+info depth 12 (88.60%, NULLMOVES: 9162 LMR: 119975 (2201470/3) nodes 9282900 time 5754 nps 3159598 score cp 20 pv e4 e5 Nf3 Nf6 Nc3 Nc6 d4 exd4 Nxd4 d5 Nxc6 bxc6 (e4 e5 Nf3 Nf6 Nc3 Nc6 d4 )
+Hash - Exact:425 Alpha: 152092 Beta: 1105211  -- Hits: 375529 Misses: 5538572
+bestmove e2e4
+Time taken: 5754
+
+v0.3
+info depth 12 (87.71%, NULLMOVES: 10830 LMR: 139190 (2504325/0) nodes 9531493 time 6384 nps 2909491 score cp 15 pv e2e4 e7e5 g1f3 g8f6 b1c3 b8c6 d2d4 f8b4 d4d5 b4c3+ (e2e4 e7e5 g1f3 )
+Hash - Exact:570 Alpha: 177783 Beta: 1211733  -- Hits: 441766 Misses: 6086356
+bestmove e2e4
+Time taken: 6384
+
+*********************************************** 0.7.3 ***************************************************************
+cmd: testepd 1000 ../src/wac.epd
+Time: 271926ms Nodes: 1099040218 251/300 Avg.Depth: 10.6467 (linux main pc -- Intel(R) Core(TM) i7 CPU         965  @ 3.20GHz)
+Time: 273918ms Nodes: 630170864 238/300 Avg.Depth: 10.06 (laptop -- Intel(R) Core(TM)2 CPU         T7400  @ 2.16GHz)
+Time: 275683ms Nodes: 258480654 224/300 Avg.Depth: 9.06 (rasberry pi3)
+
+cmd: testepd 100 ../src/wac.epd
+Time: 28272ms Nodes: 74371377 198/300 Avg.Depth: 7.6 (linux main pc -- Intel(R) Core(TM) i7 CPU         965  @ 3.20GHz)
+Time: 30100ms Nodes: 7315215 116/300 Avg.Depth: 4.76333 (rasberry pi3)
+*********************************************** 0.7.2 ***************************************************************
+cmd: testepd 1000 ../src/wac.epd
+Time: 271164ms Nodes: 673183875 238/300 Avg.Depth: 10.0933 (linux main pc -- Intel(R) Core(TM) i7 CPU         965  @ 3.20GHz)
+Time: 271002ms Nodes: 622254160 238/300 Avg.Depth: 10.01 (Windows main pc)
+Time: 275592ms Nodes: 377304382 232/300 Avg.Depth: 9.46 (laptop -- Intel(R) Core(TM)2 CPU         T7400  @ 2.16GHz)
+Time: 277784ms Nodes: 170346622 216/300 Avg.Depth: 8.55667 (rasberry pi3)
+
+cmd: ./sillychess -bench (100 ms per position)
+Time: 28720ms Nodes: 46578895 184/300 Avg.Depth: 7.02 (linux main pc -- Intel(R) Core(TM) i7 CPU         965  @ 3.20GHz)
+Time: 35051ms Nodes: 75175 25/300 Avg.Depth: 1 (laptop -- Interestingly enough the TT_clear() that happens between the EPDs is taking 116ms, so only depth 1)
+Time: 30428ms Nodes: 4963536 101/300 Avg.Depth: 4.26667 (rasberry pi3)
+
+TODO: http://stackoverflow.com/questions/708238/how-do-i-add-an-icon-to-a-mingw-gcc-compiled-executable

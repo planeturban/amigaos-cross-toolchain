@@ -1,0 +1,4 @@
+2014-06-29  alex  <alex@alex-VirtualBox>
+
+	* move.c (generateCaptureMoves): en passant out of the loop for captures as well
+	* uci.c	(input_loop): Elliminated all the warnings
