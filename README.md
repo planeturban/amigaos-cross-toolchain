@@ -1,18 +1,22 @@
-AmigaOS cross compiler for Linux / Windows ( OSX not working atm)
+AmigaOS cross compiler for Linux / Windows
 ===
 
-**THIS IS A FORK OF https://github.com/cahirwpz/amigaos-cross-toolchain - great thanks to [Krystian Bacławski](mailto:krystian.baclawski@gmail.com) ** 
+THIS IS A FORK OF https://github.com/cahirwpz/amigaos-cross-toolchain - great thanks to [Krystian Bacławski](mailto:krystian.baclawski@gmail.com) - but do not bother him with the changes made here! 
 
 ### What's different here?
 
  * Main focus is getting gcc 6 to work,
  * for AmigaOS with Motorola CPUs.
- * I am testing with Windows Cygwin 32 bit and Linux 32 bit (e.g. Xubuntu, CentOS, ...).
- * All other stuff might work or not and I neither know nor care about for now.
+ * I am testing with Windows Cygwin 32 bit, Ubuntu 32/64 bit and CentOs 64 bit.
+ * current version is quite usable.
 
-**Author:** [Krystian Bacławski](mailto:krystian.baclawski@gmail.com) - check out https://github.com/cahirwpz/amigaos-cross-toolchain for a stable toolchain.
 
-**Contributor:** [Stefan "Bebbo" Franke](mailto:bebbo@bejy.net) - wasting my time with newer binutils and gcc 6.3.
+**Contributor:** [Stefan "Bebbo" Franke](mailto:bebbo@bejy.net)
+
+**Donations?** <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YRRBRLCKDU3H6">
+<img src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donate_LG.gif" border="0" alt="Donate with PayPal.">
+</a>
+
 
 ### Overview
 
@@ -55,11 +59,16 @@ I am using funny symbols in my commits:
  * @D : debugging related changes
  * @C : comments added / remove / changed
  * @S : see submodule
+ * @T : test related
+ * @V : version stuff
 
 
 ### Downloads
 
-There are no binary downloads provided for the time being. I do as much as possible to make the toolchain portable among Unix-like environments.
+There is one download available now:
+
+  [amiga-toolchain-centos.tgz](http://franke.ms/download/amiga-toolchain-centos.tgz) - built for /opt/amiga (mandatory path!)
+  
 
 ### Documentation
 
