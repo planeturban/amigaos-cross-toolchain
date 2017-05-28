@@ -1061,7 +1061,7 @@ _ParsePosition:
 .LC26:
 	.ascii "sc v0.7.3f\0"
 .LC27:
-	.ascii "%s, written by Alex Argiropoulos (compiler's version used: 6.3.1b 20170526)\12\0"
+	.ascii "%s, written by Alex Argiropoulos (compiler's version used: gcc-6)\12\0"
 .LC28:
 	.ascii "isready\0"
 .LC29:

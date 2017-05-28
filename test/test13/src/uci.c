@@ -384,7 +384,7 @@ void input_loop(S_SEARCHINFO *info)
 	int exit = FALSE;
 	char line[INPUTBUFFER];
 
-	printf("%s, written by Alex Argiropoulos (compiler's version used: "__VERSION__")\n", NAME);
+	printf("%s, written by Alex Argiropoulos (compiler's version used: gcc-6)\n", NAME);
 	//printf("%s\n", getCPUModel());
 #ifndef NDEBUG
 	printf("Terminal is %s\n",isatty(fileno(stdout)) ? "true": "false");
