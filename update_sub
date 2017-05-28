@@ -1,0 +1,101 @@
+#!/bin/bash
+
+findmaster() {
+# search the master branch by reading .gitmodules
+cat "$2/.gitmodules" | \
+while read line
+do
+	a=($line)
+	if [ "${a[0]}" == "[submodule" ]; then
+		[ "$seen" == "1" ] && return
+		[ "[submodule \"$1\"]" == "$line" ] && seen=1
+	else
+		[ "${a[0]}" == "branch" ] && [ "$seen" == "1" ] && { echo ${a[2]}; return; }
+	fi
+done
+}
+
+parselog() {
+# collect the commit messages
+git log | \
+while read line
+do
+	a=($line)
+	if [ "${a[0]}" == "commit" ]; then
+		x=${a[1]}
+		[ "$x" == "$1" ] && { echo -e $msg | sort -u ; break; }
+		while read line
+		do
+			[ "$line" == "" ] && break
+		done
+	else
+		msg="$msg\n$line"
+	fi
+done
+}
+
+export script=$(readlink -f $0)
+
+if [ "$2" == "" ]; then
+	# make the latest commit in each submodule of branch mainbranch the current revision in each submodule
+	mainbranch=$(git branch | grep \* | cut -d ' ' -f2) 
+	# reset submodules to last revision
+	git pull
+	git submodule update
+	# call me for each submodule
+	git submodule foreach "$script \"\$name\" \"\$toplevel\" \"$mainbranch\" \"$1\""
+	# submodules are at most recent positions
+	if [ "$1" != "" ]; then
+		# now the merged submodules are added. stash these changes, merge the branch, pop stash and commit
+		git stash
+		git merge "$1"
+		git stash pop
+		git commit -m "@S updated submodule references"
+		git push
+	fi
+	git commit -m "@S updated submodule references"
+	git push
+else
+	# called from git submodule above
+	# make the latest commit in this branch $3 the current revision in this submodule
+	# get current revision
+	revision=$(git rev-parse HEAD)
+	
+	if [ "$3" == "master" ]; then
+		branch=$(findmaster "$1" "$2")
+		[ "$branch" == "" ] && branch=master
+	else
+		branch="$3"		
+	fi
+	
+	# switch to branch and check it out, then pull if branch exists
+	git checkout $branch || exit 0
+	git pull
+	
+	head=$(git rev-parse HEAD)
+	
+	if [ "$revision" != "$head" ]; then
+		echo scanning from $revision to $head
+		# get the log messages in between
+		msg=$(parselog $revision)
+		if [ "$msg" != "" ]; then
+			# commit the changes to the master module
+			pushd "$2"
+			git add "$1"
+			git commit -m "@S $1:$msg"
+			popd
+		fi
+	fi
+	
+	# branch is now up to date
+	if [ "$4" != "" ]; then
+		# merge specified branch into "master / what's defined in .gitmodules"
+		git merge "$4"
+		git push
+		# add the changes to the master module
+		pushd "$2"
+		git add "$1"
+		popd		
+	fi
+fi
+
