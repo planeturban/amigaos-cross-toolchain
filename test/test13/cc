@@ -1,0 +1,15 @@
+# compile different version
+#m68k-amigaos-gcc -noixemul -O3 -fomit-frame-pointer -o silly00 src/*.c -lm -DNDEBUG
+#m68k-amigaos-gcc -noixemul -O3                      -o silly00f src/*.c -lm -DNDEBUG
+#m68k-amigaos-gcc -noixemul -O3 -fomit-frame-pointer -o silly00- src/*.c -lm -DNDEBUG -fbbb=- 
+#m68k-amigaos-gcc -noixemul -O3 -fomit-frame-pointer -o silly- -m68020 src/*.c -lm -DNDEBUG -fbbb=- 
+#m68k-amigaos-gcc -noixemul -O3 -fomit-frame-pointer -o silly -m68020 src/*.c -lm -DNDEBUG 
+
+# compile for golden file check
+mkdir -p bbb
+m68k-amigaos-gcc -noixemul -O3 -fomit-frame-pointer -S -m68000 src/*.c  -DNDEBUG -fbbb=+v 
+mv *.s bbb
+
+r="$(diff --brief golden bbb)"
+[ "$r" == "" ] || diff golden bbb
+[ "$r" == "" ] || exit 1 
