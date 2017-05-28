@@ -90,7 +90,7 @@ else
 	# branch is now up to date
 	if [ "$4" != "" ]; then
 		# merge specified branch into "master / what's defined in .gitmodules"
-		git merge "$4"
+		git merge "$4" || exit 0
 		git push
 		# add the changes to the master module
 		pushd "$2"
@@ -98,4 +98,3 @@ else
 		popd		
 	fi
 fi
-
