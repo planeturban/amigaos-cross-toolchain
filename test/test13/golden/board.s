@@ -116,9 +116,9 @@ _isAttacked:
 	jeq .L140
 	moveq #-33,d2
 	add.l a0,d2
-	moveq #119,d5
-	not.b d5
-	and.l d2,d5
+	moveq #119,d3
+	not.b d3
+	and.l d2,d3
 	jne .L97
 .L96:
 	cmp.b #3,(a1,d2.l)
@@ -186,41 +186,41 @@ _isAttacked:
 	cmp.b #2,(a1,a2.l)
 	jeq .L140
 .L37:
-	moveq #14,d1
-	add.l a0,d1
-	moveq #119,d2
-	not.b d2
-	and.l d1,d2
+	moveq #14,d0
+	add.l a0,d0
+	moveq #119,d1
+	not.b d1
+	and.l d0,d1
 	jne .L38
 	lea _board,a1
-	cmp.b #3,(a1,d1.l)
+	cmp.b #3,(a1,d0.l)
 	jeq .L140
 .L38:
 	lea (-1,a0),a6
-	moveq #119,d1
-	not.b d1
-	move.l a6,d2
-	and.l d2,d1
+	moveq #119,d0
+	not.b d0
+	move.l a6,d1
+	and.l d1,d0
 	jne .L39
 	lea _board,a1
 	cmp.b #2,(a1,a6.l)
 	jeq .L140
 .L39:
-	moveq #18,d1
-	add.l a0,d1
-	moveq #119,d5
-	not.b d5
-	and.l d1,d5
+	moveq #18,d0
+	add.l a0,d0
+	moveq #119,d1
+	not.b d1
+	and.l d0,d1
 	jne .L40
 	lea _board,a1
-	cmp.b #3,(a1,d1.l)
+	cmp.b #3,(a1,d0.l)
 	jeq .L140
 .L40:
 	moveq #15,d7
 	add.l a0,d7
-	moveq #119,d1
-	not.b d1
-	and.l d7,d1
+	moveq #119,d0
+	not.b d0
+	and.l d7,d0
 	jne .L41
 	lea _board,a1
 	cmp.b #2,(a1,d7.l)
@@ -228,9 +228,9 @@ _isAttacked:
 .L41:
 	moveq #31,d1
 	add.l a0,d1
-	moveq #119,d5
-	not.b d5
-	and.l d1,d5
+	moveq #119,d0
+	not.b d0
+	and.l d1,d0
 	jne .L42
 	lea _board,a1
 	cmp.b #3,(a1,d1.l)
@@ -238,19 +238,19 @@ _isAttacked:
 .L42:
 	moveq #16,d1
 	add.l a0,d1
-	moveq #119,d5
-	not.b d5
-	and.l d1,d5
+	moveq #119,d0
+	not.b d0
+	and.l d1,d0
 	jne .L43
 	lea _board,a1
 	cmp.b #2,(a1,d1.l)
 	jeq .L140
 .L43:
 	lea (33,a0),a1
-	move.l a1,d5
+	move.l a1,d2
 	moveq #119,d0
 	not.b d0
-	and.l d0,d5
+	and.l d0,d2
 	jne .L44
 	lea _board,a3
 	cmp.b #3,(a3,a1.l)
@@ -258,9 +258,9 @@ _isAttacked:
 .L44:
 	moveq #17,d5
 	add.l a0,d5
-	moveq #119,d2
-	not.b d2
-	and.l d5,d2
+	moveq #119,d0
+	not.b d0
+	and.l d5,d0
 	jeq .L169
 .L45:
 	moveq #119,d0
@@ -280,9 +280,9 @@ _isAttacked:
 	jne .L64
 	moveq #48,d1
 	add.l a0,d1
-	moveq #119,d2
-	not.b d2
-	and.l d1,d2
+	moveq #119,d0
+	not.b d0
+	and.l d1,d0
 	jne .L63
 	move.b (a1,d1.l),d1
 	jne .L64
@@ -296,9 +296,9 @@ _isAttacked:
 	jne .L64
 	moveq #80,d1
 	add.l a0,d1
-	moveq #119,d2
-	not.b d2
-	and.l d1,d2
+	moveq #119,d0
+	not.b d0
+	and.l d1,d0
 	jne .L63
 	move.b (a1,d1.l),d1
 	jne .L64
@@ -312,9 +312,9 @@ _isAttacked:
 	jne .L64
 	moveq #112,d1
 	add.l a0,d1
-	moveq #119,d2
-	not.b d2
-	and.l d1,d2
+	moveq #119,d0
+	not.b d0
+	and.l d1,d0
 	jne .L63
 	move.b (a1,d1.l),d1
 	jne .L64
@@ -328,81 +328,81 @@ _isAttacked:
 	jne .L64
 	move.l a0,d1
 	add.l #144,d1
-	moveq #119,d2
-	not.b d2
-	and.l d1,d2
+	moveq #119,d0
+	not.b d0
+	and.l d1,d0
 	jne .L63
 	move.b (a1,d1.l),d1
 	jne .L64
 .L63:
-	moveq #119,d1
-	not.b d1
-	and.l d3,d1
+	moveq #119,d0
+	not.b d0
+	and.l d3,d0
 	jne .L67
 	lea _board,a1
 	move.b (a1,d3.l),d1
 	jne .L82
 	moveq #-32,d1
 	add.l a0,d1
-	moveq #119,d3
-	not.b d3
-	and.l d1,d3
+	moveq #119,d0
+	not.b d0
+	and.l d1,d0
 	jne .L67
 	move.b (a1,d1.l),d1
 	jne .L82
 	moveq #-48,d1
 	add.l a0,d1
-	moveq #119,d3
-	not.b d3
-	and.l d1,d3
+	moveq #119,d0
+	not.b d0
+	and.l d1,d0
 	jne .L67
 	move.b (a1,d1.l),d1
 	jne .L82
 	moveq #-64,d1
 	add.l a0,d1
-	moveq #119,d3
-	not.b d3
-	and.l d1,d3
+	moveq #119,d0
+	not.b d0
+	and.l d1,d0
 	jne .L67
 	move.b (a1,d1.l),d1
 	jne .L82
 	moveq #-80,d1
 	add.l a0,d1
-	moveq #119,d3
-	not.b d3
-	and.l d1,d3
+	moveq #119,d0
+	not.b d0
+	and.l d1,d0
 	jne .L67
 	move.b (a1,d1.l),d1
 	jne .L82
 	moveq #-96,d1
 	add.l a0,d1
-	moveq #119,d3
-	not.b d3
-	and.l d1,d3
+	moveq #119,d0
+	not.b d0
+	and.l d1,d0
 	jne .L67
 	move.b (a1,d1.l),d1
 	jne .L82
 	moveq #-112,d1
 	add.l a0,d1
-	moveq #119,d3
-	not.b d3
-	and.l d1,d3
+	moveq #119,d0
+	not.b d0
+	and.l d1,d0
 	jne .L67
 	move.b (a1,d1.l),d1
 	jne .L82
 	moveq #-128,d1
 	add.l a0,d1
-	moveq #119,d3
-	not.b d3
-	and.l d1,d3
+	moveq #119,d0
+	not.b d0
+	and.l d1,d0
 	jne .L67
 	move.b (a1,d1.l),d1
 	jne .L82
 	move.l a0,d1
 	add.l #-144,d1
-	moveq #119,d3
-	not.b d3
-	and.l d1,d3
+	moveq #119,d0
+	not.b d0
+	and.l d1,d0
 	jne .L67
 	move.b (a1,d1.l),d1
 	jne .L82
@@ -429,21 +429,21 @@ _isAttacked:
 	cmp.l a5,d0
 	jeq .L170
 .L70:
-	move.l a6,d2
+	move.l a6,d1
 	moveq #119,d0
 	not.b d0
-	and.l d2,d0
+	and.l d1,d0
 	jne .L73
 	lea _board,a1
 	move.b (a1,a6.l),d0
 	jne .L86
 .L72:
-	subq.l #1,d2
+	subq.l #1,d1
 	moveq #119,d0
 	not.b d0
-	and.l d2,d0
+	and.l d1,d0
 	jne .L73
-	move.b (a1,d2.l),d0
+	move.b (a1,d1.l),d0
 	jeq .L72
 .L86:
 	moveq #8,d1
@@ -749,9 +749,9 @@ _isAttacked:
 	jne .L94
 	lea (-153,a0),a0
 	move.l a0,d0
-	moveq #119,d2
-	not.b d2
-	and.l d2,d0
+	moveq #119,d1
+	not.b d1
+	and.l d1,d0
 	jne .L147
 	move.b (a1,a0.l),d1
 	jne .L94
@@ -770,10 +770,10 @@ _isAttacked:
 .L46:
 	moveq #15,d7
 	add.l a0,d7
-	moveq #119,d1
-	not.b d1
-	and.l d7,d1
-	move.l d1,44(sp)
+	moveq #119,d0
+	not.b d0
+	and.l d7,d0
+	move.l d0,44(sp)
 	jne .L47
 	lea _board,a2
 	cmp.b #9,(a2,d7.l)
@@ -781,9 +781,9 @@ _isAttacked:
 .L47:
 	moveq #-33,d0
 	add.l a0,d0
-	moveq #119,d2
-	not.b d2
-	and.l d0,d2
+	moveq #119,d1
+	not.b d1
+	and.l d0,d1
 	jne .L48
 	lea _board,a2
 	cmp.b #11,(a2,d0.l)
@@ -801,9 +801,9 @@ _isAttacked:
 .L49:
 	moveq #-31,d0
 	add.l a0,d0
-	moveq #119,d2
-	not.b d2
-	and.l d0,d2
+	moveq #119,d1
+	not.b d1
+	and.l d0,d1
 	jne .L50
 	lea _board,a2
 	cmp.b #11,(a2,d0.l)
@@ -821,9 +821,9 @@ _isAttacked:
 .L51:
 	moveq #-18,d0
 	add.l a0,d0
-	moveq #119,d2
-	not.b d2
-	and.l d0,d2
+	moveq #119,d1
+	not.b d1
+	and.l d0,d1
 	jne .L52
 	lea _board,a2
 	cmp.b #11,(a2,d0.l)
@@ -841,19 +841,19 @@ _isAttacked:
 .L53:
 	moveq #-14,d0
 	add.l a0,d0
-	moveq #119,d2
-	not.b d2
-	and.l d0,d2
+	moveq #119,d1
+	not.b d1
+	and.l d0,d1
 	jne .L54
 	lea _board,a2
 	cmp.b #11,(a2,d0.l)
 	jeq .L140
 .L54:
 	lea (1,a0),a2
-	moveq #119,d2
-	not.b d2
+	moveq #119,d1
+	not.b d1
 	move.l a2,d0
-	and.l d0,d2
+	and.l d0,d1
 	jne .L55
 	lea _board,a3
 	cmp.b #10,(a3,a2.l)
@@ -870,20 +870,20 @@ _isAttacked:
 	jeq .L140
 .L56:
 	lea (-1,a0),a6
-	moveq #119,d2
-	not.b d2
+	moveq #119,d1
+	not.b d1
 	move.l a6,d0
-	and.l d0,d2
+	and.l d0,d1
 	jne .L57
 	lea _board,a3
 	cmp.b #10,(a3,a6.l)
 	jeq .L140
 .L57:
 	lea (18,a0),a3
-	move.l a3,d1
-	moveq #119,d2
-	not.b d2
-	and.l d2,d1
+	move.l a3,d0
+	moveq #119,d1
+	not.b d1
+	and.l d1,d0
 	jne .L58
 	lea _board,a4
 	cmp.b #11,(a4,a3.l)
@@ -907,9 +907,9 @@ _isAttacked:
 .L60:
 	moveq #16,d1
 	add.l a0,d1
-	moveq #119,d2
-	not.b d2
-	and.l d1,d2
+	moveq #119,d0
+	not.b d0
+	and.l d1,d0
 	jne .L61
 	lea _board,a3
 	cmp.b #10,(a3,d1.l)
@@ -955,9 +955,9 @@ _isAttacked:
 .L29:
 	moveq #-33,d2
 	add.l a0,d2
-	moveq #119,d5
-	not.b d5
-	and.l d2,d5
+	moveq #119,d3
+	not.b d3
+	and.l d2,d3
 	lea _board,a1
 	jeq .L96
 	moveq #-31,d1
@@ -968,15 +968,15 @@ _isAttacked:
 	jne .L32
 	jra .L175
 .L64:
-	moveq #8,d2
-	and.l d1,d2
-	cmp.l a5,d2
+	moveq #8,d0
+	and.l d1,d0
+	cmp.l a5,d0
 	jne .L63
 	moveq #7,d0
 	and.l d0,d1
 	subq.l #6,d1
-	moveq #1,d2
-	cmp.l d1,d2
+	moveq #1,d0
+	cmp.l d1,d0
 	jcs .L63
 	moveq #1,d0
 	jra .L173
@@ -987,15 +987,15 @@ _isAttacked:
 	moveq #1,d0
 	jra .L173
 .L82:
-	moveq #8,d3
-	and.l d1,d3
-	cmp.l a5,d3
+	moveq #8,d0
+	and.l d1,d0
+	cmp.l a5,d0
 	jne .L67
 	moveq #7,d0
 	and.l d0,d1
 	subq.l #6,d1
-	moveq #1,d2
-	cmp.l d1,d2
+	moveq #1,d0
+	cmp.l d1,d0
 	jcs .L67
 	moveq #1,d0
 	jra .L173
@@ -1010,8 +1010,8 @@ _isAttacked:
 	moveq #1,d0
 	jra .L173
 .L171:
-	moveq #7,d2
-	and.l d2,d0
+	moveq #7,d1
+	and.l d1,d0
 	subq.l #6,d0
 	moveq #1,d1
 	cmp.l d0,d1
@@ -1329,10 +1329,10 @@ _board2fen:
 	jne .L211
 .L261:
 	add.b #49,d0
-	move.l d5,d4
-	move.l d4,d5
+	move.l d5,d1
+	move.l d1,d5
 	addq.l #1,d5
-	move.b d0,(a1,d4.l)
+	move.b d0,(a1,d1.l)
 	jra .L215
 .L260:
 	addq.l #1,d0
@@ -1469,11 +1469,12 @@ _printBoard:
 	lea (-16,a5),a5
 	addq.l #4,sp
 	jne .L265
-	move.l _board+138,-(sp)
-	move.l _board+134,-(sp)
+	lea _board,a2
+	move.l 138(a2),-(sp)
+	move.l 134(a2),-(sp)
 	pea .LC10
 	jsr (a4)
-	move.b _board+130,d0
+	move.b 130(a2),d0
 	lea (12,sp),sp
 	cmp.b #127,d0
 	jeq .L284
@@ -2092,8 +2093,8 @@ _initBoard:
 	jsr _fen2board
 	moveq #4,d0
 	move.l d0,_kingLoc
-	moveq #116,d1
-	move.l d1,_kingLoc+4
+	moveq #116,d0
+	move.l d0,_kingLoc+4
 	move.l #_psq_pawns+256,d5
 	move.l #_psq_knights+256,d4
 	move.l #_psq_bishops+256,d3

@@ -7,19 +7,19 @@ _rand64:
 	lea _b,a3
 	move.l (a3),a0
 	move.l 4(a3),a2
-	move.l a2,d4
+	move.l a2,d1
 	moveq #25,d0
-	lsr.l d0,d4
-	move.l a0,d3
-	lsl.l #7,d3
-	move.l d4,d0
-	or.l d3,d0
-	move.l a0,d4
-	moveq #25,d2
-	lsr.l d2,d4
+	lsr.l d0,d1
+	move.l a0,d2
+	lsl.l #7,d2
+	move.l d1,d0
+	or.l d2,d0
+	move.l a0,d2
+	moveq #25,d1
+	lsr.l d1,d2
 	move.l a2,d3
 	lsl.l #7,d3
-	move.l d4,d1
+	move.l d2,d1
 	or.l d3,d1
 	move.l _a,d3
 	move.l _a+4,d4
@@ -29,34 +29,34 @@ _rand64:
 	move.l d4,a5
 	move.l _c,d4
 	move.l _c+4,d5
-	move.l d5,d3
-	clr.w d3
-	swap d3
-	lsr.w #3,d3
-	move.l d4,d6
-	moveq #13,d7
-	lsl.l d7,d6
-	or.l d6,d3
-	move.l d3,a1
-	move.l d4,d3
-	clr.w d3
-	swap d3
-	lsr.w #3,d3
-	move.l d5,d6
-	lsl.l d7,d6
-	or.l d6,d3
+	move.l d5,d0
+	clr.w d0
+	swap d0
+	lsr.w #3,d0
+	move.l d4,d1
+	moveq #13,d2
+	lsl.l d2,d1
+	or.l d1,d0
+	move.l d0,a1
+	move.l d4,d1
+	clr.w d1
+	swap d1
+	lsr.w #3,d1
+	move.l d5,d0
+	lsl.l d2,d0
+	or.l d0,d1
 	move.l a1,d6
 	move.l a0,d0
 	eor.l d0,d6
 	move.l a2,d7
-	eor.l d3,d7
+	eor.l d1,d7
 	move.l d6,_a
 	move.l d7,_a+4
 	move.l _d,d2
 	move.l _d+4,d3
-	move.l d2,d1
-	lsl.l #5,d1
-	move.l d1,a0
+	move.l d2,d0
+	lsl.l #5,d0
+	move.l d0,a0
 	move.l d3,d0
 	moveq #27,d1
 	lsr.l d1,d0
@@ -133,12 +133,12 @@ _rkissSeed:
 	lsl.l #7,d6
 	or.l d6,d2
 	move.l d2,a4
-	move.l d0,d7
-	lsr.l d3,d7
+	move.l d0,d6
+	lsr.l d3,d6
 	move.l d1,d2
 	lsl.l #7,d2
-	or.l d2,d7
-	move.l d7,a5
+	or.l d2,d6
+	move.l d6,a5
 	move.l 48(sp),d6
 	move.l 52(sp),d7
 	move.l a4,d2
@@ -150,10 +150,10 @@ _rkissSeed:
 	clr.w d3
 	swap d3
 	lsr.w #3,d3
-	move.l d4,d6
+	move.l d4,d2
 	moveq #13,d7
-	lsl.l d7,d6
-	or.l d6,d3
+	lsl.l d7,d2
+	or.l d2,d3
 	move.l d4,d2
 	clr.w d2
 	swap d2
@@ -168,14 +168,14 @@ _rkissSeed:
 	move.l 40(sp),d1
 	lsl.l #5,d1
 	move.l 44(sp),d0
-	moveq #27,d3
-	lsr.l d3,d0
+	moveq #27,d2
+	lsr.l d2,d0
 	or.l d0,d1
 	move.l d1,60(sp)
 	move.l 44(sp),d1
 	lsl.l #5,d1
 	move.l 40(sp),d0
-	lsr.l d3,d0
+	lsr.l d2,d0
 	or.l d0,d1
 	move.l d1,56(sp)
 	move.l 56(sp),d0
@@ -212,7 +212,7 @@ _rkissSeed:
 	lea (32,sp),sp
 	rts
 .L6:
-	move.w #73,a5
+	move.w #73,a1
 	clr.l d2
 	move.l #-723440521,d3
 	move.l d2,d4
@@ -221,13 +221,13 @@ _rkissSeed:
 	move.l d3,d1
 	clr.l d6
 	move.l #-236298515,d7
-	sub.l a1,a1
-	move.l a1,a0
+	sub.l a2,a2
+	move.l a2,a0
 	move.l d6,48(sp)
 	move.l d7,52(sp)
 	move.l d2,40(sp)
 	move.l d3,44(sp)
-	move.l a5,68(sp)
+	move.l a1,68(sp)
 	jra .L4
 .lcomm _d,8
 .lcomm _c,8

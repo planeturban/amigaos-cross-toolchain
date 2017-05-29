@@ -262,8 +262,8 @@ _object_clear:
 	asr.w #4,d2
 	move.w a1,a1
 	ext.l d0
-	lea (a1,d0.l),a5
-	move.l a5,d0
+	lea (a1,d0.l),a2
+	move.l a2,d0
 	asr.l #4,d0
 	move.l d0,a5
 	move.w a0,a0
@@ -424,8 +424,8 @@ _object_renderObject:
 	move.w d0,d1
 	asr.w #4,d1
 	move.w d2,a0
-	lea (a0,d4.w),a5
-	move.l a5,d2
+	lea (a0,d4.w),a1
+	move.l a1,d2
 	asr.l #4,d2
 	move.l d2,a5
 	move.w d0,a0
@@ -543,19 +543,19 @@ _object_render:
 	cmp.w #0,a0
 	jeq .L113
 	clr.w d1
-	lea _object_zBuffer,a5
+	lea _object_zBuffer,a3
 .L112:
 	move.w d1,a1
 	move.l a1,d0
 	add.l a1,d0
 	add.l d0,d0
-	move.l a0,(a5,d0.l)
+	move.l a0,(a3,d0.l)
 	addq.w #1,d1
 	move.l 68(a0),a1
 	move.l 38(a0),a2
-	move.w 16(a0),d2
-	add.w 8(a2),d2
-	move.w d2,(a1)
+	move.w 16(a0),d0
+	add.w 8(a2),d0
+	move.w d0,(a1)
 	move.w 6(a2),d0
 	move.w 18(a0),d2
 	sub.w d0,d2
@@ -573,8 +573,8 @@ _object_render:
 	move.w _object_count,d3
 	jle .L84
 	clr.w d7
-	lea _object_zBuffer,a5
-	move.l a5,d6
+	lea _object_zBuffer,a0
+	move.l a0,d6
 .L128:
 	move.w d7,a0
 	move.l a0,d0
@@ -713,8 +713,8 @@ _object_render:
 	jle .L104
 	jra .L168
 .L163:
-	lea (60,a0),a2
-	move.l a2,68(a0)
+	lea (60,a0),a1
+	move.l a1,68(a0)
 	move.l 8(a0),a0
 	cmp.w #0,a0
 	jne .L112

@@ -122,9 +122,9 @@ _testPerft:
 	lea (380,sp),sp
 	rts
 .L22:
-	move.b 2(a2),d2
-	ext.w d2
-	move.w d2,a0
+	move.b 2(a2),d0
+	ext.w d0
+	move.w d0,a0
 	moveq #-48,d2
 	add.l a0,d2
 	pea 4(a2)
@@ -272,8 +272,8 @@ _testEPD:
 	add.l 3640(sp),d0
 	move.l d0,88(sp)
 	clr.l 124(sp)
-	moveq #1,d1
-	move.l d1,96(sp)
+	moveq #1,d0
+	move.l d0,96(sp)
 	move.l a4,-(sp)
 	jsr _think
 	move.l d0,72(sp)

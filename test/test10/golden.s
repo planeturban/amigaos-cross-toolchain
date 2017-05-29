@@ -63,9 +63,9 @@ _star_add:
 	move.w #-8,14(a0)
 	move.w d5,8(a0)
 	move.w d4,10(a0)
-	move.w 18(a2),d1
-	add.w #-10,d1
-	move.w d1,24(a0)
+	move.w 18(a2),d0
+	add.w #-10,d0
+	move.w d0,24(a0)
 	jsr (a3)
 	move.w 16(a2),d5
 	add.w #22,d5

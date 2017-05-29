@@ -91,9 +91,9 @@ _showMoveList:
 	jne .L5
 	jra .L6
 .L11:
-	move.l #_printf,d4
+	move.l #_printf,d0
 	pea .LC0
-	move.l d4,a0
+	move.l d0,a0
 	jsr (a0)
 	addq.l #4,sp
 	movem.l (sp)+,#31868
@@ -138,9 +138,9 @@ _ParseScore:
 	add.l d1,d0
 	add.l d0,d0
 	move.l (a5,d0.l),-(sp)
-	moveq #0,d1
-	move.b _board+128,d1
-	move.l d1,-(sp)
+	moveq #0,d0
+	move.b _board+128,d0
+	move.l d0,-(sp)
 	jsr (a4)
 	lea (12,sp),sp
 	tst.l d0
@@ -198,8 +198,8 @@ _ParseScore:
 	.align	2
 	.globl	_ParsePerft
 _ParsePerft:
-	movem.l #16160,-(sp)
-	move.l 32(sp),d0
+	movem.l #15904,-(sp)
+	move.l 28(sp),d0
 	addq.l #6,d0
 	move.l d0,-(sp)
 	jsr _atoi
@@ -207,10 +207,10 @@ _ParsePerft:
 	lea _get_ms,a2
 	jsr (a2)
 	move.l d0,d2
-	moveq #0,d1
-	not.b d1
-	and.l d6,d1
-	move.l d1,-(sp)
+	moveq #0,d0
+	not.b d0
+	and.l d6,d0
+	move.l d0,-(sp)
 	jsr _Perft
 	move.l d0,d4
 	move.l d1,d5
@@ -220,12 +220,12 @@ _ParsePerft:
 	jeq .L26
 	sub.l d2,d0
 	move.l d0,-(sp)
-	move.l d5,d7
+	move.l d5,d3
 	moveq #27,d1
-	lsr.l d1,d7
+	lsr.l d1,d3
 	move.l d4,d1
 	lsl.l #5,d1
-	move.l d7,d2
+	move.l d3,d2
 	or.l d1,d2
 	move.l d5,d3
 	lsl.l #5,d3
@@ -257,19 +257,19 @@ _ParsePerft:
 	pea .LC3
 	jsr _printf
 	lea (28,sp),sp
-	movem.l (sp)+,#1276
+	movem.l (sp)+,#1148
 	rts
 .L26:
 	move.l d2,d0
 	addq.l #1,d0
 	sub.l d2,d0
 	move.l d0,-(sp)
-	move.l d5,d7
+	move.l d5,d3
 	moveq #27,d1
-	lsr.l d1,d7
+	lsr.l d1,d3
 	move.l d4,d1
 	lsl.l #5,d1
-	move.l d7,d2
+	move.l d3,d2
 	or.l d1,d2
 	move.l d5,d3
 	lsl.l #5,d3
@@ -301,13 +301,13 @@ _ParsePerft:
 	pea .LC3
 	jsr _printf
 	lea (28,sp),sp
-	movem.l (sp)+,#1276
+	movem.l (sp)+,#1148
 	rts
 	.align	2
 	.globl	_ParseDivide
 _ParseDivide:
-	movem.l #16160,-(sp)
-	move.l 32(sp),d0
+	movem.l #15904,-(sp)
+	move.l 28(sp),d0
 	addq.l #7,d0
 	move.l d0,-(sp)
 	jsr _atoi
@@ -315,10 +315,10 @@ _ParseDivide:
 	lea _get_ms,a2
 	jsr (a2)
 	move.l d0,d2
-	moveq #0,d1
-	not.b d1
-	and.l d6,d1
-	move.l d1,-(sp)
+	moveq #0,d0
+	not.b d0
+	and.l d6,d0
+	move.l d0,-(sp)
 	jsr _Divide
 	move.l d0,d4
 	move.l d1,d5
@@ -328,12 +328,12 @@ _ParseDivide:
 	jeq .L31
 	sub.l d2,d0
 	move.l d0,-(sp)
-	move.l d5,d7
+	move.l d5,d3
 	moveq #27,d1
-	lsr.l d1,d7
+	lsr.l d1,d3
 	move.l d4,d1
 	lsl.l #5,d1
-	move.l d7,d2
+	move.l d3,d2
 	or.l d1,d2
 	move.l d5,d3
 	lsl.l #5,d3
@@ -368,19 +368,19 @@ _ParseDivide:
 	pea .LC3
 	jsr _printf
 	lea (28,sp),sp
-	movem.l (sp)+,#1276
+	movem.l (sp)+,#1148
 	rts
 .L31:
 	move.l d2,d0
 	addq.l #1,d0
 	sub.l d2,d0
 	move.l d0,-(sp)
-	move.l d5,d7
+	move.l d5,d3
 	moveq #27,d1
-	lsr.l d1,d7
+	lsr.l d1,d3
 	move.l d4,d1
 	lsl.l #5,d1
-	move.l d7,d2
+	move.l d3,d2
 	or.l d1,d2
 	move.l d5,d3
 	lsl.l #5,d3
@@ -415,7 +415,7 @@ _ParseDivide:
 	pea .LC3
 	jsr _printf
 	lea (28,sp),sp
-	movem.l (sp)+,#1276
+	movem.l (sp)+,#1148
 	rts
 .LC4:
 	.ascii "../src/wac.epd\0"
@@ -586,10 +586,10 @@ _ParseGo:
 	move.l d0,a3
 	move.l d0,4(a2)
 	move.l d4,12(a2)
-	moveq #1,d6
+	moveq #1,d1
 	moveq #1,d0
 	move.l d0,16(a2)
-	move.l d6,-(sp)
+	move.l d1,-(sp)
 	move.l d7,-(sp)
 	jsr ___divsi3
 	addq.l #8,sp
@@ -599,8 +599,7 @@ _ParseGo:
 	add.l d3,a3
 	move.l a3,8(a2)
 .L48:
-	moveq #-1,d0
-	cmp.l d4,d0
+	addq.l #1,d4
 	jeq .L55
 	clr.l 16(a2)
 .L50:
@@ -649,11 +648,11 @@ _ParseGo:
 	moveq #-1,d0
 	cmp.l d3,d0
 	jeq .L48
-	move.l d3,d7
+	move.l d3,d1
 	moveq #1,d0
 	move.l d0,16(a2)
 	move.l d6,-(sp)
-	move.l d7,-(sp)
+	move.l d1,-(sp)
 	jsr ___divsi3
 	addq.l #8,sp
 	moveq #-10,d3
@@ -703,10 +702,10 @@ _ParseGo:
 	tst.l d0
 	jeq .L86
 	moveq #-1,d7
-	lea _atoi,a4
+	lea _atoi,a3
 	move.l d0,a0
 	pea 6(a0)
-	jsr (a4)
+	jsr (a3)
 	move.l d0,d4
 	addq.l #4,sp
 	jra .L46
@@ -740,12 +739,12 @@ _ParseGo:
 	addq.l #4,sp
 	jra .L40
 .L87:
-	move.l d3,d7
+	move.l d3,d1
 	moveq #-1,d4
 	moveq #1,d0
 	move.l d0,16(a2)
 	move.l d6,-(sp)
-	move.l d7,-(sp)
+	move.l d1,-(sp)
 	jsr ___divsi3
 	addq.l #8,sp
 	moveq #-10,d3
@@ -1456,11 +1455,11 @@ _input_loop:
 	addq.l #8,sp
 	tst.l d0
 	jle .L141
-	move.l #_move_make,d2
+	move.l #_move_make,d1
 	lea _kingLoc,a5
 	lea _isAttacked,a0
 	lea _move_unmake,a1
-	move.l d2,48(sp)
+	move.l d1,48(sp)
 	move.l d0,d2
 	move.l a0,d0
 	move.l a1,a4
@@ -1478,9 +1477,9 @@ _input_loop:
 	add.l d1,d0
 	add.l d0,d0
 	move.l (a5,d0.l),-(sp)
-	moveq #0,d1
-	move.b _board+128,d1
-	move.l d1,-(sp)
+	moveq #0,d0
+	move.b _board+128,d0
+	move.l d0,-(sp)
 	move.l d4,a0
 	jsr (a0)
 	lea (12,sp),sp
@@ -1507,9 +1506,9 @@ _input_loop:
 	add.l d1,d0
 	add.l d0,d0
 	move.l (a5,d0.l),-(sp)
-	moveq #0,d1
-	move.b _board+128,d1
-	move.l d1,-(sp)
+	moveq #0,d0
+	move.b _board+128,d0
+	move.l d0,-(sp)
 	move.l d4,a0
 	jsr (a0)
 	lea (12,sp),sp
@@ -1586,15 +1585,15 @@ _input_loop:
 	move.l d3,d1
 	moveq #27,d0
 	lsr.l d0,d1
-	move.l d1,a3
+	move.l d1,a1
 	move.l d2,d1
 	lsl.l #5,d1
-	move.l a3,d0
+	move.l a1,d0
 	or.l d1,d0
 	move.l d0,a4
-	move.l d3,d1
-	lsl.l #5,d1
-	move.l d1,a5
+	move.l d3,d0
+	lsl.l #5,d0
+	move.l d0,a5
 	move.l a4,d0
 	move.l a5,d1
 	sub.l d3,d1
@@ -1639,15 +1638,15 @@ _input_loop:
 	move.l d3,d1
 	moveq #27,d0
 	lsr.l d0,d1
-	move.l d1,a3
+	move.l d1,a1
 	move.l d2,d1
 	lsl.l #5,d1
-	move.l a3,d0
+	move.l a1,d0
 	or.l d1,d0
 	move.l d0,a4
-	move.l d3,d1
-	lsl.l #5,d1
-	move.l d1,a5
+	move.l d3,d0
+	lsl.l #5,d0
+	move.l d0,a5
 	move.l a4,d0
 	move.l a5,d1
 	sub.l d3,d1
@@ -1711,9 +1710,9 @@ _input_loop:
 	add.l d1,d0
 	add.l d0,d0
 	move.l (a5,d0.l),-(sp)
-	moveq #0,d1
-	move.b _board+128,d1
-	move.l d1,-(sp)
+	moveq #0,d0
+	move.b _board+128,d0
+	move.l d0,-(sp)
 	move.l d4,a0
 	jsr (a0)
 	lea (12,sp),sp
@@ -1764,11 +1763,11 @@ _input_loop:
 	move.l d0,52(sp)
 	addq.l #4,sp
 	jle .L141
-	move.l #_move_make,d2
+	move.l #_move_make,d1
 	lea _kingLoc,a5
 	lea _isAttacked,a4
 	lea _move_unmake,a0
-	move.l d2,d0
+	move.l d1,d0
 	move.l a0,d2
 	move.l d7,a3
 	move.l d0,d3
@@ -1789,9 +1788,9 @@ _input_loop:
 	add.l d1,d0
 	add.l d0,d0
 	move.l (a5,d0.l),-(sp)
-	moveq #0,d1
-	move.b _board+128,d1
-	move.l d1,-(sp)
+	moveq #0,d0
+	move.b _board+128,d0
+	move.l d0,-(sp)
 	jsr (a4)
 	lea (24,sp),sp
 	tst.l d0
@@ -1821,18 +1820,18 @@ _input_loop:
 	add.l d1,d0
 	add.l d0,d0
 	move.l (a5,d0.l),-(sp)
-	moveq #0,d1
-	move.b _board+128,d1
-	move.l d1,-(sp)
+	moveq #0,d0
+	move.b _board+128,d0
+	move.l d0,-(sp)
 	jsr (a4)
 	lea (24,sp),sp
 	tst.l d0
 	jne .L224
 .L177:
-	move.l (a3),d1
+	move.l (a3),d0
 	move.l 8(a3),52(sp)
-	move.l d1,-(sp)
-	move.l d1,48(sp)
+	move.l d0,-(sp)
+	move.l d0,48(sp)
 	jsr _moveToUCI
 	move.l 48(sp),d1
 	move.l d1,-(sp)

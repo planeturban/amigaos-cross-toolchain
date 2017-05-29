@@ -111,8 +111,8 @@ _gfx_fillRectSmallScreen:
 	movem.l (sp)+,#31996
 	rts
 .L19:
-	move.w a4,d6
-	and.w d6,d7
+	move.w a4,d2
+	and.w d2,d7
 	mulu.w #200,d1
 	lsr.w #3,d0
 	and.l #65535,d0
