@@ -1227,12 +1227,12 @@ _generateBishopMoves:
 	or.l d1,d0
 	move.l d0,48(sp)
 	move.l _moveList,56(sp)
+	move.l _moveIndex,a1
 	move.l d0,d1
 	swap d1
 	clr.w d1
 	or.l 72(sp),d1
 	move.w _board+142,a0
-	move.l _moveIndex,a1
 	move.l #_rmoves.2966+4,52(sp)
 	lsl.l #7,d0
 	clr.b d4
@@ -1386,12 +1386,12 @@ _generateRookMoves:
 	or.l d1,d0
 	move.l d0,48(sp)
 	move.l _moveList,56(sp)
+	move.l _moveIndex,a1
 	move.l d0,d1
 	swap d1
 	clr.w d1
 	or.l 72(sp),d1
 	move.w _board+142,a0
-	move.l _moveIndex,a1
 	move.l #_rmoves.2979+4,52(sp)
 	lsl.l #7,d0
 	clr.b d4
@@ -1545,12 +1545,12 @@ _generateQueenMoves:
 	or.l d1,d0
 	move.l d0,a4
 	move.l _moveList,56(sp)
+	move.l _moveIndex,a1
 	swap d0
 	clr.w d0
 	or.l 72(sp),d0
 	move.l d0,44(sp)
 	move.w _board+142,a0
-	move.l _moveIndex,a1
 	move.l #_rmoves.2992+4,48(sp)
 	move.l a4,d0
 	lsl.l #7,d0
@@ -2169,13 +2169,13 @@ _generateMoves:
 	or.b #2,d1
 	and.l #255,d1
 	move.l _moveList,a4
+	move.l _moveIndex,d4
 	move.l d1,d0
 	swap d0
 	clr.w d0
 	or.l d6,d0
 	move.l d0,48(sp)
 	move.w _board+142,a0
-	move.l _moveIndex,d4
 	lea _rmoves.2946+4,a1
 	move.l #_rmoves.2946+32,d7
 	sub.l a6,a6
@@ -7338,12 +7338,12 @@ _generateCaptureMoves:
 	and.l #255,d4
 	move.l d4,48(sp)
 	move.l _moveList,a4
+	move.l _moveIndex,d6
 	move.l d4,d0
 	swap d0
 	clr.w d0
 	or.l d2,d0
 	move.l d0,52(sp)
-	move.l _moveIndex,d6
 	lea _rmoves.3142+4,a1
 	move.l #_rmoves.3142+16,d7
 	sub.l a6,a6
@@ -7566,12 +7566,12 @@ _generateCaptureMoves:
 	or.b #2,d4
 	and.l #255,d4
 	move.l _moveList,a1
+	move.l _moveIndex,a0
 	move.l d4,d0
 	swap d0
 	clr.w d0
 	or.l d2,d0
 	move.l d0,44(sp)
-	move.l _moveIndex,a0
 	moveq #-17,d0
 	add.l d2,d0
 	moveq #119,d1
