@@ -183,8 +183,8 @@ _level1_doorIntelligence:
 	lea (16,sp),sp
 	rts
 .L62:
-	clr.w d2
-	move.w d2,d0
+	clr.w d1
+	move.w d1,d0
 	movem.l (sp)+,#15420
 	lea (16,sp),sp
 	rts
@@ -194,15 +194,15 @@ _level1_doorIntelligence:
 .L38:
 	clr.w 26(a2)
 	move.w #1,28(a2)
-	clr.w d2
-	move.w d2,d0
+	clr.w d1
+	move.w d1,d0
 	movem.l (sp)+,#15420
 	lea (16,sp),sp
 	rts
 .L79:
 	move.w #-1,26(a0)
-	clr.w d2
-	move.w d2,d0
+	clr.w d1
+	move.w d1,d0
 	movem.l (sp)+,#15420
 	lea (16,sp),sp
 	rts
@@ -290,8 +290,8 @@ _level1_doorIntelligence:
 	move.w d3,d0
 	ext.l d0
 	jsr _object_collision
-	move.w d0,d4
 	addq.l #4,sp
+	tst.w d0
 	jeq .L51
 	tst.l 40(sp)
 	jeq .L52
@@ -331,11 +331,11 @@ _level1_doorIntelligence:
 	jge .L56
 	move.w 16(a2),d0
 	cmp.w 16(a4),d0
-	sge d4
-	ext.w d4
-	or.w #1,d4
+	sge d0
+	ext.w d0
+	or.w #1,d0
 .L56:
-	move.w d4,26(a2)
+	move.w d0,26(a2)
 	move.w 18(a2),a0
 	sub.w 18(a4),a0
 	move.l a0,d0
@@ -376,9 +376,9 @@ _level1_doorIntelligence:
 .L60:
 	cmp.w d1,d0
 	jge .L36
-	move.w 48(a3),d1
-	neg.w d1
-	move.w d1,28(a2)
+	move.w 48(a3),d0
+	neg.w d0
+	move.w d0,28(a2)
 	move.w d2,d0
 	movem.l (sp)+,#15420
 	lea (16,sp),sp
@@ -420,8 +420,8 @@ _enemy_intelligence:
 	lea (16,sp),sp
 	rts
 .L109:
-	clr.w d2
-	move.w d2,d0
+	clr.w d1
+	move.w d1,d0
 	movem.l (sp)+,#15420
 	lea (16,sp),sp
 	rts
@@ -508,8 +508,8 @@ _enemy_intelligence:
 	move.w d3,d0
 	ext.l d0
 	jsr _object_collision
-	move.w d0,d4
 	addq.l #4,sp
+	tst.w d0
 	jeq .L98
 	tst.l 40(sp)
 	jeq .L99
@@ -545,11 +545,11 @@ _enemy_intelligence:
 	jge .L103
 	move.w 16(a2),d0
 	cmp.w 16(a4),d0
-	sge d4
-	ext.w d4
-	or.w #1,d4
+	sge d0
+	ext.w d0
+	or.w #1,d0
 .L103:
-	move.w d4,26(a2)
+	move.w d0,26(a2)
 	move.w 18(a2),a0
 	sub.w 18(a4),a0
 	move.l a0,d0
@@ -590,9 +590,9 @@ _enemy_intelligence:
 .L107:
 	cmp.w d1,d0
 	jge .L86
-	move.w 48(a3),d1
-	neg.w d1
-	move.w d1,28(a2)
+	move.w 48(a3),d0
+	neg.w d0
+	move.w d0,28(a2)
 	move.w d2,d0
 	movem.l (sp)+,#15420
 	lea (16,sp),sp

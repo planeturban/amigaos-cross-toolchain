@@ -31,12 +31,12 @@ _TT_set_size:
 .L10:
 	add.l d1,d1
 	addx.l d0,d0
-	move.l d1,d4
+	move.l d1,d3
 	moveq #27,d2
-	lsr.l d2,d4
+	lsr.l d2,d3
 	move.l d0,d2
 	lsl.l #5,d2
-	or.l d4,d2
+	or.l d3,d2
 	move.l d1,d3
 	lsl.l #5,d3
 	move.l d2,d4
@@ -44,8 +44,8 @@ _TT_set_size:
 	sub.l d7,d5
 	subx.l d6,d4
 	jls .L10
-	move.l d1,d6
-	lsl.l #4,d6
+	move.l d1,d5
+	lsl.l #4,d5
 	moveq #-1,d2
 	moveq #-1,d3
 	add.l d1,d3
@@ -59,7 +59,7 @@ _TT_set_size:
 	jsr _free
 	addq.l #4,sp
 .L11:
-	move.l d6,-(sp)
+	move.l d5,-(sp)
 	jsr _malloc
 	move.l d0,_board+32336
 	move.l d2,_board+32340
@@ -67,12 +67,12 @@ _TT_set_size:
 	addq.l #4,sp
 	tst.l d0
 	jeq .L27
-	move.l d3,d6
-	moveq #28,d5
-	lsr.l d5,d6
+	move.l d3,d1
+	moveq #28,d0
+	lsr.l d0,d1
 	move.l d2,d0
 	lsl.l #4,d0
-	or.l d6,d0
+	or.l d1,d0
 	move.l d3,d1
 	lsl.l #4,d1
 	move.l d1,-(sp)
@@ -117,7 +117,7 @@ _TT_set_size:
 	move.l #16368,d4
 	clr.l d2
 	move.l #1023,d3
-	move.l #16384,d6
+	move.l #16384,d5
 	jra .L9
 	.align	2
 	.globl	_TT_clear
@@ -339,9 +339,9 @@ _TT_fillPVLineFromTT:
 	add.l d3,a4
 	add.l a4,a4
 	add.l a4,a4
-	moveq #48,d1
-	add.l sp,d1
-	add.l d1,a4
+	moveq #48,d0
+	add.l sp,d0
+	add.l d0,a4
 	lea _move_unmake,a5
 .L74:
 	move.l a4,-(sp)

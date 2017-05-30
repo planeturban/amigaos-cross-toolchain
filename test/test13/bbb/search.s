@@ -92,8 +92,8 @@ _numOfLegalMoves:
 	lea (3072,sp),sp
 	rts
 .L14:
-	moveq #0,d4
-	move.l d4,d0
+	moveq #0,d1
+	move.l d1,d0
 	movem.l (sp)+,#31804
 	lea (3072,sp),sp
 	rts
@@ -280,10 +280,10 @@ _Quiescence:
 	add.l #_board+112,a0
 	move.l d2,44(sp)
 	move.l d3,48(sp)
-	move.l a3,d6
+	move.l a3,d5
 .L47:
 	subq.l #2,a1
-	cmp.l a1,d6
+	cmp.l a1,d5
 	jgt .L71
 	lea (-16,a0),a0
 	move.l 16(a0),d2
@@ -324,21 +324,21 @@ _Quiescence:
 	lea (60,sp),a2
 	moveq #0,d3
 	lea _move_make,a5
-	move.l 3140(sp),d1
-	neg.l d1
-	move.l d1,52(sp)
+	move.l 3140(sp),d0
+	neg.l d0
+	move.l d0,52(sp)
 	move.l a4,56(sp)
 	move.l 3140(sp),a4
 	lea (8,a2),a1
 	move.l d3,a0
 	move.l d3,d0
-	move.l #-31000,d7
+	move.l #-31000,d6
 .L54:
 	move.l (a1),d1
-	cmp.l d1,d7
+	cmp.l d1,d6
 	jge .L53
 	move.l d0,a0
-	move.l d1,d7
+	move.l d1,d6
 .L53:
 	addq.l #1,d0
 	lea (12,a1),a1
@@ -404,11 +404,11 @@ _Quiescence:
 	lea (8,a2),a1
 	move.l d3,a0
 	move.l d3,d0
-	move.l #-31000,d7
+	move.l #-31000,d6
 	jra .L54
 .L58:
-	move.l 3140(sp),d5
-	move.l d5,d0
+	move.l 3140(sp),d1
+	move.l d1,d0
 	movem.l (sp)+,#31996
 	lea (3088,sp),sp
 	rts
@@ -428,18 +428,18 @@ _Quiescence:
 	jra .L52
 .L72:
 	jsr _get_ms
-	moveq #1,d3
-	cmp.l 16(a4),d3
+	moveq #1,d1
+	cmp.l 16(a4),d1
 	jeq .L75
 .L49:
-	moveq #2,d6
-	cmp.l 96(a4),d6
+	moveq #2,d1
+	cmp.l 96(a4),d1
 	jeq .L50
 	sub.l 4(a4),d0
 	cmp.l #3000,d0
 	jls .L50
-	moveq #1,d7
-	move.l d7,92(a4)
+	moveq #1,d0
+	move.l d0,92(a4)
 .L50:
 	move.l a4,-(sp)
 	jsr _ReadInput
@@ -454,7 +454,7 @@ _Quiescence:
 .L75:
 	cmp.l 8(a4),d0
 	jls .L49
-	move.l d3,44(a4)
+	move.l d1,44(a4)
 	clr.l 92(a4)
 	move.l a4,-(sp)
 	jsr _ReadInput
@@ -519,8 +519,8 @@ _AlphaBeta:
 	subx.l d0,d4
 	jne .L83
 .L81:
-	moveq #0,d4
-	move.l d4,d0
+	moveq #0,d1
+	move.l d1,d0
 	movem.l -3968(a5),#23804
 	unlk a5
 	rts
@@ -542,9 +542,9 @@ _AlphaBeta:
 	cmp.b #3,d0
 	jeq .L170
 .L88:
-	move.l -3884(a5),d4
+	move.l -3884(a5),d1
 .L171:
-	move.l d4,d0
+	move.l d1,d0
 	movem.l -3968(a5),#23804
 	unlk a5
 	rts
@@ -564,18 +564,18 @@ _AlphaBeta:
 	moveq #9,d2
 	lsr.l d2,d0
 	lsr.l #8,d1
-	moveq #0,d4
-	not.b d4
-	and.l d4,d1
+	moveq #0,d2
+	not.b d2
+	and.l d2,d1
 	and.l #1920,d0
 	add.l d1,d0
 	add.l #6036,d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l 8(a5),d5
+	move.l 8(a5),d1
 	lea _board,a0
-	add.l d5,(a0,d0.l)
-	move.l -3884(a5),d4
+	add.l d1,(a0,d0.l)
+	move.l -3884(a5),d1
 	jra .L171
 .L170:
 	move.l -3880(a5),d1
@@ -599,7 +599,7 @@ _AlphaBeta:
 	add.l a0,a0
 	move.l a1,(a2,a0.l)
 	move.l d1,(a2,d0.l)
-	move.l -3884(a5),d4
+	move.l -3884(a5),d1
 	jra .L171
 .L85:
 	move.l 16(a5),d0
@@ -622,9 +622,9 @@ _AlphaBeta:
 	move.l 16(a5),-(sp)
 	move.l 12(a5),-(sp)
 	jsr _Quiescence
-	move.l d0,d4
+	move.l d0,d1
 	lea (12,sp),sp
-	move.l d4,d0
+	move.l d1,d0
 	movem.l -3968(a5),#23804
 	unlk a5
 	rts
@@ -704,18 +704,18 @@ _AlphaBeta:
 	move.l 20(a5),d0
 	addq.l #8,d0
 	move.l d0,-3904(a5)
-	move.l #-3872,d6
-	add.l a5,d6
-	move.l d6,-3900(a5)
-	move.l 8(a5),d6
-	subq.l #1,d6
-	move.l d6,-3916(a5)
+	move.l #-3872,d0
+	add.l a5,d0
+	move.l d0,-3900(a5)
+	move.l 8(a5),d0
+	subq.l #1,d0
+	move.l d0,-3916(a5)
 	move.l 16(a5),d0
 	neg.l d0
 	move.l d0,-3908(a5)
-	move.l 8(a5),d6
-	subq.l #2,d6
-	move.l d6,-3888(a5)
+	move.l 8(a5),d0
+	subq.l #2,d0
+	move.l d0,-3888(a5)
 .L135:
 	lea (8,a2),a1
 	move.l d3,a0
@@ -776,11 +776,11 @@ _AlphaBeta:
 	jne .L173
 	tst.l d5
 	jeq .L174
-	moveq #3,d1
-	cmp.l d5,d1
+	moveq #3,d0
+	cmp.l d5,d0
 	jge .L125
-	moveq #2,d6
-	cmp.l 8(a5),d6
+	moveq #2,d0
+	cmp.l 8(a5),d0
 	jge .L125
 	moveq #1,d0
 	cmp.l -3912(a5),d0
@@ -848,9 +848,9 @@ _AlphaBeta:
 	add.l #6036,d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l -3896(a5),d4
+	move.l -3896(a5),d1
 	lea _board,a0
-	add.l d4,(a0,d0.l)
+	add.l d1,(a0,d0.l)
 	move.l d6,-3928(a5)
 	move.l d6,d4
 .L122:
@@ -885,18 +885,18 @@ _AlphaBeta:
 	jra .L96
 .L172:
 	jsr _get_ms
-	moveq #1,d4
-	cmp.l 16(a3),d4
+	moveq #1,d1
+	cmp.l 16(a3),d1
 	jeq .L180
 .L93:
-	moveq #2,d5
-	cmp.l 96(a3),d5
+	moveq #2,d1
+	cmp.l 96(a3),d1
 	jeq .L94
 	sub.l 4(a3),d0
 	cmp.l #3000,d0
 	jls .L94
-	moveq #1,d6
-	move.l d6,92(a3)
+	moveq #1,d0
+	move.l d0,92(a3)
 .L94:
 	move.l a3,-(sp)
 	jsr _ReadInput
@@ -970,12 +970,12 @@ _AlphaBeta:
 	move.l a3,-(sp)
 	move.l 24(a5),-(sp)
 	pea -3876(a5)
-	move.l d4,d1
-	neg.l d1
-	move.l d1,-(sp)
-	move.l d4,d6
-	not.l d6
-	move.l d6,-(sp)
+	move.l d4,d0
+	neg.l d0
+	move.l d0,-(sp)
+	move.l d4,d0
+	not.l d0
+	move.l d0,-(sp)
 	move.l -3888(a5),-(sp)
 	jsr _AlphaBeta
 	neg.l d0
@@ -988,7 +988,7 @@ _AlphaBeta:
 .L180:
 	cmp.l 8(a3),d0
 	jls .L93
-	move.l d4,44(a3)
+	move.l d1,44(a3)
 	clr.l 92(a3)
 	move.l a3,-(sp)
 	jsr _ReadInput
@@ -1007,9 +1007,9 @@ _AlphaBeta:
 	add.l 8(a5),d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l d2,d4
-	sub.l d0,d4
-	cmp.l 16(a5),d4
+	move.l d2,d3
+	sub.l d0,d3
+	cmp.l 16(a5),d3
 	jge .L183
 .L99:
 	cmp.l 16(a5),d2
@@ -1055,9 +1055,9 @@ _AlphaBeta:
 	moveq #1,d1
 	sub.l 16(a5),d1
 	move.l d1,-(sp)
-	move.l 16(a5),d2
-	neg.l d2
-	move.l d2,-(sp)
+	move.l 16(a5),d1
+	neg.l d1
+	move.l d1,-(sp)
 	move.l d0,-(sp)
 	jsr _AlphaBeta
 	move.l d0,d2
@@ -1070,8 +1070,8 @@ _AlphaBeta:
 	cmp.l 16(a5),d2
 	jlt .L96
 	addq.l #1,56(a3)
-	move.l 16(a5),d4
-	move.l d4,d0
+	move.l 16(a5),d1
+	move.l d1,d0
 	movem.l -3968(a5),#23804
 	unlk a5
 	rts
@@ -1133,15 +1133,14 @@ _AlphaBeta:
 	tst.l -3892(a5)
 	jeq .L81
 	move.w _board+132,a0
-	move.l a0,d4
-	add.l #-31000,d4
-	move.l d4,d0
+	move.l a0,d1
+	add.l #-31000,d1
+	move.l d1,d0
 	movem.l -3968(a5),#23804
 	unlk a5
 	rts
 .L178:
-	moveq #1,d2
-	cmp.l d5,d2
+	subq.l #1,d5
 	jeq .L184
 	addq.l #1,48(a3)
 .L132:
@@ -1174,8 +1173,8 @@ _AlphaBeta:
 	jsr _TT_RecordHash
 	addq.l #1,88(a3)
 	lea (16,sp),sp
-	move.l 16(a5),d4
-	move.l d4,d0
+	move.l 16(a5),d1
+	move.l d1,d0
 	movem.l -3968(a5),#23804
 	unlk a5
 	rts
@@ -1225,18 +1224,18 @@ _AlphaBeta:
 	lea _board,a0
 	tst.l (a0,d0.l)
 	jle .L99
-	move.l d4,d0
+	move.l d3,d0
 	movem.l -3968(a5),#23804
 	unlk a5
 	rts
 .L101:
 	move.l a3,-(sp)
-	moveq #1,d4
-	sub.l 16(a5),d4
-	move.l d4,-(sp)
-	move.l 16(a5),d5
-	neg.l d5
-	move.l d5,-(sp)
+	moveq #1,d0
+	sub.l 16(a5),d0
+	move.l d0,-(sp)
+	move.l 16(a5),d0
+	neg.l d0
+	move.l d0,-(sp)
 	jsr _Quiescence
 	move.l d0,d2
 	neg.l d2
@@ -1465,8 +1464,8 @@ _think:
 	pea _pv
 	jsr _memcpy
 	lea (12,sp),sp
-	moveq #1,d1
-	cmp.l 44(a2),d1
+	moveq #1,d0
+	cmp.l 44(a2),d0
 	jeq .L238
 .L207:
 	tst.l 16(a2)
@@ -1525,8 +1524,8 @@ _think:
 	pea _pv
 	jsr _memcpy
 	lea (12,sp),sp
-	moveq #1,d1
-	cmp.l 44(a2),d1
+	moveq #1,d0
+	cmp.l 44(a2),d0
 	jne .L207
 .L238:
 	subq.l #1,a3
@@ -1551,9 +1550,9 @@ _think:
 	move.l d7,d0
 	moveq #27,d1
 	lsr.l d1,d0
-	move.l d6,d4
-	lsl.l #5,d4
-	or.l d4,d0
+	move.l d6,d1
+	lsl.l #5,d1
+	or.l d1,d0
 	move.l d7,d1
 	lsl.l #5,d1
 	sub.l d7,d1
@@ -1652,9 +1651,9 @@ _think:
 	move.l d7,d0
 	moveq #27,d1
 	lsr.l d1,d0
-	move.l d6,d4
-	lsl.l #5,d4
-	or.l d4,d0
+	move.l d6,d1
+	lsl.l #5,d1
+	or.l d1,d0
 	move.l d7,d1
 	lsl.l #5,d1
 	sub.l d7,d1

@@ -96,8 +96,8 @@ _generatePosKey:
 	jeq .L11
 	move.l _side,d2
 	eor.l d2,d0
-	move.l _side+4,d4
-	eor.l d4,d1
+	move.l _side+4,d2
+	eor.l d2,d1
 .L11:
 	movem.l (sp)+,#1052
 	rts

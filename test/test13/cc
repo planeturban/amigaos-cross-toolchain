@@ -7,7 +7,7 @@
 
 # compile for golden file check
 mkdir -p bbb
-m68k-amigaos-gcc -noixemul -O3 -fomit-frame-pointer -S -m68000 src/*.c  -DNDEBUG -fbbb=+v 
+m68k-amigaos-gcc -noixemul -O3 -fomit-frame-pointer -S -m68000 src/*.c  -DNDEBUG  
 mv *.s bbb
 
 r="$(diff --brief golden bbb)"

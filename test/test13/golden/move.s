@@ -67,11 +67,11 @@ _qprintMove:
 	cmp.l d2,d0
 	jeq .L6
 	jge .L16
-	moveq #6,d4
-	cmp.l d2,d4
+	moveq #6,d0
+	cmp.l d2,d0
 	jeq .L9
-	moveq #7,d5
-	cmp.l d2,d5
+	moveq #7,d0
+	cmp.l d2,d0
 	jne .L5
 	move.b #113,_buffer.2819+4
 .L11:
@@ -81,8 +81,8 @@ _qprintMove:
 	movem.l (sp)+,#1084
 	rts
 .L16:
-	moveq #3,d1
-	cmp.l d2,d1
+	moveq #3,d0
+	cmp.l d2,d0
 	jne .L5
 	move.b #110,_buffer.2819+4
 	clr.b _buffer.2819+5
@@ -188,11 +188,11 @@ _InitMvvLva:
 	.align	2
 	.globl	_move_to_san
 _move_to_san:
-	movem.l #16190,-(sp)
-	move.l 48(sp),d1
-	moveq #0,d6
-	not.b d6
-	and.l d1,d6
+	movem.l #16188,-(sp)
+	move.l 44(sp),d1
+	moveq #0,d3
+	not.b d3
+	and.l d1,d3
 	move.l d1,d5
 	lsr.l #8,d5
 	moveq #0,d4
@@ -204,19 +204,19 @@ _move_to_san:
 	subq.l #1,d0
 	jeq .L66
 	lea _buffer.2847,a2
-	lea _buffer.2847,a4
-	clr.b (a4)
-	clr.b 1(a4)
-	clr.b 2(a4)
-	clr.b 3(a4)
-	clr.b 4(a4)
-	clr.b 5(a4)
-	clr.b 6(a4)
-	clr.b 7(a4)
-	clr.b 8(a4)
-	clr.b 9(a4)
-	clr.b 10(a4)
-	clr.b 11(a4)
+	lea _buffer.2847,a0
+	clr.b (a0)
+	clr.b 1(a0)
+	clr.b 2(a0)
+	clr.b 3(a0)
+	clr.b 4(a0)
+	clr.b 5(a0)
+	clr.b 6(a0)
+	clr.b 7(a0)
+	clr.b 8(a0)
+	clr.b 9(a0)
+	clr.b 10(a0)
+	clr.b 11(a0)
 	move.l d1,d7
 	clr.w d7
 	swap d7
@@ -227,18 +227,18 @@ _move_to_san:
 	jeq .L31
 	lea .LC6,a0
 	move.b (a0,d0.l),(a2)
-	tst.l 60(sp)
+	tst.l 56(sp)
 	jle .L44
-	lsr.l #4,d6
-	move.l d6,a6
-	move.l 64(sp),a0
-	move.l 60(sp),d3
+	lsr.l #4,d3
+	move.l d3,a5
+	move.l 60(sp),a0
+	move.l 56(sp),d3
 	add.l d3,d3
 	add.l 60(sp),d3
 	add.l d3,d3
 	add.l d3,d3
 	add.l a0,d3
-	sub.l a5,a5
+	sub.l a1,a1
 	sub.l a3,a3
 	sub.l a4,a4
 .L35:
@@ -271,15 +271,15 @@ _move_to_san:
 	jeq .L61
 .L72:
 	lea .LC1,a3
-	move.b (a3,a6.l),(a2,a0.l)
+	move.b (a3,a5.l),(a2,a0.l)
 	move.l d0,a0
 	move.l d2,d0
 	move.l d1,d2
 	clr.w d2
 	swap d2
 	lsr.w #4,d2
-	moveq #15,d6
-	and.l d6,d2
+	moveq #15,d3
+	and.l d3,d2
 	jne .L40
 .L73:
 	move.l a0,d2
@@ -307,10 +307,10 @@ _move_to_san:
 	lsr.b #3,d0
 	eor.b #1,d0
 	and.l #255,d0
-	moveq #1,d6
-	sub.l d0,d6
-	move.l d6,d0
-	add.l d6,d0
+	moveq #1,d3
+	sub.l d0,d3
+	move.l d3,d0
+	add.l d3,d0
 	add.l d0,d0
 	lea _kingLoc,a0
 	move.l (a0,d0.l),-(sp)
@@ -324,7 +324,7 @@ _move_to_san:
 	clr.b (a2,d2.l)
 .L28:
 	move.l #_buffer.2847,d0
-	movem.l (sp)+,#31996
+	movem.l (sp)+,#15612
 	rts
 .L67:
 	move.l d0,d2
@@ -337,13 +337,13 @@ _move_to_san:
 	move.l d0,d2
 	lsr.l #4,d2
 	and.l d6,d2
-	cmp.l a6,d2
+	cmp.l a5,d2
 	jeq .L70
 .L34:
 	eor.l d1,d0
 	moveq #7,d2
 	and.l d2,d0
-	move.w #1,a5
+	move.w #1,a1
 	jne .L33
 	move.w #1,a3
 	lea (12,a0),a0
@@ -351,7 +351,7 @@ _move_to_san:
 	jne .L35
 	jra .L71
 .L68:
-	cmp.w #0,a5
+	cmp.w #0,a1
 	jne .L36
 	moveq #3,d2
 	moveq #2,d0
@@ -366,8 +366,8 @@ _move_to_san:
 	clr.w d2
 	swap d2
 	lsr.w #4,d2
-	moveq #15,d6
-	and.l d6,d2
+	moveq #15,d3
+	and.l d3,d2
 	jeq .L73
 .L40:
 	move.l d0,d2
@@ -387,14 +387,13 @@ _move_to_san:
 	jra .L28
 .L66:
 	lea _buffer.2847,a1
-	cmp.l d6,d4
+	cmp.l d3,d4
 	jls .L26
 	lea .LC4,a0
 .L27:
 	move.b (a0)+,(a1)+
 	jeq .L28
-	move.b (a0)+,d0
-	move.b d0,(a1)+
+	move.b (a0)+,(a1)+
 	jne .L27
 	jra .L28
 .L31:
@@ -424,8 +423,7 @@ _move_to_san:
 .L29:
 	move.b (a0)+,(a1)+
 	jeq .L28
-	move.b (a0)+,d0
-	move.b d0,(a1)+
+	move.b (a0)+,(a1)+
 	jne .L29
 	jra .L28
 .L43:
@@ -498,12 +496,12 @@ _printMove:
 	lsr.w #8,d2
 	moveq #7,d0
 	and.l d0,d2
-	moveq #5,d3
-	cmp.l d2,d3
+	moveq #5,d0
+	cmp.l d2,d0
 	jeq .L77
 	jge .L84
-	moveq #6,d3
-	cmp.l d2,d3
+	moveq #6,d0
+	cmp.l d2,d0
 	jeq .L80
 	moveq #7,d0
 	cmp.l d2,d0
@@ -575,8 +573,8 @@ _moveToUCI:
 	ext.l d2
 	moveq #7,d0
 	and.l d0,d2
-	moveq #5,d3
-	cmp.l d2,d3
+	moveq #5,d0
+	cmp.l d2,d0
 	jeq .L87
 	jge .L94
 	subq.l #6,d2
@@ -1230,10 +1228,10 @@ _generateBishopMoves:
 	move.l d0,48(sp)
 	move.l _moveList,56(sp)
 	move.l _moveIndex,a1
-	move.l d0,d7
-	swap d7
-	clr.w d7
-	or.l 72(sp),d7
+	move.l d0,d1
+	swap d1
+	clr.w d1
+	or.l 72(sp),d1
 	move.w _board+142,a0
 	move.l #_rmoves.2966+4,52(sp)
 	lsl.l #7,d0
@@ -1250,7 +1248,7 @@ _generateBishopMoves:
 	add.l d0,d0
 	move.l d0,a4
 	add.l d0,a4
-	move.l d7,44(sp)
+	move.l d1,44(sp)
 .L177:
 	move.l 72(sp),d2
 	add.l d5,d2
@@ -1389,10 +1387,10 @@ _generateRookMoves:
 	move.l d0,48(sp)
 	move.l _moveList,56(sp)
 	move.l _moveIndex,a1
-	move.l d0,d7
-	swap d7
-	clr.w d7
-	or.l 72(sp),d7
+	move.l d0,d1
+	swap d1
+	clr.w d1
+	or.l 72(sp),d1
 	move.w _board+142,a0
 	move.l #_rmoves.2979+4,52(sp)
 	lsl.l #7,d0
@@ -1409,7 +1407,7 @@ _generateRookMoves:
 	add.l d0,d0
 	move.l d0,a4
 	add.l d0,a4
-	move.l d7,44(sp)
+	move.l d1,44(sp)
 .L207:
 	move.l 72(sp),d2
 	add.l d5,d2
@@ -1716,9 +1714,9 @@ _generatePawnMoves:
 	jne .L306
 	tst.l d2
 	jne .L284
-	moveq #7,d4
+	moveq #7,d0
 	move.w #16,a5
-	cmp.l d7,d4
+	cmp.l d7,d0
 	jeq .L261
 .L262:
 	moveq #1,d1
@@ -1825,8 +1823,7 @@ _generatePawnMoves:
 	jeq .L310
 	tst.l d2
 	jne .L274
-	moveq #7,d4
-	cmp.l d7,d4
+	subq.l #7,d7
 	jeq .L273
 .L274:
 	moveq #1,d4
@@ -1876,8 +1873,7 @@ _generatePawnMoves:
 	move.w #16,a5
 	jra .L263
 .L311:
-	moveq #6,d4
-	cmp.l d6,d4
+	subq.l #6,d6
 	jne .L258
 .L276:
 	move.l a5,d4
@@ -2129,9 +2125,9 @@ _generateMoves:
 	move.l d1,44(sp)
 .L325:
 	add.l d6,d0
-	moveq #119,d3
-	not.b d3
-	and.l d0,d3
+	moveq #119,d1
+	not.b d1
+	and.l d0,d1
 	jne .L333
 	move.b (a5,d0.l),d3
 	jeq .L334
@@ -2199,9 +2195,9 @@ _generateMoves:
 	move.l d1,44(sp)
 .L326:
 	add.l d6,d0
-	moveq #119,d3
-	not.b d3
-	and.l d0,d3
+	moveq #119,d1
+	not.b d1
+	and.l d0,d1
 	jne .L327
 	move.b (a5,d0.l),d3
 	jeq .L328
@@ -2273,8 +2269,8 @@ _generateMoves:
 	jne .L339
 	jra .L406
 .L397:
-	move.w a6,d1
-	tst.b d1
+	move.w a6,d0
+	tst.b d0
 	jne .L407
 	move.b d2,d1
 .L425:
@@ -2444,7 +2440,8 @@ _generateMoves:
 	jra .L417
 .L404:
 	pea 4.w
-	move.b _board+128,d0
+	lea _board,a3
+	move.b 128(a3),d0
 	eor.b #8,d0
 	and.l #255,d0
 	move.l d0,-(sp)
@@ -2454,7 +2451,7 @@ _generateMoves:
 	tst.l d0
 	jne .L393
 	pea 3.w
-	move.b _board+128,d0
+	move.b 128(a3),d0
 	eor.b #8,d0
 	and.l #255,d0
 	move.l d0,-(sp)
@@ -2463,7 +2460,7 @@ _generateMoves:
 	tst.l d0
 	jne .L393
 	pea 2.w
-	move.b _board+128,d0
+	move.b 128(a3),d0
 	eor.b #8,d0
 	and.l #255,d0
 	move.l d0,-(sp)
@@ -2481,7 +2478,7 @@ _generateMoves:
 	move.l #268567044,(a0,d1.l)
 	addq.l #1,d0
 	move.l d0,_moveIndex
-	move.b _board+130,d1
+	move.b 130(a3),d1
 	cmp.b #127,d1
 	jne .L418
 	jra .L315
@@ -2504,7 +2501,8 @@ _generateMoves:
 	jra .L420
 .L413:
 	pea 116.w
-	move.b _board+128,d0
+	lea _board,a3
+	move.b 128(a3),d0
 	eor.b #8,d0
 	and.l #255,d0
 	move.l d0,-(sp)
@@ -2514,7 +2512,7 @@ _generateMoves:
 	tst.l d0
 	jne .L395
 	pea 115.w
-	move.b _board+128,d0
+	move.b 128(a3),d0
 	eor.b #8,d0
 	and.l #255,d0
 	move.l d0,-(sp)
@@ -2523,7 +2521,7 @@ _generateMoves:
 	tst.l d0
 	jne .L395
 	pea 114.w
-	move.b _board+128,d0
+	move.b 128(a3),d0
 	eor.b #8,d0
 	and.l #255,d0
 	move.l d0,-(sp)
@@ -2541,7 +2539,7 @@ _generateMoves:
 	move.l #269120116,(a0,d1.l)
 	addq.l #1,d0
 	move.l d0,_moveIndex
-	move.b _board+130,d1
+	move.b 130(a3),d1
 	cmp.b #127,d1
 	jne .L421
 	jra .L315
@@ -2585,7 +2583,8 @@ _generateMoves:
 	jra .L422
 .L419:
 	pea 117.w
-	move.b _board+128,d0
+	lea _board,a3
+	move.b 128(a3),d0
 	eor.b #8,d0
 	and.l #255,d0
 	move.l d0,-(sp)
@@ -2594,7 +2593,7 @@ _generateMoves:
 	tst.l d0
 	jne .L394
 	pea 118.w
-	move.b _board+128,d0
+	move.b 128(a3),d0
 	eor.b #8,d0
 	and.l #255,d0
 	move.l d0,-(sp)
@@ -2612,11 +2611,12 @@ _generateMoves:
 	move.l #269121140,(a0,d0.l)
 	addq.l #1,d1
 	move.l d1,_moveIndex
-	move.b _board+129,d0
+	move.b 129(a3),d0
 	jra .L423
 .L416:
 	pea 5.w
-	move.b _board+128,d0
+	lea _board,a3
+	move.b 128(a3),d0
 	eor.b #8,d0
 	and.l #255,d0
 	move.l d0,-(sp)
@@ -2625,7 +2625,7 @@ _generateMoves:
 	tst.l d0
 	jne .L392
 	pea 6.w
-	move.b _board+128,d0
+	move.b 128(a3),d0
 	eor.b #8,d0
 	and.l #255,d0
 	move.l d0,-(sp)
@@ -2643,7 +2643,7 @@ _generateMoves:
 	move.l #268568068,(a0,d0.l)
 	addq.l #1,d1
 	move.l d1,_moveIndex
-	move.b _board+129,d0
+	move.b 129(a3),d0
 	jra .L424
 .L407:
 	move.l d4,_moveIndex
@@ -3133,21 +3133,21 @@ _move_make:
 	addq.w #1,132(a1)
 	move.b 128(a1),d0
 	move.w d0,a4
-	move.b d0,d3
-	eor.b #8,d3
-	move.b d3,128(a1)
+	move.b d0,d2
+	eor.b #8,d2
+	move.b d2,128(a1)
 	addq.b #1,d1
 	move.b d1,131(a1)
 	move.l (a6),d5
 	moveq #0,d4
 	not.b d4
 	and.l d5,d4
-	move.l d5,d6
-	lsr.l #8,d6
-	move.l d6,58(sp)
+	move.l d5,d0
+	lsr.l #8,d0
+	move.l d0,58(sp)
 	moveq #0,d2
 	not.b d2
-	and.l d6,d2
+	and.l d0,d2
 	move.l d5,d1
 	clr.w d1
 	swap d1
@@ -3205,8 +3205,8 @@ _move_make:
 .L496:
 	clr.b _board+131
 .L497:
-	moveq #2,d3
-	cmp.l 62(sp),d3
+	moveq #2,d0
+	cmp.l 62(sp),d0
 	jeq .L726
 .L498:
 	clr.b (a3,d4.l)
@@ -3231,18 +3231,18 @@ _move_make:
 	move.w a4,d0
 	tst.b d0
 	jeq .L727
-	move.l d1,d3
-	add.l d1,d3
-	add.l d3,d3
+	move.l d1,d0
+	add.l d1,d0
+	add.l d0,d0
 	lea (a0,a0.l),a1
 	add.l a1,a1
 	move.l a1,66(sp)
 	lea _matValues,a1
-	move.l (a1,d3.l),d3
+	move.l (a1,d0.l),d0
 	move.l 66(sp),a1
 	lea _matValues,a4
-	sub.l (a1,a4.l),d3
-	move.l d3,66(sp)
+	sub.l (a1,a4.l),d0
+	move.l d0,66(sp)
 	moveq #7,d3
 	and.l d5,d3
 	add.l d4,d3
@@ -3347,18 +3347,18 @@ _move_make:
 	.word .L566-.L557
 	.word .L567-.L557
 .L727:
-	move.l d1,d3
-	add.l d1,d3
-	add.l d3,d3
+	move.l d1,d0
+	add.l d1,d0
+	add.l d0,d0
 	lea (a0,a0.l),a1
 	add.l a1,a1
 	move.l a1,66(sp)
 	lea _matValues,a1
-	move.l (a1,d3.l),d3
+	move.l (a1,d0.l),d0
 	move.l 66(sp),a1
 	lea _matValues,a4
-	sub.l (a1,a4.l),d3
-	move.l d3,66(sp)
+	sub.l (a1,a4.l),d0
+	move.l d0,66(sp)
 	moveq #7,d3
 	and.l d5,d3
 	add.l d4,d3
@@ -3428,8 +3428,8 @@ _move_make:
 .L716:
 	move.l d1,a1
 .L604:
-	move.l a1,d1
-	add.l d1,54(sp)
+	move.l a1,d0
+	add.l d0,54(sp)
 	move.l 54(sp),_board+32368
 .L527:
 	lea _castleKeys,a0
@@ -3440,20 +3440,20 @@ _move_make:
 	eor.l d7,d1
 	move.l 4(a0,d0.l),d0
 	eor.l d0,d6
-	moveq #7,d7
-	cmp.l d4,d7
+	moveq #7,d0
+	cmp.l d4,d0
 	jeq .L608
 .L743:
-	cmp.l d4,d7
+	cmp.l d4,d0
 	jge .L729
-	moveq #116,d7
-	cmp.l d4,d7
+	moveq #116,d0
+	cmp.l d4,d0
 	jeq .L612
 	moveq #119,d0
 	cmp.l d4,d0
 	jeq .L613
-	moveq #112,d7
-	cmp.l d4,d7
+	moveq #112,d0
+	cmp.l d4,d0
 	jeq .L730
 .L607:
 	moveq #7,d0
@@ -3465,8 +3465,8 @@ _move_make:
 	moveq #116,d0
 	cmp.l d2,d0
 	jeq .L620
-	moveq #119,d7
-	cmp.l d2,d7
+	moveq #119,d0
+	cmp.l d2,d0
 	jeq .L621
 	moveq #112,d0
 	cmp.l d2,d0
@@ -3492,15 +3492,15 @@ _move_make:
 	moveq #2,d0
 	cmp.l d2,d0
 	jeq .L734
-	moveq #118,d5
-	cmp.l d2,d5
+	moveq #118,d0
+	cmp.l d2,d0
 	jne .L627
 	clr.b 2(a0)
 	move.b #14,(a0)
 	lea _pieceKeys,a1
 	move.l 15288(a1),d5
-	move.l 15272(a1),d7
-	eor.l d7,d5
+	move.l 15272(a1),d0
+	eor.l d0,d5
 	move.l 15292(a1),d0
 	move.l 15276(a1),d7
 	eor.l d7,d0
@@ -3521,16 +3521,15 @@ _move_make:
 	eor.l d6,d0
 	move.l d0,_board+138
 .L628:
-	moveq #1,d6
-	cmp.l 62(sp),d6
+	moveq #1,d0
+	cmp.l 62(sp),d0
 	jeq .L735
 .L629:
 	move.b #127,_board+130
 	move.l (a6),d0
-	moveq #28,d6
-	lsr.l d6,d0
-	moveq #2,d7
-	cmp.l d0,d7
+	moveq #28,d1
+	lsr.l d1,d0
+	subq.l #2,d0
 	jeq .L736
 .L631:
 	cmp.w #0,a5
@@ -3539,8 +3538,8 @@ _move_make:
 	lsl.l #7,d0
 	add.l d0,d2
 	lsl.l #3,d2
-	move.l (a2,d2.l),d5
-	eor.l d5,_board+134
+	move.l (a2,d2.l),d0
+	eor.l d0,_board+134
 	move.l 4(a2,d2.l),d2
 	eor.l d2,_board+138
 	move.l a5,d0
@@ -3588,9 +3587,9 @@ _move_make:
 	move.l d6,9(a1)
 	jra .L624
 .L735:
-	move.l d2,d7
-	sub.l d4,d7
-	move.l d7,-(sp)
+	move.l d2,d0
+	sub.l d4,d0
+	move.l d0,-(sp)
 	jsr _abs
 	addq.l #4,sp
 	moveq #32,d1
@@ -3600,15 +3599,14 @@ _move_make:
 	asr.l #1,d4
 	move.b d4,_board+130
 	lsl.l #3,d4
-	move.l (a2,d4.l),d5
-	eor.l d5,_board+134
+	move.l (a2,d4.l),d0
+	eor.l d0,_board+134
 	move.l 4(a2,d4.l),d4
 	eor.l d4,_board+138
 	move.l (a6),d0
-	moveq #28,d6
-	lsr.l d6,d0
-	moveq #2,d7
-	cmp.l d0,d7
+	moveq #28,d1
+	lsr.l d1,d0
+	subq.l #2,d0
 	jne .L631
 .L736:
 	cmp.b #8,_board+128.l
@@ -3618,8 +3616,8 @@ _move_make:
 	clr.b (a3,d1.l)
 	add.l #144,d2
 	lsl.l #3,d2
-	move.l (a2,d2.l),d3
-	eor.l d3,_board+134
+	move.l (a2,d2.l),d0
+	eor.l d0,_board+134
 	move.l 4(a2,d2.l),d2
 	eor.l d2,_board+138
 	moveq #7,d0
@@ -3662,8 +3660,8 @@ _move_make:
 	sub.l d1,_board+32364
 	move.l a5,d0
 	subq.l #1,d0
-	moveq #1,d7
-	cmp.l d0,d7
+	moveq #1,d1
+	cmp.l d0,d1
 	jcc .L678
 .L666:
 	subq.l #1,_board+32388
@@ -3685,11 +3683,11 @@ _move_make:
 .L662:
 	move.w #64,a0
 	add.l d3,a0
-	move.l a0,d3
-	add.l a0,d3
-	add.l d3,d3
+	move.l a0,d2
+	add.l a0,d2
+	add.l d2,d2
 	lea _psq_rooks,a0
-	move.l (a0,d3.l),d0
+	move.l (a0,d2.l),d0
 	add.l d0,d1
 	sub.l d1,_board+32364
 .L741:
@@ -3698,33 +3696,33 @@ _move_make:
 .L661:
 	move.w #64,a0
 	add.l d3,a0
-	move.l a0,d3
-	add.l a0,d3
-	add.l d3,d3
+	move.l a0,d2
+	add.l a0,d2
+	add.l d2,d2
 	lea _psq_bishops,a0
-	move.l (a0,d3.l),d0
+	move.l (a0,d2.l),d0
 	add.l d0,d1
 	sub.l d1,_board+32364
 	jra .L741
 .L660:
 	move.w #64,a0
 	add.l d3,a0
-	move.l a0,d3
-	add.l a0,d3
-	add.l d3,d3
+	move.l a0,d2
+	add.l a0,d2
+	add.l d2,d2
 	lea _psq_knights,a0
-	move.l (a0,d3.l),d0
+	move.l (a0,d2.l),d0
 	add.l d0,d1
 	sub.l d1,_board+32364
 	jra .L741
 .L659:
 	move.w #64,a0
 	add.l d3,a0
-	move.l a0,d3
-	add.l a0,d3
-	add.l d3,d3
+	move.l a0,d2
+	add.l a0,d2
+	add.l d2,d2
 	lea _psq_pawns,a0
-	move.l (a0,d3.l),d0
+	move.l (a0,d2.l),d0
 	add.l d0,d1
 	sub.l d1,_board+32364
 	jra .L741
@@ -3763,11 +3761,11 @@ _move_make:
 .L663:
 	move.w #64,a0
 	add.l d3,a0
-	move.l a0,d3
-	add.l a0,d3
-	add.l d3,d3
+	move.l a0,d2
+	add.l a0,d2
+	add.l d2,d2
 	lea _psq_queens,a0
-	move.l (a0,d3.l),d0
+	move.l (a0,d2.l),d0
 	add.l d0,d1
 	sub.l d1,_board+32364
 	jra .L741
@@ -3875,32 +3873,32 @@ _move_make:
 	add.l d3,a0
 	add.l a0,a0
 	add.l a0,a0
-	move.l #_psq_pawns,d3
-	move.l (a0,d3.l),a0
+	move.l #_psq_pawns,d0
+	move.l (a0,d0.l),a0
 	jra .L528
 .L537:
 	move.w #64,a0
 	add.l d3,a0
 	add.l a0,a0
 	add.l a0,a0
-	move.l #_psq_knights,d3
-	move.l (a0,d3.l),a0
+	move.l #_psq_knights,d0
+	move.l (a0,d0.l),a0
 	jra .L528
 .L538:
 	move.w #64,a0
 	add.l d3,a0
 	add.l a0,a0
 	add.l a0,a0
-	move.l #_psq_bishops,d3
-	move.l (a0,d3.l),a0
+	move.l #_psq_bishops,d0
+	move.l (a0,d0.l),a0
 	jra .L528
 .L539:
 	move.w #64,a0
 	add.l d3,a0
 	add.l a0,a0
 	add.l a0,a0
-	move.l #_psq_rooks,d3
-	move.l (a0,d3.l),a0
+	move.l #_psq_rooks,d0
+	move.l (a0,d0.l),a0
 	jra .L528
 .L585:
 	lea _psq_knights,a0
@@ -3912,16 +3910,16 @@ _move_make:
 	and.l d5,d0
 	add.l d4,d0
 	asr.l #1,d0
-	move.l d0,a4
+	move.l d0,a1
 .L598:
-	move.l a4,d0
-	add.l a4,d0
+	move.l a1,d0
+	add.l a1,d0
 	add.l d0,d0
 	sub.l (a0,d0.l),d1
-	move.l d1,a1
+	move.l d1,a0
 .L748:
-	move.l a1,d1
-	add.l d1,54(sp)
+	move.l a0,d0
+	add.l d0,54(sp)
 	move.l 54(sp),_board+32368
 	jra .L527
 .L586:
@@ -3934,7 +3932,7 @@ _move_make:
 	and.l d5,d0
 	add.l d4,d0
 	asr.l #1,d0
-	move.l d0,a4
+	move.l d0,a1
 	jra .L598
 .L587:
 	lea _psq_rooks,a0
@@ -3946,7 +3944,7 @@ _move_make:
 	and.l d5,d0
 	add.l d4,d0
 	asr.l #1,d0
-	move.l d0,a4
+	move.l d0,a1
 	jra .L598
 .L588:
 	lea _psq_queens,a0
@@ -3958,15 +3956,15 @@ _move_make:
 	and.l d5,d0
 	add.l d4,d0
 	asr.l #1,d0
-	move.l d0,a4
+	move.l d0,a1
 	jra .L598
 .L540:
 	move.w #64,a0
 	add.l d3,a0
 	add.l a0,a0
 	add.l a0,a0
-	move.l #_psq_queens,d3
-	move.l (a0,d3.l),a0
+	move.l #_psq_queens,d0
+	move.l (a0,d0.l),a0
 	jra .L528
 .L582:
 	lea _psq_pawns,a0
@@ -3978,7 +3976,7 @@ _move_make:
 	and.l d5,d0
 	add.l d4,d0
 	asr.l #1,d0
-	move.l d0,a4
+	move.l d0,a1
 	jra .L598
 .L592:
 	lea _psq_rooks,a1
@@ -4028,8 +4026,8 @@ _move_make:
 	lea _psq_queens,a1
 	move.l (a1,d0.l),d0
 	add.l d0,a0
-	move.l a0,d1
-	add.l d1,54(sp)
+	move.l a0,d0
+	add.l d0,54(sp)
 	move.l 54(sp),_board+32368
 	addq.l #1,_board+32392
 .L744:
@@ -4041,8 +4039,8 @@ _move_make:
 	eor.l d7,d1
 	move.l 4(a0,d0.l),d0
 	eor.l d0,d6
-	moveq #7,d7
-	cmp.l d4,d7
+	moveq #7,d0
+	cmp.l d4,d0
 	jne .L743
 .L608:
 	and.b #7,70(sp)
@@ -4057,8 +4055,8 @@ _move_make:
 	lea _psq_rooks,a1
 	move.l (a1,d0.l),d0
 	add.l d0,a0
-	move.l a0,d1
-	add.l d1,54(sp)
+	move.l a0,d0
+	add.l d0,54(sp)
 	move.l 54(sp),_board+32368
 	addq.l #1,_board+32392
 	jra .L744
@@ -4071,8 +4069,8 @@ _move_make:
 	lea _psq_bishops,a1
 	move.l (a1,d0.l),d0
 	add.l d0,a0
-	move.l a0,d1
-	add.l d1,54(sp)
+	move.l a0,d0
+	add.l d0,54(sp)
 	move.l 54(sp),_board+32368
 	addq.l #1,_board+32392
 	jra .L744
@@ -4085,8 +4083,8 @@ _move_make:
 	lea _psq_knights,a1
 	move.l (a1,d0.l),d0
 	add.l d0,a0
-	move.l a0,d1
-	add.l d1,54(sp)
+	move.l a0,d0
+	add.l d0,54(sp)
 	move.l 54(sp),_board+32368
 	addq.l #1,_board+32392
 	jra .L744
@@ -4099,16 +4097,16 @@ _move_make:
 	lea _psq_pawns,a1
 	move.l (a1,d0.l),d0
 	add.l d0,a0
-	move.l a0,d1
-	add.l d1,54(sp)
+	move.l a0,d0
+	add.l d0,54(sp)
 	move.l 54(sp),_board+32368
 	addq.l #1,_board+32392
 	jra .L744
 .L544:
 	moveq #0,d0
 	add.l d0,a0
-	move.l a0,d1
-	add.l d1,54(sp)
+	move.l a0,d0
+	add.l d0,54(sp)
 	move.l 54(sp),_board+32368
 	addq.l #1,_board+32392
 	jra .L744
@@ -4118,8 +4116,8 @@ _move_make:
 	sub.l d1,_board+32364
 	move.l a5,d0
 	subq.l #1,d0
-	moveq #1,d7
-	cmp.l d0,d7
+	moveq #1,d1
+	cmp.l d0,d1
 	jcc .L678
 	jra .L666
 .L581:
@@ -4132,8 +4130,8 @@ _move_make:
 .L670:
 	moveq #20,d0
 	add.l d0,a0
-	move.l a0,d1
-	add.l d1,54(sp)
+	move.l a0,d0
+	add.l d0,54(sp)
 	move.l 54(sp),_board+32368
 	addq.l #1,_board+32392
 	jra .L744
@@ -4179,8 +4177,8 @@ _move_make:
 .L715:
 	move.l d1,a1
 .L578:
-	move.l a1,d1
-	add.l d1,72(sp)
+	move.l a1,d0
+	add.l d0,72(sp)
 	move.l 72(sp),_board+32364
 	jra .L527
 .L506:
@@ -4283,54 +4281,54 @@ _move_make:
 	move.l d0,a4
 	jra .L745
 .L556:
-	lea _psq_pawns,a1
+	lea _psq_pawns,a0
 	move.l a4,d0
 	add.l a4,d0
 	add.l d0,d0
-	move.l (a1,d0.l),d1
+	move.l (a0,d0.l),d1
 	moveq #7,d0
 	and.l d5,d0
 	add.l d4,d0
 	asr.l #1,d0
-	move.l d0,a4
+	move.l d0,a1
 .L572:
-	move.l a4,d0
-	add.l a4,d0
+	move.l a1,d0
+	add.l a1,d0
 	add.l d0,d0
-	sub.l (a1,d0.l),d1
-	move.l d1,a1
+	sub.l (a0,d0.l),d1
+	move.l d1,a0
 .L749:
-	move.l a1,d1
-	add.l d1,72(sp)
+	move.l a0,d0
+	add.l d0,72(sp)
 	move.l 72(sp),_board+32364
 	jra .L527
 .L560:
-	lea _psq_bishops,a1
+	lea _psq_bishops,a0
 	move.l a4,d0
 	add.l a4,d0
 	add.l d0,d0
-	move.l (a1,d0.l),d1
+	move.l (a0,d0.l),d1
 	moveq #7,d0
 	and.l d5,d0
 	add.l d4,d0
 	asr.l #1,d0
-	move.l d0,a4
+	move.l d0,a1
 	jra .L572
 .L510:
 	move.w #64,a0
 	add.l d3,a0
 	add.l a0,a0
 	add.l a0,a0
-	move.l #_psq_knights,d3
-	move.l (a0,d3.l),a0
+	move.l #_psq_knights,d0
+	move.l (a0,d0.l),a0
 	jra .L501
 .L509:
 	move.w #64,a0
 	add.l d3,a0
 	add.l a0,a0
 	add.l a0,a0
-	move.l #_psq_pawns,d3
-	move.l (a0,d3.l),a0
+	move.l #_psq_pawns,d0
+	move.l (a0,d0.l),a0
 	jra .L501
 .L508:
 	add.l d3,d3
@@ -4349,24 +4347,24 @@ _move_make:
 	add.l d3,a0
 	add.l a0,a0
 	add.l a0,a0
-	move.l #_psq_rooks,d3
-	move.l (a0,d3.l),a0
+	move.l #_psq_rooks,d0
+	move.l (a0,d0.l),a0
 	jra .L501
 .L511:
 	move.w #64,a0
 	add.l d3,a0
 	add.l a0,a0
 	add.l a0,a0
-	move.l #_psq_bishops,d3
-	move.l (a0,d3.l),a0
+	move.l #_psq_bishops,d0
+	move.l (a0,d0.l),a0
 	jra .L501
 .L513:
 	move.w #64,a0
 	add.l d3,a0
 	add.l a0,a0
 	add.l a0,a0
-	move.l #_psq_queens,d3
-	move.l (a0,d3.l),a0
+	move.l #_psq_queens,d0
+	move.l (a0,d0.l),a0
 	jra .L501
 .L564:
 	lea _psq_knights,a1
@@ -4395,40 +4393,40 @@ _move_make:
 	move.l d0,a4
 	jra .L745
 .L562:
-	lea _psq_queens,a1
+	lea _psq_queens,a0
 	move.l a4,d0
 	add.l a4,d0
 	add.l d0,d0
-	move.l (a1,d0.l),d1
+	move.l (a0,d0.l),d1
 	moveq #7,d0
 	and.l d5,d0
 	add.l d4,d0
 	asr.l #1,d0
-	move.l d0,a4
+	move.l d0,a1
 	jra .L572
 .L561:
-	lea _psq_rooks,a1
+	lea _psq_rooks,a0
 	move.l a4,d0
 	add.l a4,d0
 	add.l d0,d0
-	move.l (a1,d0.l),d1
+	move.l (a0,d0.l),d1
 	moveq #7,d0
 	and.l d5,d0
 	add.l d4,d0
 	asr.l #1,d0
-	move.l d0,a4
+	move.l d0,a1
 	jra .L572
 .L559:
-	lea _psq_knights,a1
+	lea _psq_knights,a0
 	move.l a4,d0
 	add.l a4,d0
 	add.l d0,d0
-	move.l (a1,d0.l),d1
+	move.l (a0,d0.l),d1
 	moveq #7,d0
 	and.l d5,d0
 	add.l d4,d0
 	asr.l #1,d0
-	move.l d0,a4
+	move.l d0,a1
 	jra .L572
 .L522:
 	lea (64,a0),a0
@@ -4519,8 +4517,8 @@ _move_make:
 .L731:
 	tst.l d2
 	jeq .L618
-	moveq #4,d7
-	cmp.l d2,d7
+	moveq #4,d0
+	cmp.l d2,d0
 	jne .L615
 	move.b 70(sp),d0
 	and.b #-13,d0
@@ -4574,8 +4572,8 @@ _move_make:
 	add.l d1,d0
 	sub.l d0,_board+32368
 	lea (-9,a5),a5
-	moveq #1,d6
-	cmp.l a5,d6
+	moveq #1,d0
+	cmp.l a5,d0
 	jcc .L678
 .L665:
 	subq.l #1,_board+32392
@@ -4597,55 +4595,55 @@ _move_make:
 .L648:
 	move.w #64,a0
 	add.l d3,a0
-	move.l a0,d3
-	add.l a0,d3
-	add.l d3,d3
+	move.l a0,d2
+	add.l a0,d2
+	add.l d2,d2
 	lea _psq_queens,a0
-	move.l (a0,d3.l),d1
+	move.l (a0,d2.l),d1
 	add.l d1,d0
 	sub.l d0,_board+32368
 	jra .L747
 .L647:
 	move.w #64,a0
 	add.l d3,a0
-	move.l a0,d3
-	add.l a0,d3
-	add.l d3,d3
+	move.l a0,d2
+	add.l a0,d2
+	add.l d2,d2
 	lea _psq_rooks,a0
-	move.l (a0,d3.l),d1
+	move.l (a0,d2.l),d1
 	add.l d1,d0
 	sub.l d0,_board+32368
 	jra .L747
 .L646:
 	move.w #64,a0
 	add.l d3,a0
-	move.l a0,d3
-	add.l a0,d3
-	add.l d3,d3
+	move.l a0,d2
+	add.l a0,d2
+	add.l d2,d2
 	lea _psq_bishops,a0
-	move.l (a0,d3.l),d1
+	move.l (a0,d2.l),d1
 	add.l d1,d0
 	sub.l d0,_board+32368
 	jra .L747
 .L645:
 	move.w #64,a0
 	add.l d3,a0
-	move.l a0,d3
-	add.l a0,d3
-	add.l d3,d3
+	move.l a0,d2
+	add.l a0,d2
+	add.l d2,d2
 	lea _psq_knights,a0
-	move.l (a0,d3.l),d1
+	move.l (a0,d2.l),d1
 	add.l d1,d0
 	sub.l d0,_board+32368
 	jra .L747
 .L644:
 	move.w #64,a0
 	add.l d3,a0
-	move.l a0,d3
-	add.l a0,d3
-	add.l d3,d3
+	move.l a0,d1
+	add.l a0,d1
+	add.l d1,d1
 	lea _psq_pawns,a0
-	add.l (a0,d3.l),d0
+	add.l (a0,d1.l),d0
 	sub.l d0,_board+32368
 	moveq #0,d0
 	movem.l (sp)+,#31996
@@ -4688,8 +4686,8 @@ _move_make:
 	add.l d1,d0
 	sub.l d0,_board+32368
 	lea (-9,a5),a5
-	moveq #1,d6
-	cmp.l a5,d6
+	moveq #1,d0
+	cmp.l a5,d0
 	jcc .L678
 	jra .L665
 .L621:
@@ -4752,8 +4750,8 @@ _move_make:
 	move.b #6,(a0)
 	lea _pieceKeys,a1
 	move.l 6200(a1),d5
-	move.l 6184(a1),d7
-	eor.l d7,d5
+	move.l 6184(a1),d0
+	eor.l d0,d5
 	move.l 6204(a1),d0
 	move.l 6188(a1),d7
 	eor.l d7,d0
@@ -4793,8 +4791,8 @@ _move_make:
 	move.b #6,3(a0)
 	lea _pieceKeys,a1
 	move.l 6144(a1),d5
-	move.l 6168(a1),d7
-	eor.l d7,d5
+	move.l 6168(a1),d0
+	eor.l d0,d5
 	move.l 6148(a1),d0
 	move.l 6172(a1),d7
 	eor.l d7,d0
@@ -4813,13 +4811,13 @@ _move_make:
 	lea _board+112,a0
 	clr.b (a0)
 	move.b #14,3(a0)
-	move.l 54(sp),d5
-	subq.l #5,d5
-	move.l d5,32256(a0)
+	move.l 54(sp),d0
+	subq.l #5,d0
+	move.l d0,32256(a0)
 	lea _pieceKeys,a1
 	move.l 15232(a1),d5
-	move.l 15256(a1),d7
-	eor.l d7,d5
+	move.l 15256(a1),d0
+	eor.l d0,d5
 	move.l 15236(a1),d0
 	move.l 15260(a1),d7
 	eor.l d7,d0
@@ -4834,7 +4832,7 @@ _move_make:
 	add.l a4,d0
 	add.l d0,d0
 	sub.l (a0,d0.l),d1
-	move.l d1,a1
+	move.l d1,a0
 	jra .L748
 .L698:
 	lea _psq_queens,a1
@@ -4845,7 +4843,7 @@ _move_make:
 	add.l a4,d0
 	add.l d0,d0
 	sub.l (a0,d0.l),d1
-	move.l d1,a1
+	move.l d1,a0
 	jra .L749
 .L688:
 	lea _psq_queens,a1
@@ -4865,7 +4863,7 @@ _move_make:
 	add.l a4,d0
 	add.l d0,d0
 	sub.l (a0,d0.l),d1
-	move.l d1,a1
+	move.l d1,a0
 	jra .L749
 .L682:
 	lea _psq_rooks,a0
@@ -4873,7 +4871,7 @@ _move_make:
 	add.l a4,d0
 	add.l d0,d0
 	sub.l (a0,d0.l),d1
-	move.l d1,a1
+	move.l d1,a0
 	jra .L749
 .L681:
 	lea _psq_bishops,a0
@@ -4881,7 +4879,7 @@ _move_make:
 	add.l a4,d0
 	add.l d0,d0
 	sub.l (a0,d0.l),d1
-	move.l d1,a1
+	move.l d1,a0
 	jra .L749
 .L680:
 	lea _psq_knights,a0
@@ -4889,7 +4887,7 @@ _move_make:
 	add.l a4,d0
 	add.l d0,d0
 	sub.l (a0,d0.l),d1
-	move.l d1,a1
+	move.l d1,a0
 	jra .L749
 .L697:
 	lea _psq_rooks,a1
@@ -4906,7 +4904,7 @@ _move_make:
 	add.l a4,d0
 	add.l d0,d0
 	sub.l (a0,d0.l),d1
-	move.l d1,a1
+	move.l d1,a0
 	jra .L748
 .L692:
 	lea _psq_rooks,a0
@@ -4914,7 +4912,7 @@ _move_make:
 	add.l a4,d0
 	add.l d0,d0
 	sub.l (a0,d0.l),d1
-	move.l d1,a1
+	move.l d1,a0
 	jra .L748
 .L691:
 	lea _psq_bishops,a0
@@ -4922,7 +4920,7 @@ _move_make:
 	add.l a4,d0
 	add.l d0,d0
 	sub.l (a0,d0.l),d1
-	move.l d1,a1
+	move.l d1,a0
 	jra .L748
 .L690:
 	lea _psq_knights,a0
@@ -4930,7 +4928,7 @@ _move_make:
 	add.l a4,d0
 	add.l d0,d0
 	sub.l (a0,d0.l),d1
-	move.l d1,a1
+	move.l d1,a0
 	jra .L748
 	.align	2
 	.globl	_move_unmake
@@ -4999,10 +4997,10 @@ _move_unmake:
 	jeq .L779
 	subq.l #1,_board+32388
 	move.l d0,d2
-	moveq #28,d4
-	lsr.l d4,d2
-	moveq #2,d6
-	cmp.l d2,d6
+	moveq #28,d3
+	lsr.l d3,d2
+	moveq #2,d3
+	cmp.l d2,d3
 	jeq .L756
 	clr.w d0
 	swap d0
@@ -5016,14 +5014,14 @@ _move_unmake:
 	moveq #6,d0
 	cmp.l d1,d0
 	jeq .L780
-	moveq #2,d2
-	cmp.l d1,d2
+	moveq #2,d0
+	cmp.l d1,d0
 	jeq .L781
-	moveq #118,d3
-	cmp.l d1,d3
+	moveq #118,d0
+	cmp.l d1,d0
 	jeq .L782
-	moveq #114,d4
-	cmp.l d1,d4
+	moveq #114,d0
+	cmp.l d1,d0
 	jne .L771
 	move.b #14,_board+112
 	clr.b _board+115
@@ -5035,8 +5033,8 @@ _move_unmake:
 	move.l d0,d2
 	moveq #28,d4
 	lsr.l d4,d2
-	moveq #2,d6
-	cmp.l d2,d6
+	moveq #2,d4
+	cmp.l d2,d4
 	jeq .L759
 	clr.w d0
 	swap d0
@@ -5050,8 +5048,8 @@ _move_unmake:
 .L764:
 	move.w #-9,a0
 	add.l d0,a0
-	moveq #1,d4
-	cmp.l a0,d4
+	moveq #1,d0
+	cmp.l a0,d0
 	jcc .L763
 	addq.l #1,_board+32392
 	jra .L763
@@ -5074,16 +5072,16 @@ _move_unmake:
 .L779:
 	subq.l #1,_board+32392
 	move.l d0,d2
-	moveq #28,d6
-	lsr.l d6,d2
+	moveq #28,d3
+	lsr.l d3,d2
 	moveq #2,d3
 	cmp.l d2,d3
 	jeq .L761
 	clr.w d0
 	swap d0
 	lsr.w #4,d0
-	moveq #15,d6
-	and.l d6,d0
+	moveq #15,d3
+	and.l d3,d0
 	jeq .L763
 	move.b d0,(a1,d1.l)
 .L768:
@@ -5159,9 +5157,9 @@ _moveExists:
 	jeq .L817
 	lea _board,a1
 	move.b 128(a1),d1
-	move.b d1,d5
-	eor.b #8,d5
-	move.b d5,128(a1)
+	move.b d1,d4
+	eor.b #8,d4
+	move.b d4,128(a1)
 	move.b 4(a5),130(a1)
 	move.b 5(a5),131(a1)
 	move.b 6(a5),129(a1)
@@ -5188,12 +5186,12 @@ _moveExists:
 	moveq #0,d6
 	not.b d6
 	and.l d0,d6
-	move.l d0,d5
-	lsr.l #8,d5
-	moveq #0,d7
-	not.b d7
-	and.l d5,d7
-	move.l d7,a1
+	move.l d0,d4
+	lsr.l #8,d4
+	moveq #0,d5
+	not.b d5
+	and.l d4,d5
+	move.l d5,a1
 	move.l d0,d5
 	clr.w d5
 	swap d5
@@ -5206,35 +5204,35 @@ _moveExists:
 .L788:
 	clr.b (a6,a1.l)
 	move.b d7,(a6,d6.l)
-	move.l d0,d5
-	clr.w d5
-	swap d5
-	lsr.w #8,d5
-	moveq #15,d6
-	and.l d6,d5
+	move.l d0,d4
+	clr.w d4
+	swap d4
+	lsr.w #8,d4
+	moveq #15,d5
+	and.l d5,d4
 	jeq .L789
 .L824:
 	tst.b d1
 	jeq .L819
 	subq.l #1,_board+32388
 	move.l d0,d5
-	moveq #28,d4
-	lsr.l d4,d5
-	moveq #2,d6
-	cmp.l d5,d6
+	moveq #28,d1
+	lsr.l d1,d5
+	moveq #2,d1
+	cmp.l d5,d1
 	jeq .L793
 	clr.w d0
 	swap d0
 	lsr.w #4,d0
-	moveq #15,d7
-	and.l d7,d0
+	moveq #15,d1
+	and.l d1,d0
 	jeq .L800
 	move.b d0,(a6,a1.l)
 .L801:
 	move.w #-9,a0
 	add.l d0,a0
-	moveq #1,d6
-	cmp.l a0,d6
+	moveq #1,d0
+	cmp.l a0,d0
 	jcc .L800
 	addq.l #1,_board+32392
 .L800:
@@ -5243,14 +5241,14 @@ _moveExists:
 	moveq #6,d0
 	cmp.l a1,d0
 	jeq .L820
-	moveq #2,d1
-	cmp.l a1,d1
+	moveq #2,d0
+	cmp.l a1,d0
 	jeq .L821
-	moveq #118,d4
-	cmp.l a1,d4
+	moveq #118,d0
+	cmp.l a1,d0
 	jeq .L822
-	moveq #114,d5
-	cmp.l a1,d5
+	moveq #114,d0
+	cmp.l a1,d0
 	jeq .L823
 .L792:
 	addq.l #1,d2
@@ -5270,33 +5268,33 @@ _moveExists:
 	move.l d6,(a2,d5.l)
 	clr.b (a6,a1.l)
 	move.b d7,(a6,d6.l)
-	move.l d0,d5
-	clr.w d5
-	swap d5
-	lsr.w #8,d5
-	moveq #15,d6
-	and.l d6,d5
+	move.l d0,d4
+	clr.w d4
+	swap d4
+	lsr.w #8,d4
+	moveq #15,d5
+	and.l d5,d4
 	jne .L824
 .L789:
 	move.l d0,d5
 	moveq #28,d4
 	lsr.l d4,d5
-	moveq #2,d6
-	cmp.l d5,d6
+	moveq #2,d4
+	cmp.l d5,d4
 	jeq .L796
 	clr.w d0
 	swap d0
 	lsr.w #4,d0
-	moveq #15,d7
-	and.l d7,d0
+	moveq #15,d4
+	and.l d4,d0
 	jeq .L800
 	move.b d0,(a6,a1.l)
 	tst.b d1
 	jne .L801
 .L807:
 	subq.l #1,d0
-	moveq #1,d4
-	cmp.l d0,d4
+	moveq #1,d1
+	cmp.l d0,d1
 	jcc .L800
 	addq.l #1,_board+32388
 	jra .L800
@@ -5312,9 +5310,9 @@ _moveExists:
 	move.l (a5),d0
 	lea _board,a1
 	move.b 128(a1),d1
-	move.b d1,d5
-	eor.b #8,d5
-	move.b d5,128(a1)
+	move.b d1,d4
+	eor.b #8,d4
+	move.b d4,128(a1)
 	move.b 4(a5),130(a1)
 	move.b 5(a5),131(a1)
 	move.b 6(a5),129(a1)
@@ -5341,12 +5339,12 @@ _moveExists:
 	moveq #0,d6
 	not.b d6
 	and.l d0,d6
-	move.l d0,d5
-	lsr.l #8,d5
-	moveq #0,d7
-	not.b d7
-	and.l d5,d7
-	move.l d7,a1
+	move.l d0,d4
+	lsr.l #8,d4
+	moveq #0,d5
+	not.b d5
+	and.l d4,d5
+	move.l d5,a1
 	move.l d0,d5
 	clr.w d5
 	swap d5
@@ -5377,8 +5375,8 @@ _moveExists:
 .L819:
 	subq.l #1,_board+32392
 	move.l d0,d5
-	moveq #28,d7
-	lsr.l d7,d5
+	moveq #28,d1
+	lsr.l d1,d5
 	moveq #2,d1
 	cmp.l d5,d1
 	jeq .L798
@@ -5457,9 +5455,9 @@ _generateLegalMoves:
 	add.l d1,d0
 	add.l d0,d0
 	move.l (a4,d0.l),-(sp)
-	moveq #0,d1
-	move.b _board+128,d1
-	move.l d1,-(sp)
+	moveq #0,d0
+	move.b _board+128,d0
+	move.l d0,-(sp)
 	jsr (a3)
 	lea (12,sp),sp
 	tst.l d0
@@ -5627,8 +5625,8 @@ _printLine:
 	lsr.w #8,d2
 	moveq #7,d0
 	and.l d0,d2
-	moveq #5,d1
-	cmp.l d2,d1
+	moveq #5,d0
+	cmp.l d2,d0
 	jeq .L844
 	jge .L891
 	subq.l #6,d2
@@ -5710,8 +5708,8 @@ _printLine:
 	lsr.w #8,d2
 	moveq #7,d0
 	and.l d0,d2
-	moveq #5,d1
-	cmp.l d2,d1
+	moveq #5,d0
+	cmp.l d2,d0
 	jeq .L849
 	jge .L892
 	subq.l #6,d2
@@ -5784,9 +5782,9 @@ _printLine:
 	add.l d2,a2
 	add.l a2,a2
 	add.l a2,a2
-	moveq #60,d3
-	add.l sp,d3
-	add.l d3,a2
+	moveq #60,d0
+	add.l sp,d0
+	add.l d0,a2
 	lea _move_unmake,a3
 .L875:
 	move.l a2,-(sp)
@@ -5830,9 +5828,9 @@ _printLine:
 	add.l d1,d0
 	add.l d0,d0
 	move.l (a3,d0.l),-(sp)
-	moveq #0,d1
-	move.b _board+128,d1
-	move.l d1,-(sp)
+	moveq #0,d0
+	move.b _board+128,d0
+	move.l d0,-(sp)
 	jsr (a2)
 	lea (12,sp),sp
 	tst.l d0
@@ -5873,9 +5871,9 @@ _printLine:
 	lea (12,sp),sp
 	tst.l d0
 	jne .L894
-	moveq #1,d1
+	moveq #1,d0
 	move.l 5540(sp),a0
-	cmp.l 96(a0),d1
+	cmp.l 96(a0),d0
 	jeq .L863
 	move.l d7,-(sp)
 	move.l d5,-(sp)
@@ -5968,8 +5966,8 @@ _printLine:
 	lsr.w #8,d3
 	moveq #7,d0
 	and.l d0,d3
-	moveq #5,d1
-	cmp.l d3,d1
+	moveq #5,d0
+	cmp.l d3,d0
 	jeq .L866
 	jge .L895
 	subq.l #6,d3
@@ -6020,16 +6018,14 @@ _printLine:
 	jlt .L872
 	jra .L873
 .L891:
-	moveq #3,d5
-	cmp.l d2,d5
+	subq.l #3,d2
 	jne .L843
 	pea .LC7
 	jsr (a2)
 	addq.l #4,sp
 	jra .L843
 .L895:
-	moveq #3,d5
-	cmp.l d3,d5
+	subq.l #3,d3
 	jne .L865
 	pea .LC7
 	move.l d2,a0
@@ -6118,8 +6114,7 @@ _printLine:
 	jlt .L858
 	jra .L873
 .L892:
-	moveq #3,d3
-	cmp.l d2,d3
+	subq.l #3,d2
 	jne .L848
 	pea .LC7
 	move.l d5,a0
@@ -6199,17 +6194,17 @@ _Perft.part.0:
 	and.l #255,d1
 	move.l d1,-(sp)
 	jsr (a4)
-	move.l d0,d7
+	move.l d0,d2
 	lea (12,sp),sp
 	jeq .L941
 	move.l 50(sp),-(sp)
 	jsr (a6)
 	addq.l #1,62(sp)
-	moveq #12,d1
-	add.l d1,54(sp)
+	moveq #12,d0
+	add.l d0,54(sp)
 	addq.l #4,sp
-	move.l 102(sp),d2
-	cmp.l 58(sp),d2
+	move.l 102(sp),d0
+	cmp.l 58(sp),d0
 	jne .L920
 .L897:
 	move.l 106(sp),d0
@@ -6233,11 +6228,11 @@ _Perft.part.0:
 	move.l 50(sp),-(sp)
 	jsr (a6)
 	addq.l #1,62(sp)
-	moveq #12,d1
-	add.l d1,54(sp)
+	moveq #12,d0
+	add.l d0,54(sp)
 	addq.l #4,sp
-	move.l 102(sp),d2
-	cmp.l 58(sp),d2
+	move.l 102(sp),d0
+	cmp.l 58(sp),d0
 	jne .L920
 	jra .L897
 .L942:
@@ -6250,7 +6245,7 @@ _Perft.part.0:
 	add.l #3200,d4
 	clr.l 94(sp)
 	clr.l 98(sp)
-	move.l d7,54(sp)
+	move.l d2,54(sp)
 	move.l d4,-(sp)
 	move.l d6,a0
 	jsr (a0)
@@ -6267,7 +6262,7 @@ _Perft.part.0:
 	and.l #255,d1
 	move.l d1,-(sp)
 	jsr (a4)
-	move.l d0,d7
+	move.l d0,d2
 	lea (12,sp),sp
 	jeq .L943
 .L902:
@@ -6277,8 +6272,8 @@ _Perft.part.0:
 	moveq #12,d1
 	add.l d1,d4
 	addq.l #4,sp
-	move.l 90(sp),d2
-	cmp.l 54(sp),d2
+	move.l 90(sp),d1
+	cmp.l 54(sp),d1
 	jeq .L900
 .L939:
 	move.l d4,-(sp)
@@ -6297,7 +6292,7 @@ _Perft.part.0:
 	and.l #255,d1
 	move.l d1,-(sp)
 	jsr (a4)
-	move.l d0,d7
+	move.l d0,d2
 	lea (12,sp),sp
 	jne .L902
 .L943:
@@ -6319,14 +6314,14 @@ _Perft.part.0:
 	moveq #12,d1
 	add.l d1,d4
 	addq.l #4,sp
-	move.l 90(sp),d2
-	cmp.l 54(sp),d2
+	move.l 90(sp),d1
+	cmp.l 54(sp),d1
 	jne .L939
 	jra .L900
 .L944:
-	move.l sp,d5
-	add.l #6272,d5
-	move.l d5,-(sp)
+	move.l sp,d3
+	add.l #6272,d3
+	move.l d3,-(sp)
 	jsr _generateMoves
 	move.l d0,82(sp)
 	addq.l #4,sp
@@ -6335,8 +6330,8 @@ _Perft.part.0:
 	tst.l d0
 	jle .L903
 	move.l d4,124(sp)
-	move.l d7,d4
-	move.l d5,d7
+	move.l d2,d4
+	move.l d3,d7
 .L918:
 	move.l d7,-(sp)
 	move.l d6,a0
@@ -6760,14 +6755,13 @@ _Divide:
 	lsr.w #8,d4
 	moveq #7,d0
 	and.l d0,d4
-	moveq #5,d5
-	cmp.l d4,d5
+	moveq #5,d0
+	cmp.l d4,d0
 	jeq .L968
 	jge .L995
-	moveq #6,d5
-	cmp.l d4,d5
+	subq.l #6,d4
 	jeq .L971
-	subq.l #7,d4
+	subq.l #1,d4
 	jne .L967
 	pea .LC10
 	move.l 62(sp),a1
@@ -6997,8 +6991,8 @@ _generatePawnCaptureMoves:
 	jne .L1006
 	tst.l d3
 	jne .L1006
-	moveq #7,d1
-	cmp.l d4,d1
+	moveq #7,d0
+	cmp.l d4,d0
 	jeq .L1005
 .L1006:
 	move.l d2,d0
@@ -7015,8 +7009,8 @@ _generatePawnCaptureMoves:
 	jeq .L1037
 	tst.l d3
 	jne .L1010
-	moveq #7,d6
-	cmp.l d4,d6
+	moveq #7,d5
+	cmp.l d4,d5
 	jeq .L1009
 .L1010:
 	moveq #1,d7
@@ -7035,11 +7029,11 @@ _generatePawnCaptureMoves:
 	or.l d6,d7
 	lsl.l #8,d0
 	or.l d7,d0
-	move.l d1,d7
-	lsl.w #4,d7
-	swap d7
-	clr.w d7
-	or.l d7,d0
+	move.l d1,d6
+	lsl.w #4,d6
+	swap d6
+	clr.w d6
+	or.l d6,d0
 	move.l d0,(a0)
 	lsl.l #4,d1
 	add.l a1,d1
@@ -7068,8 +7062,8 @@ _generatePawnCaptureMoves:
 	subq.l #7,d4
 	jeq .L1013
 .L1014:
-	moveq #1,d5
-	or.l d5,d3
+	moveq #1,d1
+	or.l d1,d3
 	move.l _moveIndex,d1
 	move.l d1,a0
 	add.l d1,a0
@@ -7080,8 +7074,8 @@ _generatePawnCaptureMoves:
 	move.l d3,d4
 	swap d4
 	clr.w d4
-	move.l a2,d6
-	or.l d6,d4
+	move.l a2,d5
+	or.l d5,d4
 	lsl.l #8,d2
 	or.l d4,d2
 	move.l d0,d4
@@ -7419,9 +7413,9 @@ _generateCaptureMoves:
 	jne .L1110
 	move.b -33(a2),d6
 	jeq .L1110
-	moveq #8,d7
-	and.l d6,d7
-	cmp.l d3,d7
+	moveq #8,d4
+	and.l d6,d4
+	cmp.l d3,d4
 	jeq .L1110
 	and.l #255,d6
 	move.l d1,a4
@@ -7522,11 +7516,11 @@ _generateCaptureMoves:
 	add.l a4,a4
 	add.l a4,a4
 	lea (a1,a4.l),a4
-	move.l d7,d6
-	lsl.w #4,d6
-	swap d6
-	clr.w d6
-	move.l d6,a0
+	move.l d7,d4
+	lsl.w #4,d4
+	swap d4
+	clr.w d4
+	move.l d4,a0
 	move.l a5,d6
 	add.l #7936,d6
 	move.l a0,d4
@@ -7539,8 +7533,8 @@ _generateCaptureMoves:
 	add.l d0,a0
 	add.l a0,a0
 	add.l a0,a0
-	move.l #_MvvLvaScores,d7
-	move.l (a0,d7.l),d6
+	move.l #_MvvLvaScores,d4
+	move.l (a0,d4.l),d6
 	add.l #1000000,d6
 	move.l d6,8(a4)
 	addq.l #1,d1
@@ -7573,16 +7567,16 @@ _generateCaptureMoves:
 	and.l #255,d4
 	move.l _moveList,a1
 	move.l _moveIndex,a0
-	move.l d4,d6
-	swap d6
-	clr.w d6
-	or.l d2,d6
-	move.l d6,44(sp)
+	move.l d4,d0
+	swap d0
+	clr.w d0
+	or.l d2,d0
+	move.l d0,44(sp)
 	moveq #-17,d0
 	add.l d2,d0
-	moveq #119,d6
-	not.b d6
-	and.l d6,d0
+	moveq #119,d1
+	not.b d1
+	and.l d1,d0
 	jne .L1113
 	move.b -17(a2),d0
 	jeq .L1113
@@ -7600,9 +7594,9 @@ _generateCaptureMoves:
 	lsl.w #4,d1
 	swap d1
 	clr.w d1
-	move.l a5,d7
-	add.l #-4352,d7
-	or.l d7,d1
+	move.l a5,d6
+	add.l #-4352,d6
+	or.l d6,d1
 	or.l 44(sp),d1
 	move.l d1,(a4)
 	lsl.l #4,d0
@@ -7652,9 +7646,9 @@ _generateCaptureMoves:
 	jne .L1201
 	move.b 1(a2),d1
 	jeq .L1201
-	moveq #8,d7
-	and.l d1,d7
-	cmp.l d3,d7
+	moveq #8,d6
+	and.l d1,d6
+	cmp.l d3,d6
 	jeq .L1201
 	moveq #0,d6
 	move.b d1,d6
@@ -7725,28 +7719,28 @@ _generateCaptureMoves:
 	or.l d7,d6
 	or.l 44(sp),d6
 	move.l d6,(a6)
-	move.l 52(sp),d7
-	lsl.l #4,d7
-	add.l d4,d7
-	add.l d7,d7
-	add.l d7,d7
+	move.l 52(sp),d6
+	lsl.l #4,d6
+	add.l d4,d6
+	add.l d6,d6
+	add.l d6,d6
 	lea _MvvLvaScores,a4
-	move.l (a4,d7.l),d7
-	add.l #1000000,d7
-	move.l d7,8(a6)
+	move.l (a4,d6.l),d6
+	add.l #1000000,d6
+	move.l d6,8(a6)
 	addq.l #1,a0
 	moveq #17,d6
 	add.l d6,d2
-	moveq #119,d7
-	not.b d7
-	and.l d7,d2
+	moveq #119,d6
+	not.b d6
+	and.l d6,d2
 	jne .L1071
 	move.b 17(a2),d2
 	jeq .L1071
 	move.w #1,a4
-	moveq #8,d7
-	and.l d2,d7
-	cmp.l d3,d7
+	moveq #8,d6
+	and.l d2,d6
+	cmp.l d3,d6
 	jeq .L1073
 .L1233:
 	and.l #255,d2
@@ -7760,9 +7754,9 @@ _generateCaptureMoves:
 	lsl.w #4,d3
 	swap d3
 	clr.w d3
-	move.l a5,d7
-	add.l #4352,d7
-	or.l d7,d3
+	move.l a5,d6
+	add.l #4352,d6
+	or.l d6,d3
 	or.l 44(sp),d3
 	move.l d3,(a1)
 	lsl.l #4,d2
@@ -7837,9 +7831,9 @@ _generateCaptureMoves:
 .L1069:
 	moveq #17,d6
 	add.l d6,d2
-	moveq #119,d7
-	not.b d7
-	and.l d7,d2
+	moveq #119,d6
+	not.b d6
+	and.l d6,d2
 	jeq .L1228
 .L1073:
 	move.w a4,d2
@@ -7912,8 +7906,8 @@ _generateCaptureMoves:
 	add.l a0,a0
 	add.l _moveList,a0
 	lsl.l #8,d1
-	move.l a1,d7
-	or.l d7,d1
+	move.l a1,d2
+	or.l d2,d1
 	or.l #538509312,d1
 	move.l d1,(a0)
 	move.l #1000105,8(a0)
@@ -7938,16 +7932,16 @@ _generateCaptureMoves:
 	add.l a0,a0
 	add.l a0,a0
 	add.l a0,a1
-	move.l d3,d6
-	lsl.w #4,d6
-	swap d6
-	clr.w d6
-	move.l a5,d7
-	add.l #8448,d7
-	or.l d7,d6
-	move.l a6,d7
-	or.l d6,d7
-	move.l d7,(a1)
+	move.l d3,d4
+	lsl.w #4,d4
+	swap d4
+	clr.w d4
+	move.l a5,d6
+	add.l #8448,d6
+	or.l d6,d4
+	move.l a6,d6
+	or.l d4,d6
+	move.l d6,(a1)
 	lsl.l #4,d3
 	add.l d3,d0
 	add.l d0,d0
@@ -7961,9 +7955,9 @@ _generateCaptureMoves:
 .L1228:
 	move.b 17(a2),d2
 	jeq .L1073
-	moveq #8,d7
-	and.l d2,d7
-	cmp.l d3,d7
+	moveq #8,d6
+	and.l d2,d6
+	cmp.l d3,d6
 	jne .L1233
 	jra .L1073
 .L1218:
@@ -7978,11 +7972,11 @@ _generateCaptureMoves:
 	add.l a4,a4
 	add.l a4,a4
 	lea (a1,a4.l),a4
-	move.l d7,d6
-	lsl.w #4,d6
-	swap d6
-	clr.w d6
-	move.l d6,a0
+	move.l d7,d4
+	lsl.w #4,d4
+	swap d4
+	clr.w d4
+	move.l d4,a0
 	move.l a5,d6
 	add.l #-7936,d6
 	move.l a0,d4
@@ -7995,8 +7989,8 @@ _generateCaptureMoves:
 	add.l d0,a0
 	add.l a0,a0
 	add.l a0,a0
-	move.l #_MvvLvaScores,d7
-	move.l (a0,d7.l),d6
+	move.l #_MvvLvaScores,d4
+	move.l (a0,d4.l),d6
 	add.l #1000000,d6
 	move.l d6,8(a4)
 	addq.l #1,d1
@@ -8014,11 +8008,11 @@ _generateCaptureMoves:
 	add.l a4,a4
 	add.l a4,a4
 	lea (a1,a4.l),a4
-	move.l d7,d6
-	lsl.w #4,d6
-	swap d6
-	clr.w d6
-	move.l d6,a0
+	move.l d7,d4
+	lsl.w #4,d4
+	swap d4
+	clr.w d4
+	move.l d4,a0
 	move.l a5,d6
 	add.l #4608,d6
 	move.l a0,d4
@@ -8031,8 +8025,8 @@ _generateCaptureMoves:
 	add.l d0,a0
 	add.l a0,a0
 	add.l a0,a0
-	move.l #_MvvLvaScores,d7
-	move.l (a0,d7.l),d6
+	move.l #_MvvLvaScores,d4
+	move.l (a0,d4.l),d6
 	add.l #1000000,d6
 	move.l d6,8(a4)
 	addq.l #1,d1
@@ -8050,11 +8044,11 @@ _generateCaptureMoves:
 	add.l a4,a4
 	add.l a4,a4
 	lea (a1,a4.l),a4
-	move.l d7,d6
-	lsl.w #4,d6
-	swap d6
-	clr.w d6
-	move.l d6,a0
+	move.l d7,d4
+	lsl.w #4,d4
+	swap d4
+	clr.w d4
+	move.l d4,a0
 	move.l a5,d6
 	add.l #3584,d6
 	move.l a0,d4
@@ -8067,8 +8061,8 @@ _generateCaptureMoves:
 	add.l d0,a0
 	add.l a0,a0
 	add.l a0,a0
-	move.l #_MvvLvaScores,d7
-	move.l (a0,d7.l),d6
+	move.l #_MvvLvaScores,d4
+	move.l (a0,d4.l),d6
 	add.l #1000000,d6
 	move.l d6,8(a4)
 	addq.l #1,d1
@@ -8086,11 +8080,11 @@ _generateCaptureMoves:
 	add.l a4,a4
 	add.l a4,a4
 	lea (a1,a4.l),a4
-	move.l d7,d6
-	lsl.w #4,d6
-	swap d6
-	clr.w d6
-	move.l d6,a0
+	move.l d7,d4
+	lsl.w #4,d4
+	swap d4
+	clr.w d4
+	move.l d4,a0
 	move.l a5,d6
 	add.l #-3584,d6
 	move.l a0,d4
@@ -8103,8 +8097,8 @@ _generateCaptureMoves:
 	add.l d0,a0
 	add.l a0,a0
 	add.l a0,a0
-	move.l #_MvvLvaScores,d7
-	move.l (a0,d7.l),d6
+	move.l #_MvvLvaScores,d4
+	move.l (a0,d4.l),d6
 	add.l #1000000,d6
 	move.l d6,8(a4)
 	addq.l #1,d1
@@ -8122,11 +8116,11 @@ _generateCaptureMoves:
 	add.l a4,a4
 	add.l a4,a4
 	lea (a1,a4.l),a4
-	move.l d7,d6
-	lsl.w #4,d6
-	swap d6
-	clr.w d6
-	move.l d6,a0
+	move.l d7,d4
+	lsl.w #4,d4
+	swap d4
+	clr.w d4
+	move.l d4,a0
 	move.l a5,d6
 	add.l #-4608,d6
 	move.l a0,d4
@@ -8139,8 +8133,8 @@ _generateCaptureMoves:
 	add.l d0,a0
 	add.l a0,a0
 	add.l a0,a0
-	move.l #_MvvLvaScores,d7
-	move.l (a0,d7.l),d6
+	move.l #_MvvLvaScores,d4
+	move.l (a0,d4.l),d6
 	add.l #1000000,d6
 	move.l d6,8(a4)
 	addq.l #1,d1
@@ -8161,9 +8155,9 @@ _generateCaptureMoves:
 	lsl.w #4,d1
 	swap d1
 	clr.w d1
-	move.l a5,d7
-	add.l #-256,d7
-	or.l d7,d1
+	move.l a5,d6
+	add.l #-256,d6
+	or.l d6,d1
 	or.l 44(sp),d1
 	move.l d1,(a4)
 	lsl.l #4,d0
@@ -8192,9 +8186,9 @@ _generateCaptureMoves:
 	lsl.w #4,d1
 	swap d1
 	clr.w d1
-	move.l a5,d7
-	add.l #-3840,d7
-	or.l d7,d1
+	move.l a5,d6
+	add.l #-3840,d6
+	or.l d6,d1
 	or.l 44(sp),d1
 	move.l d1,(a4)
 	lsl.l #4,d0
@@ -8223,9 +8217,9 @@ _generateCaptureMoves:
 	lsl.w #4,d1
 	swap d1
 	clr.w d1
-	move.l a5,d7
-	add.l #-4096,d7
-	or.l d7,d1
+	move.l a5,d6
+	add.l #-4096,d6
+	or.l d6,d1
 	or.l 44(sp),d1
 	move.l d1,(a4)
 	lsl.l #4,d0
@@ -8262,15 +8256,15 @@ _generateCaptureMoves:
 	or.l d7,d6
 	or.l 44(sp),d6
 	move.l d6,(a6)
-	move.l 52(sp),d7
-	lsl.l #4,d7
-	add.l d4,d7
-	add.l d7,d7
-	add.l d7,d7
+	move.l 52(sp),d6
+	lsl.l #4,d6
+	add.l d4,d6
+	add.l d6,d6
+	add.l d6,d6
 	lea _MvvLvaScores,a4
-	move.l (a4,d7.l),d7
-	add.l #1000000,d7
-	move.l d7,8(a6)
+	move.l (a4,d6.l),d6
+	add.l #1000000,d6
+	move.l d6,8(a6)
 	addq.l #1,a0
 	move.w #1,a4
 	jra .L1068
@@ -8294,8 +8288,8 @@ _generateCaptureMoves:
 	add.l a0,a0
 	add.l _moveList,a0
 	lsl.l #8,d1
-	move.l a1,d4
-	or.l d4,d1
+	move.l a1,d2
+	or.l d2,d1
 	or.l #546373632,d1
 	move.l d1,(a0)
 	move.l #1000105,8(a0)
@@ -8320,8 +8314,8 @@ _generateCaptureMoves:
 	add.l _moveList,a0
 	move.l d1,d2
 	lsl.l #8,d2
-	move.l a1,d6
-	or.l d6,d2
+	move.l a1,d3
+	or.l d3,d2
 	or.l #538509312,d2
 	move.l d2,(a0)
 	move.l #1000105,8(a0)
@@ -8364,18 +8358,18 @@ _generateKingCaptureMoves:
 	swap d2
 	clr.w d2
 	or.l d0,d2
-	moveq #-17,d4
-	add.l d0,d4
-	moveq #119,d6
-	not.b d6
-	and.l d4,d6
+	moveq #-17,d3
+	add.l d0,d3
+	moveq #119,d4
+	not.b d4
+	and.l d3,d4
 	jne .L1252
 	lea _board,a1
-	move.b (a1,d4.l),d6
+	move.b (a1,d3.l),d6
 	jeq .L1252
-	moveq #8,d7
-	and.l d6,d7
-	cmp.l a5,d7
+	moveq #8,d4
+	and.l d6,d4
+	cmp.l a5,d4
 	jeq .L1252
 	and.l #255,d6
 	move.l d1,a2
@@ -8384,14 +8378,14 @@ _generateKingCaptureMoves:
 	add.l a2,a2
 	add.l a2,a2
 	lea (a0,a2.l),a2
-	lsl.l #8,d4
-	or.l d2,d4
-	move.l d6,d7
-	lsl.w #4,d7
-	swap d7
-	clr.w d7
-	or.l d7,d4
-	move.l d4,(a2)
+	lsl.l #8,d3
+	or.l d2,d3
+	move.l d6,d4
+	lsl.w #4,d4
+	swap d4
+	clr.w d4
+	or.l d4,d3
+	move.l d3,(a2)
 	lsl.l #4,d6
 	move.l d6,a1
 	add.l d5,a1
@@ -8406,68 +8400,68 @@ _generateKingCaptureMoves:
 .L1238:
 	moveq #-16,d4
 	add.l d0,d4
-	moveq #119,d7
-	not.b d7
-	and.l d4,d7
+	moveq #119,d3
+	not.b d3
+	and.l d4,d3
 	jne .L1239
 	lea _board,a1
-	move.b (a1,d4.l),d7
-	move.w d7,a2
+	move.b (a1,d4.l),d3
+	move.w d3,a2
 	jne .L1282
 .L1239:
 	moveq #-15,d4
 	add.l d0,d4
-	moveq #119,d7
-	not.b d7
-	and.l d4,d7
+	moveq #119,d3
+	not.b d3
+	and.l d4,d3
 	jne .L1240
 	lea _board,a1
-	move.b (a1,d4.l),d7
-	move.w d7,a2
+	move.b (a1,d4.l),d3
+	move.w d3,a1
 	jne .L1283
 .L1240:
 	move.l d0,d4
 	subq.l #1,d4
-	moveq #119,d7
-	not.b d7
-	and.l d4,d7
+	moveq #119,d3
+	not.b d3
+	and.l d4,d3
 	jne .L1241
 	lea _board,a1
-	move.b (a1,d4.l),d7
-	move.w d7,a2
+	move.b (a1,d4.l),d3
+	move.w d3,a2
 	jne .L1284
 .L1241:
 	move.l d0,d4
 	addq.l #1,d4
-	moveq #119,d7
-	not.b d7
-	and.l d4,d7
+	moveq #119,d3
+	not.b d3
+	and.l d4,d3
 	jne .L1242
 	lea _board,a1
-	move.b (a1,d4.l),d7
-	move.w d7,a2
+	move.b (a1,d4.l),d3
+	move.w d3,a2
 	jne .L1285
 .L1242:
 	moveq #15,d4
 	add.l d0,d4
-	moveq #119,d7
-	not.b d7
-	and.l d4,d7
+	moveq #119,d3
+	not.b d3
+	and.l d4,d3
 	jne .L1243
 	lea _board,a1
-	move.b (a1,d4.l),d7
-	move.w d7,a2
+	move.b (a1,d4.l),d3
+	move.w d3,a2
 	jne .L1286
 .L1243:
 	moveq #16,d4
 	add.l d0,d4
-	moveq #119,d7
-	not.b d7
-	and.l d4,d7
+	moveq #119,d3
+	not.b d3
+	and.l d4,d3
 	jne .L1244
 	lea _board,a2
-	move.b (a2,d4.l),d7
-	move.w d7,a1
+	move.b (a2,d4.l),d3
+	move.w d3,a1
 	jeq .L1244
 	moveq #8,d3
 	move.l a1,d7
@@ -8475,8 +8469,8 @@ _generateKingCaptureMoves:
 	cmp.l a5,d3
 	jeq .L1244
 	move.w a1,d3
-	moveq #0,d7
-	move.b d3,d7
+	moveq #0,d6
+	move.b d3,d6
 	move.l d1,a3
 	add.l d1,a3
 	add.l d1,a3
@@ -8485,38 +8479,38 @@ _generateKingCaptureMoves:
 	lea (a0,a3.l),a3
 	lsl.l #8,d4
 	or.l d2,d4
-	move.l d7,d6
-	lsl.w #4,d6
-	swap d6
-	clr.w d6
-	or.l d6,d4
+	move.l d6,d3
+	lsl.w #4,d3
+	swap d3
+	clr.w d3
+	or.l d3,d4
 	move.l d4,(a3)
-	lsl.l #4,d7
-	move.l d7,a1
+	lsl.l #4,d6
+	move.l d6,a1
 	add.l d5,a1
 	add.l a1,a1
 	add.l a1,a1
 	lea _MvvLvaScores,a4
-	move.l (a1,a4.l),d4
-	add.l #1000000,d4
-	move.l d4,8(a3)
+	move.l (a1,a4.l),d3
+	add.l #1000000,d3
+	move.l d3,8(a3)
 	addq.l #1,d1
-	moveq #17,d7
-	add.l d7,d0
-	moveq #119,d4
-	not.b d4
-	and.l d0,d4
+	moveq #17,d3
+	add.l d3,d0
+	moveq #119,d3
+	not.b d3
+	and.l d0,d3
 	jne .L1246
-	move.b (a2,d0.l),d4
+	move.b (a2,d0.l),d3
 	moveq #1,d6
-	tst.b d4
+	tst.b d3
 	jeq .L1246
 .L1249:
-	moveq #8,d7
-	and.l d4,d7
-	cmp.l d7,a5
+	moveq #8,d4
+	and.l d3,d4
+	cmp.l d4,a5
 	jeq .L1247
-	and.l #255,d4
+	and.l #255,d3
 	move.l d1,a1
 	add.l d1,a1
 	add.l d1,a1
@@ -8525,14 +8519,14 @@ _generateKingCaptureMoves:
 	add.l a1,a0
 	lsl.l #8,d0
 	or.l d0,d2
-	move.l d4,d0
+	move.l d3,d0
 	lsl.w #4,d0
 	swap d0
 	clr.w d0
 	or.l d0,d2
 	move.l d2,(a0)
-	lsl.l #4,d4
-	add.l d4,d5
+	lsl.l #4,d3
+	add.l d3,d5
 	add.l d5,d5
 	add.l d5,d5
 	lea _MvvLvaScores,a1
@@ -8550,9 +8544,9 @@ _generateKingCaptureMoves:
 .L1244:
 	moveq #17,d3
 	add.l d3,d0
-	moveq #119,d4
-	not.b d4
-	and.l d0,d4
+	moveq #119,d3
+	not.b d3
+	and.l d0,d3
 	jeq .L1287
 .L1247:
 	tst.b d6
@@ -8562,20 +8556,20 @@ _generateKingCaptureMoves:
 	rts
 .L1287:
 	lea _board,a1
-	move.b (a1,d0.l),d4
+	move.b (a1,d0.l),d3
 	jne .L1249
 	tst.b d6
 	jeq .L1280
 	jra .L1246
 .L1283:
 	moveq #8,d3
-	move.l a2,d7
+	move.l a1,d7
 	and.l d7,d3
 	cmp.l a5,d3
 	jeq .L1240
-	move.w a2,d3
-	moveq #0,d7
-	move.b d3,d7
+	move.w a1,d3
+	moveq #0,d6
+	move.b d3,d6
 	move.l d1,a2
 	add.l d1,a2
 	add.l d1,a2
@@ -8584,21 +8578,21 @@ _generateKingCaptureMoves:
 	lea (a0,a2.l),a2
 	lsl.l #8,d4
 	or.l d2,d4
-	move.l d7,d6
-	lsl.w #4,d6
-	swap d6
-	clr.w d6
-	or.l d6,d4
+	move.l d6,d3
+	lsl.w #4,d3
+	swap d3
+	clr.w d3
+	or.l d3,d4
 	move.l d4,(a2)
-	lsl.l #4,d7
-	move.l d7,a1
+	lsl.l #4,d6
+	move.l d6,a1
 	add.l d5,a1
 	add.l a1,a1
 	add.l a1,a1
 	lea _MvvLvaScores,a3
-	move.l (a1,a3.l),d4
-	add.l #1000000,d4
-	move.l d4,8(a2)
+	move.l (a1,a3.l),d3
+	add.l #1000000,d3
+	move.l d3,8(a2)
 	addq.l #1,d1
 	moveq #1,d6
 	jra .L1240
@@ -8609,8 +8603,8 @@ _generateKingCaptureMoves:
 	cmp.l a5,d3
 	jeq .L1239
 	move.w a2,d3
-	moveq #0,d7
-	move.b d3,d7
+	moveq #0,d6
+	move.b d3,d6
 	move.l d1,a2
 	add.l d1,a2
 	add.l d1,a2
@@ -8619,21 +8613,21 @@ _generateKingCaptureMoves:
 	lea (a0,a2.l),a2
 	lsl.l #8,d4
 	or.l d2,d4
-	move.l d7,d6
-	lsl.w #4,d6
-	swap d6
-	clr.w d6
-	or.l d6,d4
+	move.l d6,d3
+	lsl.w #4,d3
+	swap d3
+	clr.w d3
+	or.l d3,d4
 	move.l d4,(a2)
-	lsl.l #4,d7
-	move.l d7,a1
+	lsl.l #4,d6
+	move.l d6,a1
 	add.l d5,a1
 	add.l a1,a1
 	add.l a1,a1
 	lea _MvvLvaScores,a3
-	move.l (a1,a3.l),d4
-	add.l #1000000,d4
-	move.l d4,8(a2)
+	move.l (a1,a3.l),d3
+	add.l #1000000,d3
+	move.l d3,8(a2)
 	addq.l #1,d1
 	moveq #1,d6
 	jra .L1239
@@ -8644,8 +8638,8 @@ _generateKingCaptureMoves:
 	cmp.l a5,d3
 	jeq .L1242
 	move.w a2,d3
-	moveq #0,d7
-	move.b d3,d7
+	moveq #0,d6
+	move.b d3,d6
 	move.l d1,a2
 	add.l d1,a2
 	add.l d1,a2
@@ -8654,21 +8648,21 @@ _generateKingCaptureMoves:
 	lea (a0,a2.l),a2
 	lsl.l #8,d4
 	or.l d2,d4
-	move.l d7,d6
-	lsl.w #4,d6
-	swap d6
-	clr.w d6
-	or.l d6,d4
+	move.l d6,d3
+	lsl.w #4,d3
+	swap d3
+	clr.w d3
+	or.l d3,d4
 	move.l d4,(a2)
-	lsl.l #4,d7
-	move.l d7,a1
+	lsl.l #4,d6
+	move.l d6,a1
 	add.l d5,a1
 	add.l a1,a1
 	add.l a1,a1
 	lea _MvvLvaScores,a3
-	move.l (a1,a3.l),d4
-	add.l #1000000,d4
-	move.l d4,8(a2)
+	move.l (a1,a3.l),d3
+	add.l #1000000,d3
+	move.l d3,8(a2)
 	addq.l #1,d1
 	moveq #1,d6
 	jra .L1242
@@ -8679,8 +8673,8 @@ _generateKingCaptureMoves:
 	cmp.l a5,d3
 	jeq .L1241
 	move.w a2,d3
-	moveq #0,d7
-	move.b d3,d7
+	moveq #0,d6
+	move.b d3,d6
 	move.l d1,a2
 	add.l d1,a2
 	add.l d1,a2
@@ -8689,21 +8683,21 @@ _generateKingCaptureMoves:
 	lea (a0,a2.l),a2
 	lsl.l #8,d4
 	or.l d2,d4
-	move.l d7,d6
-	lsl.w #4,d6
-	swap d6
-	clr.w d6
-	or.l d6,d4
+	move.l d6,d3
+	lsl.w #4,d3
+	swap d3
+	clr.w d3
+	or.l d3,d4
 	move.l d4,(a2)
-	lsl.l #4,d7
-	move.l d7,a1
+	lsl.l #4,d6
+	move.l d6,a1
 	add.l d5,a1
 	add.l a1,a1
 	add.l a1,a1
 	lea _MvvLvaScores,a3
-	move.l (a1,a3.l),d4
-	add.l #1000000,d4
-	move.l d4,8(a2)
+	move.l (a1,a3.l),d3
+	add.l #1000000,d3
+	move.l d3,8(a2)
 	addq.l #1,d1
 	moveq #1,d6
 	jra .L1241
@@ -8714,8 +8708,8 @@ _generateKingCaptureMoves:
 	cmp.l a5,d3
 	jeq .L1243
 	move.w a2,d3
-	moveq #0,d7
-	move.b d3,d7
+	moveq #0,d6
+	move.b d3,d6
 	move.l d1,a2
 	add.l d1,a2
 	add.l d1,a2
@@ -8724,21 +8718,21 @@ _generateKingCaptureMoves:
 	lea (a0,a2.l),a2
 	lsl.l #8,d4
 	or.l d2,d4
-	move.l d7,d6
-	lsl.w #4,d6
-	swap d6
-	clr.w d6
-	or.l d6,d4
+	move.l d6,d3
+	lsl.w #4,d3
+	swap d3
+	clr.w d3
+	or.l d3,d4
 	move.l d4,(a2)
-	lsl.l #4,d7
-	move.l d7,a1
+	lsl.l #4,d6
+	move.l d6,a1
 	add.l d5,a1
 	add.l a1,a1
 	add.l a1,a1
 	lea _MvvLvaScores,a3
-	move.l (a1,a3.l),d4
-	add.l #1000000,d4
-	move.l d4,8(a2)
+	move.l (a1,a3.l),d3
+	add.l #1000000,d3
+	move.l d3,8(a2)
 	addq.l #1,d1
 	moveq #1,d6
 	jra .L1243
@@ -8757,18 +8751,18 @@ _generateKnightCaptureMoves:
 	swap d2
 	clr.w d2
 	or.l d0,d2
-	moveq #-33,d4
-	add.l d0,d4
-	moveq #119,d6
-	not.b d6
-	and.l d4,d6
+	moveq #-33,d3
+	add.l d0,d3
+	moveq #119,d4
+	not.b d4
+	and.l d3,d4
 	jne .L1303
 	lea _board,a1
-	move.b (a1,d4.l),d6
+	move.b (a1,d3.l),d6
 	jeq .L1303
-	moveq #8,d7
-	and.l d6,d7
-	cmp.l a5,d7
+	moveq #8,d4
+	and.l d6,d4
+	cmp.l a5,d4
 	jeq .L1303
 	and.l #255,d6
 	move.l d1,a2
@@ -8777,14 +8771,14 @@ _generateKnightCaptureMoves:
 	add.l a2,a2
 	add.l a2,a2
 	lea (a0,a2.l),a2
-	lsl.l #8,d4
-	or.l d2,d4
-	move.l d6,d7
-	lsl.w #4,d7
-	swap d7
-	clr.w d7
-	or.l d7,d4
-	move.l d4,(a2)
+	lsl.l #8,d3
+	or.l d2,d3
+	move.l d6,d4
+	lsl.w #4,d4
+	swap d4
+	clr.w d4
+	or.l d4,d3
+	move.l d3,(a2)
 	lsl.l #4,d6
 	move.l d6,a1
 	add.l d5,a1
@@ -8799,68 +8793,68 @@ _generateKnightCaptureMoves:
 .L1289:
 	moveq #-31,d4
 	add.l d0,d4
-	moveq #119,d7
-	not.b d7
-	and.l d4,d7
+	moveq #119,d3
+	not.b d3
+	and.l d4,d3
 	jne .L1290
 	lea _board,a1
-	move.b (a1,d4.l),d7
-	move.w d7,a2
+	move.b (a1,d4.l),d3
+	move.w d3,a2
 	jne .L1333
 .L1290:
 	moveq #-18,d4
 	add.l d0,d4
-	moveq #119,d7
-	not.b d7
-	and.l d4,d7
+	moveq #119,d3
+	not.b d3
+	and.l d4,d3
 	jne .L1291
 	lea _board,a1
-	move.b (a1,d4.l),d7
-	move.w d7,a2
+	move.b (a1,d4.l),d3
+	move.w d3,a1
 	jne .L1334
 .L1291:
 	moveq #-14,d4
 	add.l d0,d4
-	moveq #119,d7
-	not.b d7
-	and.l d4,d7
+	moveq #119,d3
+	not.b d3
+	and.l d4,d3
 	jne .L1292
 	lea _board,a1
-	move.b (a1,d4.l),d7
-	move.w d7,a2
+	move.b (a1,d4.l),d3
+	move.w d3,a2
 	jne .L1335
 .L1292:
 	moveq #14,d4
 	add.l d0,d4
-	moveq #119,d7
-	not.b d7
-	and.l d4,d7
+	moveq #119,d3
+	not.b d3
+	and.l d4,d3
 	jne .L1293
 	lea _board,a1
-	move.b (a1,d4.l),d7
-	move.w d7,a2
+	move.b (a1,d4.l),d3
+	move.w d3,a2
 	jne .L1336
 .L1293:
 	moveq #18,d4
 	add.l d0,d4
-	moveq #119,d7
-	not.b d7
-	and.l d4,d7
+	moveq #119,d3
+	not.b d3
+	and.l d4,d3
 	jne .L1294
 	lea _board,a1
-	move.b (a1,d4.l),d7
-	move.w d7,a2
+	move.b (a1,d4.l),d3
+	move.w d3,a2
 	jne .L1337
 .L1294:
 	moveq #31,d4
 	add.l d0,d4
-	moveq #119,d7
-	not.b d7
-	and.l d4,d7
+	moveq #119,d3
+	not.b d3
+	and.l d4,d3
 	jne .L1295
 	lea _board,a2
-	move.b (a2,d4.l),d7
-	move.w d7,a1
+	move.b (a2,d4.l),d3
+	move.w d3,a1
 	jeq .L1295
 	moveq #8,d3
 	move.l a1,d7
@@ -8868,8 +8862,8 @@ _generateKnightCaptureMoves:
 	cmp.l a5,d3
 	jeq .L1295
 	move.w a1,d3
-	moveq #0,d7
-	move.b d3,d7
+	moveq #0,d6
+	move.b d3,d6
 	move.l d1,a3
 	add.l d1,a3
 	add.l d1,a3
@@ -8878,38 +8872,38 @@ _generateKnightCaptureMoves:
 	lea (a0,a3.l),a3
 	lsl.l #8,d4
 	or.l d2,d4
-	move.l d7,d6
-	lsl.w #4,d6
-	swap d6
-	clr.w d6
-	or.l d6,d4
+	move.l d6,d3
+	lsl.w #4,d3
+	swap d3
+	clr.w d3
+	or.l d3,d4
 	move.l d4,(a3)
-	lsl.l #4,d7
-	move.l d7,a1
+	lsl.l #4,d6
+	move.l d6,a1
 	add.l d5,a1
 	add.l a1,a1
 	add.l a1,a1
 	lea _MvvLvaScores,a4
-	move.l (a1,a4.l),d4
-	add.l #1000000,d4
-	move.l d4,8(a3)
+	move.l (a1,a4.l),d3
+	add.l #1000000,d3
+	move.l d3,8(a3)
 	addq.l #1,d1
-	moveq #33,d7
-	add.l d7,d0
-	moveq #119,d4
-	not.b d4
-	and.l d0,d4
+	moveq #33,d3
+	add.l d3,d0
+	moveq #119,d3
+	not.b d3
+	and.l d0,d3
 	jne .L1297
-	move.b (a2,d0.l),d4
+	move.b (a2,d0.l),d3
 	moveq #1,d6
-	tst.b d4
+	tst.b d3
 	jeq .L1297
 .L1300:
-	moveq #8,d7
-	and.l d4,d7
-	cmp.l d7,a5
+	moveq #8,d4
+	and.l d3,d4
+	cmp.l d4,a5
 	jeq .L1298
-	and.l #255,d4
+	and.l #255,d3
 	move.l d1,a1
 	add.l d1,a1
 	add.l d1,a1
@@ -8918,14 +8912,14 @@ _generateKnightCaptureMoves:
 	add.l a1,a0
 	lsl.l #8,d0
 	or.l d0,d2
-	move.l d4,d0
+	move.l d3,d0
 	lsl.w #4,d0
 	swap d0
 	clr.w d0
 	or.l d0,d2
 	move.l d2,(a0)
-	lsl.l #4,d4
-	add.l d4,d5
+	lsl.l #4,d3
+	add.l d3,d5
 	add.l d5,d5
 	add.l d5,d5
 	lea _MvvLvaScores,a1
@@ -8943,9 +8937,9 @@ _generateKnightCaptureMoves:
 .L1295:
 	moveq #33,d3
 	add.l d3,d0
-	moveq #119,d4
-	not.b d4
-	and.l d0,d4
+	moveq #119,d3
+	not.b d3
+	and.l d0,d3
 	jeq .L1338
 .L1298:
 	tst.b d6
@@ -8955,20 +8949,20 @@ _generateKnightCaptureMoves:
 	rts
 .L1338:
 	lea _board,a1
-	move.b (a1,d0.l),d4
+	move.b (a1,d0.l),d3
 	jne .L1300
 	tst.b d6
 	jeq .L1331
 	jra .L1297
 .L1334:
 	moveq #8,d3
-	move.l a2,d7
+	move.l a1,d7
 	and.l d7,d3
 	cmp.l a5,d3
 	jeq .L1291
-	move.w a2,d3
-	moveq #0,d7
-	move.b d3,d7
+	move.w a1,d3
+	moveq #0,d6
+	move.b d3,d6
 	move.l d1,a2
 	add.l d1,a2
 	add.l d1,a2
@@ -8977,21 +8971,21 @@ _generateKnightCaptureMoves:
 	lea (a0,a2.l),a2
 	lsl.l #8,d4
 	or.l d2,d4
-	move.l d7,d6
-	lsl.w #4,d6
-	swap d6
-	clr.w d6
-	or.l d6,d4
+	move.l d6,d3
+	lsl.w #4,d3
+	swap d3
+	clr.w d3
+	or.l d3,d4
 	move.l d4,(a2)
-	lsl.l #4,d7
-	move.l d7,a1
+	lsl.l #4,d6
+	move.l d6,a1
 	add.l d5,a1
 	add.l a1,a1
 	add.l a1,a1
 	lea _MvvLvaScores,a3
-	move.l (a1,a3.l),d4
-	add.l #1000000,d4
-	move.l d4,8(a2)
+	move.l (a1,a3.l),d3
+	add.l #1000000,d3
+	move.l d3,8(a2)
 	addq.l #1,d1
 	moveq #1,d6
 	jra .L1291
@@ -9002,8 +8996,8 @@ _generateKnightCaptureMoves:
 	cmp.l a5,d3
 	jeq .L1290
 	move.w a2,d3
-	moveq #0,d7
-	move.b d3,d7
+	moveq #0,d6
+	move.b d3,d6
 	move.l d1,a2
 	add.l d1,a2
 	add.l d1,a2
@@ -9012,21 +9006,21 @@ _generateKnightCaptureMoves:
 	lea (a0,a2.l),a2
 	lsl.l #8,d4
 	or.l d2,d4
-	move.l d7,d6
-	lsl.w #4,d6
-	swap d6
-	clr.w d6
-	or.l d6,d4
+	move.l d6,d3
+	lsl.w #4,d3
+	swap d3
+	clr.w d3
+	or.l d3,d4
 	move.l d4,(a2)
-	lsl.l #4,d7
-	move.l d7,a1
+	lsl.l #4,d6
+	move.l d6,a1
 	add.l d5,a1
 	add.l a1,a1
 	add.l a1,a1
 	lea _MvvLvaScores,a3
-	move.l (a1,a3.l),d4
-	add.l #1000000,d4
-	move.l d4,8(a2)
+	move.l (a1,a3.l),d3
+	add.l #1000000,d3
+	move.l d3,8(a2)
 	addq.l #1,d1
 	moveq #1,d6
 	jra .L1290
@@ -9037,8 +9031,8 @@ _generateKnightCaptureMoves:
 	cmp.l a5,d3
 	jeq .L1293
 	move.w a2,d3
-	moveq #0,d7
-	move.b d3,d7
+	moveq #0,d6
+	move.b d3,d6
 	move.l d1,a2
 	add.l d1,a2
 	add.l d1,a2
@@ -9047,21 +9041,21 @@ _generateKnightCaptureMoves:
 	lea (a0,a2.l),a2
 	lsl.l #8,d4
 	or.l d2,d4
-	move.l d7,d6
-	lsl.w #4,d6
-	swap d6
-	clr.w d6
-	or.l d6,d4
+	move.l d6,d3
+	lsl.w #4,d3
+	swap d3
+	clr.w d3
+	or.l d3,d4
 	move.l d4,(a2)
-	lsl.l #4,d7
-	move.l d7,a1
+	lsl.l #4,d6
+	move.l d6,a1
 	add.l d5,a1
 	add.l a1,a1
 	add.l a1,a1
 	lea _MvvLvaScores,a3
-	move.l (a1,a3.l),d4
-	add.l #1000000,d4
-	move.l d4,8(a2)
+	move.l (a1,a3.l),d3
+	add.l #1000000,d3
+	move.l d3,8(a2)
 	addq.l #1,d1
 	moveq #1,d6
 	jra .L1293
@@ -9072,8 +9066,8 @@ _generateKnightCaptureMoves:
 	cmp.l a5,d3
 	jeq .L1292
 	move.w a2,d3
-	moveq #0,d7
-	move.b d3,d7
+	moveq #0,d6
+	move.b d3,d6
 	move.l d1,a2
 	add.l d1,a2
 	add.l d1,a2
@@ -9082,21 +9076,21 @@ _generateKnightCaptureMoves:
 	lea (a0,a2.l),a2
 	lsl.l #8,d4
 	or.l d2,d4
-	move.l d7,d6
-	lsl.w #4,d6
-	swap d6
-	clr.w d6
-	or.l d6,d4
+	move.l d6,d3
+	lsl.w #4,d3
+	swap d3
+	clr.w d3
+	or.l d3,d4
 	move.l d4,(a2)
-	lsl.l #4,d7
-	move.l d7,a1
+	lsl.l #4,d6
+	move.l d6,a1
 	add.l d5,a1
 	add.l a1,a1
 	add.l a1,a1
 	lea _MvvLvaScores,a3
-	move.l (a1,a3.l),d4
-	add.l #1000000,d4
-	move.l d4,8(a2)
+	move.l (a1,a3.l),d3
+	add.l #1000000,d3
+	move.l d3,8(a2)
 	addq.l #1,d1
 	moveq #1,d6
 	jra .L1292
@@ -9107,8 +9101,8 @@ _generateKnightCaptureMoves:
 	cmp.l a5,d3
 	jeq .L1294
 	move.w a2,d3
-	moveq #0,d7
-	move.b d3,d7
+	moveq #0,d6
+	move.b d3,d6
 	move.l d1,a2
 	add.l d1,a2
 	add.l d1,a2
@@ -9117,21 +9111,21 @@ _generateKnightCaptureMoves:
 	lea (a0,a2.l),a2
 	lsl.l #8,d4
 	or.l d2,d4
-	move.l d7,d6
-	lsl.w #4,d6
-	swap d6
-	clr.w d6
-	or.l d6,d4
+	move.l d6,d3
+	lsl.w #4,d3
+	swap d3
+	clr.w d3
+	or.l d3,d4
 	move.l d4,(a2)
-	lsl.l #4,d7
-	move.l d7,a1
+	lsl.l #4,d6
+	move.l d6,a1
 	add.l d5,a1
 	add.l a1,a1
 	add.l a1,a1
 	lea _MvvLvaScores,a3
-	move.l (a1,a3.l),d4
-	add.l #1000000,d4
-	move.l d4,8(a2)
+	move.l (a1,a3.l),d3
+	add.l #1000000,d3
+	move.l d3,8(a2)
 	addq.l #1,d1
 	moveq #1,d6
 	jra .L1294
@@ -9145,11 +9139,11 @@ _generateBishopCaptureMoves:
 	or.l d2,d7
 	move.l _moveList,a3
 	move.l _moveIndex,d3
-	move.l d7,d6
-	swap d6
-	clr.w d6
-	or.l d4,d6
-	move.l d6,a6
+	move.l d7,d0
+	swap d0
+	clr.w d0
+	or.l d4,d0
+	move.l d0,a6
 	lea _rmoves.3142+4,a1
 	move.l #_rmoves.3142+16,d5
 	sub.l a5,a5
@@ -9221,11 +9215,11 @@ _generateRookCaptureMoves:
 	or.l d2,d7
 	move.l _moveList,a3
 	move.l _moveIndex,d3
-	move.l d7,d6
-	swap d6
-	clr.w d6
-	or.l d4,d6
-	move.l d6,a6
+	move.l d7,d0
+	swap d0
+	clr.w d0
+	or.l d4,d0
+	move.l d0,a6
 	lea _rmoves.3155+4,a1
 	move.l #_rmoves.3155+16,d5
 	sub.l a5,a5
@@ -9297,11 +9291,11 @@ _generateQueenCaptureMoves:
 	or.l d2,d7
 	move.l _moveList,a3
 	move.l _moveIndex,d3
-	move.l d7,d6
-	swap d6
-	clr.w d6
-	or.l d4,d6
-	move.l d6,a6
+	move.l d7,d0
+	swap d0
+	clr.w d0
+	or.l d4,d0
+	move.l d0,a6
 	lea _rmoves.3168+4,a1
 	move.l #_rmoves.3168+32,d5
 	sub.l a5,a5

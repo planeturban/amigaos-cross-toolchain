@@ -23,16 +23,16 @@ _gfx_screenWidthBitBlitNoMask:
 	ext.l d5
 	move.l d1,a3
 	lea (a3,d5.l),a0
-	move.l a1,d6
-	add.l a0,d6
+	move.l a1,d5
+	add.l a0,d5
 	jsr _hw_waitBlitter
 	move.w d3,d0
-	moveq #12,d7
-	lsl.w d7,d0
+	moveq #12,d1
+	lsl.w d1,d0
 	or.w #2544,d0
 	move.l #14676032,a1
 	move.w d0,(a1)
-	lsl.w d7,d3
+	lsl.w d1,d3
 	move.w d3,2(a1)
 	clr.w 6(a1)
 	move.w d2,a0
@@ -46,7 +46,7 @@ _gfx_screenWidthBitBlitNoMask:
 	sub.w d1,d2
 	move.w d2,36(a1)
 	move.w d2,38(a1)
-	move.l d6,16(a1)
+	move.l d5,16(a1)
 	move.l a2,20(a1)
 	move.w d4,d1
 	add.w d4,d1
