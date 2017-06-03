@@ -234,7 +234,7 @@ _move_to_san:
 	move.l 60(sp),a0
 	move.l 56(sp),d3
 	add.l d3,d3
-	add.l 60(sp),d3
+	add.l 56(sp),d3
 	add.l d3,d3
 	add.l d3,d3
 	add.l a0,d3

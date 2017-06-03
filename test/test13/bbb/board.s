@@ -1597,13 +1597,13 @@ _fen2board:
 	clr.b (a0)+
 	cmp.l d0,a0
 	jne .L294
-	lea _board+32364,a3
-	clr.l 28(a3)
-	clr.l 24(a3)
-	clr.l 4(a3)
-	clr.l (a3)
-	clr.l 20(a3)
-	clr.l 16(a3)
+	lea _board+32364,a0
+	clr.l 28(a0)
+	clr.l 24(a0)
+	clr.l 4(a0)
+	clr.l (a0)
+	clr.l 20(a0)
+	clr.l 16(a0)
 	sub.l a0,a0
 	moveq #7,d2
 	move.l #_psq_pawns,d3
