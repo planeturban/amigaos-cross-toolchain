@@ -624,7 +624,6 @@ _AlphaBeta:
 	jsr _Quiescence
 	move.l d0,d1
 	lea (12,sp),sp
-	move.l d1,d0
 	movem.l -3968(a5),#23804
 	unlk a5
 	rts
@@ -796,8 +795,8 @@ _AlphaBeta:
 	move.l a2,-(sp)
 	jsr _move_unmake
 	addq.l #4,sp
-	moveq #1,d1
-	cmp.l 44(a3),d1
+	moveq #1,d0
+	cmp.l 44(a3),d0
 	jeq .L81
 	tst.w _board+132
 	jne .L129

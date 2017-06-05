@@ -2953,7 +2953,7 @@ _move_unmakeNull:
 	move.b 4(a0),2(a1)
 	move.b 5(a0),3(a1)
 	move.b 6(a0),1(a1)
-	move.w _board+142,d0
+	move.w 14(a1),d0
 	subq.w #1,d0
 	move.w d0,14(a1)
 	move.w d0,a0
@@ -7523,7 +7523,6 @@ _generateCaptureMoves:
 	move.l d4,a0
 	move.l a5,d6
 	add.l #7936,d6
-	move.l a0,d4
 	or.l d4,d6
 	move.l a6,d4
 	or.l d6,d4
@@ -7979,7 +7978,6 @@ _generateCaptureMoves:
 	move.l d4,a0
 	move.l a5,d6
 	add.l #-7936,d6
-	move.l a0,d4
 	or.l d4,d6
 	move.l a6,d4
 	or.l d6,d4
@@ -8015,7 +8013,6 @@ _generateCaptureMoves:
 	move.l d4,a0
 	move.l a5,d6
 	add.l #4608,d6
-	move.l a0,d4
 	or.l d4,d6
 	move.l a6,d4
 	or.l d6,d4
@@ -8051,7 +8048,6 @@ _generateCaptureMoves:
 	move.l d4,a0
 	move.l a5,d6
 	add.l #3584,d6
-	move.l a0,d4
 	or.l d4,d6
 	move.l a6,d4
 	or.l d6,d4
@@ -8087,7 +8083,6 @@ _generateCaptureMoves:
 	move.l d4,a0
 	move.l a5,d6
 	add.l #-3584,d6
-	move.l a0,d4
 	or.l d4,d6
 	move.l a6,d4
 	or.l d6,d4
@@ -8123,7 +8118,6 @@ _generateCaptureMoves:
 	move.l d4,a0
 	move.l a5,d6
 	add.l #-4608,d6
-	move.l a0,d4
 	or.l d4,d6
 	move.l a6,d4
 	or.l d6,d4
