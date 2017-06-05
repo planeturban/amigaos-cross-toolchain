@@ -47,7 +47,6 @@ ___powisf2:
 	jsr ___divsf3
 	addq.l #8,sp
 	move.l d0,d1
-	move.l d1,d0
 	movem.l (sp)+,#1084
 	rts
 .L14:

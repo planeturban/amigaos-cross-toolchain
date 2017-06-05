@@ -19,7 +19,6 @@ _SETDARKCOLOR:
 | 26 "test.c" 1
 	jsr a6@(-0x42:W)
 #NO_APP
-	move.l _DOSBase,a6
 	move.l d4,d1
 	moveq #-1,d3
 #APP
@@ -28,7 +27,6 @@ _SETDARKCOLOR:
 #NO_APP
 	move.l d0,d5
 	lea _IMemA,a3
-	move.l _DOSBase,a6
 	move.l d4,d1
 	move.l (a3),d2
 	move.l d0,d3
@@ -36,7 +34,6 @@ _SETDARKCOLOR:
 | 28 "test.c" 1
 	jsr a6@(-0x2a:W)
 #NO_APP
-	move.l _DOSBase,a6
 	move.l d4,d1
 #APP
 | 29 "test.c" 1
@@ -53,7 +50,6 @@ _SETDARKCOLOR:
 	cmp.l #1129136464,(a0)
 	jeq .L5
 	move.l d0,a0
-	move.l a0,d0
 	addq.l #4,d0
 	cmp.l d0,d1
 	jhi .L16
@@ -93,7 +89,6 @@ _SETDARKCOLOR:
 | 46 "test.c" 1
 	jsr a6@(-0x354:W)
 #NO_APP
-	move.l _GfxBase,a6
 	move.w #44,a0
 	add.l _MyScreen+8,a0
 	move.l d6,d0
@@ -108,7 +103,6 @@ _SETDARKCOLOR:
 	add.l d5,d0
 	cmp.l d7,d0
 	jls .L7
-	move.l a0,d7
 	addq.l #3,d7
 	moveq #0,d6
 	move.b d4,d6
@@ -120,17 +114,13 @@ _SETDARKCOLOR:
 	move.b (a0)+,(a1)+
 	move.b (a0)+,(a1)+
 	move.b (a0),(a1)
-	move.l _GfxBase,a6
 	move.w #44,a0
 	add.l _MyScreen+4,a0
 	moveq #0,d1
-	moveq #0,d2
-	moveq #0,d3
 #APP
 | 46 "test.c" 1
 	jsr a6@(-0x354:W)
 #NO_APP
-	move.l _GfxBase,a6
 	move.w #44,a0
 	add.l _MyScreen+8,a0
 	move.l d6,d0
@@ -159,7 +149,6 @@ _INTROEXIT:
 | 60 "test.c" 1
 	jsr a6@(-0x126:W)
 #NO_APP
-	move.l _SysBase,a6
 	move.l d0,a1
 	moveq #0,d0
 #APP
@@ -4945,8 +4934,7 @@ _GREATEFFECT:
 	move.l d1,d0
 	add.l d1,d0
 	add.l d0,d0
-	lea _GfxBase,a3
-	move.l (a3),a6
+	move.l _GfxBase,a6
 	move.w #44,a0
 	lea _MyScreen,a1
 	add.l (a1,d0.l),a0
@@ -4957,14 +4945,8 @@ _GREATEFFECT:
 #APP
 | 295 "test.c" 1
 	jsr a6@(-0x120:W)
-#NO_APP
-	move.l (a3),a6
-#APP
 | 296 "test.c" 1
 	jsr a6@(-0x10e:W)
-#NO_APP
-	move.l (a3),a6
-#APP
 | 297 "test.c" 1
 	jsr a6@(-0x10e:W)
 #NO_APP
@@ -4975,7 +4957,6 @@ _GREATEFFECT:
 	move.l d1,d0
 	add.l d1,d0
 	add.l d0,d0
-	move.l (a3),a6
 	move.w #44,a0
 	lea _MyScreen,a1
 	add.l (a1,d0.l),a0
@@ -5542,8 +5523,8 @@ _GREATEFFECT:
 	lea (16,sp),sp
 	move.l d0,64(a2)
 	move.l d1,68(a2)
-	moveq #2,d1
-	cmp.l d7,d1
+	moveq #2,d0
+	cmp.l d7,d0
 	jeq .L324
 	move.l 28(a2),-(sp)
 	move.l 24(a2),-(sp)
@@ -5592,8 +5573,8 @@ _GREATEFFECT:
 	lea (16,sp),sp
 	move.l d0,80(a2)
 	move.l d1,84(a2)
-	moveq #4,d1
-	cmp.l d7,d1
+	moveq #4,d0
+	cmp.l d7,d0
 	jeq .L324
 	move.l 44(a2),-(sp)
 	move.l 40(a2),-(sp)
@@ -5677,8 +5658,8 @@ _GREATEFFECT:
 	lea (16,sp),sp
 	move.l d0,200(a2)
 	move.l d1,204(a2)
-	moveq #1,d1
-	cmp.l d7,d1
+	moveq #1,d0
+	cmp.l d7,d0
 	jeq .L327
 	move.l 164(a2),-(sp)
 	move.l 160(a2),-(sp)
@@ -5727,8 +5708,8 @@ _GREATEFFECT:
 	lea (16,sp),sp
 	move.l d0,216(a2)
 	move.l d1,220(a2)
-	moveq #3,d1
-	cmp.l d7,d1
+	moveq #3,d0
+	cmp.l d7,d0
 	jeq .L327
 	move.l 180(a2),-(sp)
 	move.l 176(a2),-(sp)
@@ -5777,8 +5758,7 @@ _GREATEFFECT:
 	lea (16,sp),sp
 	move.l d0,232(a2)
 	move.l d1,236(a2)
-	moveq #5,d1
-	cmp.l d7,d1
+	subq.l #5,d7
 	jeq .L327
 	move.l 196(a2),-(sp)
 	move.l 192(a2),-(sp)
@@ -5828,8 +5808,8 @@ _GREATEFFECT:
 	lea (16,sp),sp
 	move.l d0,52(sp)
 	move.l d1,56(sp)
-	moveq #1,d1
-	cmp.l 60(sp),d1
+	moveq #1,d0
+	cmp.l 60(sp),d0
 	jeq .L449
 	and.l #255,d2
 	add.l d2,d2
@@ -5847,7 +5827,6 @@ _GREATEFFECT:
 	move.b _AScr,d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #84,a1
 	lea _MyScreen,a0
 	add.l (a0,d0.l),a1
@@ -5871,8 +5850,8 @@ _GREATEFFECT:
 .L361:
 	tst.b 5(a2)
 	jeq .L341
-	moveq #1,d1
-	cmp.l d2,d1
+	moveq #1,d0
+	cmp.l d2,d0
 	jge .L342
 	moveq #0,d0
 	move.b _AScr,d0
@@ -5922,7 +5901,6 @@ _GREATEFFECT:
 	move.l d0,-(sp)
 	jsr (a5)
 	move.l d0,d1
-	move.l _GfxBase,a6
 	move.l d4,a1
 	move.l d3,d0
 #APP
@@ -5991,7 +5969,6 @@ _GREATEFFECT:
 	move.b _AScr,d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #84,a1
 	lea _MyScreen,a0
 	add.l (a0,d0.l),a1
@@ -6046,7 +6023,6 @@ _GREATEFFECT:
 	move.l d0,-(sp)
 	jsr (a5)
 	move.l d0,d1
-	move.l _GfxBase,a6
 	move.l d4,a1
 	move.l d3,d0
 #APP
@@ -6182,8 +6158,7 @@ _GREATEFFECT:
 	and.l #255,d2
 	add.l d2,d2
 	add.l d2,d2
-	lea _GfxBase,a2
-	move.l (a2),a6
+	move.l _GfxBase,a6
 	move.w #84,a1
 	lea _MyScreen,a0
 	add.l (a0,d2.l),a1
@@ -6193,11 +6168,10 @@ _GREATEFFECT:
 	jsr a6@(-0x156:W)
 #NO_APP
 	moveq #0,d0
-	lea _AScr,a3
-	move.b (a3),d0
+	lea _AScr,a2
+	move.b (a2),d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l (a2),a6
 	move.w #84,a1
 	lea _MyScreen,a0
 	add.l (a0,d0.l),a1
@@ -6210,7 +6184,7 @@ _GREATEFFECT:
 	jsr a6@(-0x132:W)
 #NO_APP
 	moveq #0,d0
-	move.b (a3),d0
+	move.b (a2),d0
 	add.l d0,d0
 	add.l d0,d0
 	move.l _IntuitionBase,a6
@@ -6222,11 +6196,11 @@ _GREATEFFECT:
 #NO_APP
 	moveq #3,d0
 	sub.b _AScr,d0
-	move.b d0,(a3)
+	move.b d0,(a2)
 	and.l #255,d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l (a2),a6
+	move.l _GfxBase,a6
 	move.w #84,a1
 	lea _MyScreen,a0
 	add.l (a0,d0.l),a1
@@ -6236,10 +6210,9 @@ _GREATEFFECT:
 	jsr a6@(-0x156:W)
 #NO_APP
 	moveq #0,d0
-	move.b (a3),d0
+	move.b (a2),d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l (a2),a6
 	move.w #84,a1
 	lea _MyScreen,a0
 	add.l (a0,d0.l),a1
@@ -6250,7 +6223,7 @@ _GREATEFFECT:
 	jsr a6@(-0x132:W)
 #NO_APP
 	moveq #0,d0
-	move.b (a3),d0
+	move.b (a2),d0
 	add.l d0,d0
 	add.l d0,d0
 	move.l _IntuitionBase,a6
@@ -6262,7 +6235,7 @@ _GREATEFFECT:
 #NO_APP
 	moveq #3,d0
 	sub.b _AScr,d0
-	move.b d0,(a3)
+	move.b d0,(a2)
 	move.w #12,_custom+150
 	movem.l (sp)+,#31996
 	lea (24,sp),sp
@@ -6601,7 +6574,6 @@ _GREATEFFECT:
 	move.l d0,-(sp)
 	jsr (a5)
 	move.l d0,d1
-	move.l _GfxBase,a6
 	move.l d4,a1
 	move.l d3,d0
 #APP
@@ -6613,7 +6585,6 @@ _GREATEFFECT:
 	lea (16,sp),sp
 	moveq #4,d3
 	move.l d1,d0
-	move.l a2,d6
 	move.l d0,a2
 	jra .L344
 .L450:
@@ -6735,7 +6706,6 @@ _LOADSOUNDS:
 | 447 "test.c" 1
 	jsr a6@(-0x42:W)
 #NO_APP
-	move.l _DOSBase,a6
 	move.l d4,d1
 	moveq #-1,d3
 #APP
@@ -6759,7 +6729,6 @@ _LOADSOUNDS:
 | 452 "test.c" 1
 	jsr a6@(-0x2a:W)
 #NO_APP
-	move.l _DOSBase,a6
 	move.l d4,d1
 #APP
 | 453 "test.c" 1
@@ -10390,7 +10359,6 @@ _MAININTRO:
 	add.l d1,d0
 	move.l d0,a1
 	add.l d0,a1
-	move.l _GfxBase,a6
 	move.l a3,a0
 	moveq #41,d0
 	moveq #0,d1
@@ -10457,7 +10425,6 @@ _MAININTRO:
 	add.l d1,d0
 	move.l d0,a1
 	add.l d0,a1
-	move.l (a3),a6
 	lea (268,sp),a0
 	moveq #50,d0
 	moveq #0,d1
@@ -10756,7 +10723,6 @@ _MAININTRO:
 	move.l d1,d0
 	add.l d1,d0
 	add.l d0,d0
-	move.l (a3),a6
 	move.w #84,a1
 	add.l (a5,d0.l),a1
 	moveq #0,d0
@@ -10800,7 +10766,6 @@ _MAININTRO:
 	move.l d1,d0
 	add.l d1,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #84,a1
 	add.l (a5,d0.l),a1
 	moveq #36,d0
@@ -10871,7 +10836,6 @@ _MAININTRO:
 	add.l d1,d0
 	move.l d0,a1
 	add.l d0,a1
-	move.l (a4),a6
 	lea (272,sp),a0
 	moveq #0,d0
 	moveq #0,d1
@@ -10994,10 +10958,10 @@ _MAININTRO:
 	move.l d1,_FactorMCos+4
 	moveq #0,d0
 	move.b (a3),d0
-	moveq #3,d2
-	sub.l d0,d2
-	move.l d2,d0
-	add.l d2,d0
+	moveq #3,d1
+	sub.l d0,d1
+	move.l d1,d0
+	add.l d1,d0
 	add.l d0,d0
 	move.l (a4),a6
 	move.w #84,a1
@@ -11014,7 +10978,6 @@ _MAININTRO:
 	move.l d1,d0
 	add.l d1,d0
 	add.l d0,d0
-	move.l (a4),a6
 	move.w #84,a1
 	add.l (a5,d0.l),a1
 	moveq #0,d0
@@ -11059,7 +11022,6 @@ _MAININTRO:
 	move.l d1,d0
 	add.l d1,d0
 	add.l d0,d0
-	move.l (a4),a6
 	move.w #84,a1
 	add.l (a5,d0.l),a1
 	moveq #0,d0
@@ -11090,7 +11052,6 @@ _MAININTRO:
 	move.l d0,d7
 	addq.l #8,sp
 	jeq .L476
-	move.l (a4),a6
 	lea (118,sp),a0
 	move.l d0,a1
 	move.l #21000,d0
@@ -11098,7 +11059,6 @@ _MAININTRO:
 | 617 "test.c" 1
 	jsr a6@(-0x1d4:W)
 #NO_APP
-	move.l (a4),a6
 	lea (168,sp),a0
 	lea _IMemA,a2
 	move.l (a2),a1
@@ -11528,7 +11488,6 @@ _MAININTRO:
 	addq.l #8,sp
 	btst #6,d0
 	jeq .L666
-	move.l _GfxBase,a6
 	move.l d7,a0
 	move.l d4,d0
 	move.l #360,d1
@@ -11556,8 +11515,7 @@ _MAININTRO:
 #NO_APP
 	clr.l _MyScreen+8
 .L496:
-	lea _SysBase,a3
-	move.l (a3),a6
+	move.l _SysBase,a6
 	lea _IMemA,a0
 	move.l (a0),a1
 	lea _IMemL,a0
@@ -11577,21 +11535,19 @@ _MAININTRO:
 	move.l d0,_MyScreen+8
 	addq.l #4,sp
 	jeq .L476
-	lea _IMemL,a4
-	move.l #201856,(a4)
-	move.l #21000,4(a4)
-	move.l (a3),a6
+	lea _IMemL,a3
+	move.l #201856,(a3)
+	move.l #21000,4(a3)
 	move.l #201856,d0
 	moveq #2,d1
 #APP
 | 838 "test.c" 1
 	jsr a6@(-0xc6:W)
 #NO_APP
-	lea _IMemA,a1
-	move.l d0,(a1)
+	lea _IMemA,a0
+	move.l d0,(a0)
 	jeq .L476
-	move.l (a3),a6
-	move.l 4(a4),d0
+	move.l 4(a3),d0
 	moveq #2,d1
 #APP
 | 838 "test.c" 1
@@ -11607,8 +11563,7 @@ _MAININTRO:
 #NO_APP
 	move.l #-16777216,d4
 .L497:
-	lea _GfxBase,a3
-	move.l (a3),a6
+	move.l _GfxBase,a6
 	move.w #44,a0
 	add.l _MyScreen+8,a0
 	moveq #0,d0
@@ -11618,16 +11573,12 @@ _MAININTRO:
 #APP
 | 856 "test.c" 1
 	jsr a6@(-0x354:W)
-#NO_APP
-	move.l (a3),a6
-#APP
 | 858 "test.c" 1
 	jsr a6@(-0x10e:W)
 #NO_APP
 	add.l #-83886080,d4
 	cmp.l #167772160,d4
 	jne .L497
-	move.l (a3),a6
 	move.w #44,a0
 	add.l _MyScreen+8,a0
 	moveq #0,d0
@@ -11714,8 +11665,7 @@ _MAININTRO:
 	move.l d0,d4
 	addq.l #8,sp
 	jeq .L503
-	lea _DOSBase,a3
-	move.l (a3),a6
+	move.l _DOSBase,a6
 	move.l d0,d1
 	moveq #0,d2
 	moveq #1,d3
@@ -11723,7 +11673,6 @@ _MAININTRO:
 | 882 "test.c" 1
 	jsr a6@(-0x42:W)
 #NO_APP
-	move.l (a3),a6
 	move.l d4,d1
 	moveq #-1,d3
 #APP
@@ -11734,7 +11683,6 @@ _MAININTRO:
 	move.l (a2),d2
 	add.l #-250,d2
 	sub.l d0,d2
-	move.l (a3),a6
 	move.l d4,d1
 	lea _IMemA,a0
 	add.l (a0),d2
@@ -11753,7 +11701,6 @@ _MAININTRO:
 	pea (a0,d0.l)
 	move.l a0,-(sp)
 	jsr _UNPACK
-	move.l (a3),a6
 	move.l d4,d1
 #APP
 | 886 "test.c" 1
@@ -11933,7 +11880,6 @@ _MAININTRO:
 	move.b 1(a2),d2
 	moveq #0,d3
 	move.b 2(a2),d3
-	move.l _GfxBase,a6
 	move.w #44,a0
 	add.l (a5,d0.l),a0
 	move.l d5,d0
@@ -11959,7 +11905,6 @@ _MAININTRO:
 	move.b (a2),d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #84,a1
 	add.l (a5,d0.l),a1
 	moveq #0,d0
@@ -12003,7 +11948,6 @@ _MAININTRO:
 	add.l d0,d0
 	move.w #84,a0
 	add.l (a5,d0.l),a0
-	move.l _GfxBase,a6
 	moveq #0,d0
 	move.l #270,d1
 	move.l a0,a1
@@ -12052,7 +11996,6 @@ _MAININTRO:
 	add.l d0,d0
 	move.w #84,a0
 	add.l (a5,d0.l),a0
-	move.l _GfxBase,a6
 	moveq #0,d0
 	move.l #270,d1
 	move.l a0,a1
@@ -12099,7 +12042,6 @@ _MAININTRO:
 	add.l d0,d0
 	move.w #84,a0
 	add.l (a5,d0.l),a0
-	move.l _GfxBase,a6
 	moveq #0,d0
 	move.l #270,d1
 	move.l a0,a1
@@ -12146,7 +12088,6 @@ _MAININTRO:
 	add.l d0,d0
 	move.w #84,a0
 	add.l (a5,d0.l),a0
-	move.l _GfxBase,a6
 	moveq #0,d0
 	move.l #270,d1
 	move.l a0,a1
@@ -12193,7 +12134,6 @@ _MAININTRO:
 	add.l d0,d0
 	move.w #84,a0
 	add.l (a5,d0.l),a0
-	move.l _GfxBase,a6
 	moveq #0,d0
 	move.l #270,d1
 	move.l a0,a1
@@ -12240,7 +12180,6 @@ _MAININTRO:
 	add.l d0,d0
 	move.w #84,a0
 	add.l (a5,d0.l),a0
-	move.l _GfxBase,a6
 	moveq #0,d0
 	move.l #270,d1
 	move.l a0,a1
@@ -12293,7 +12232,6 @@ _MAININTRO:
 	add.l d0,d0
 	move.w #84,a0
 	add.l (a5,d0.l),a0
-	move.l _GfxBase,a6
 	moveq #0,d0
 	move.l #270,d1
 	move.l a0,a1
@@ -12310,7 +12248,6 @@ _MAININTRO:
 	add.l d0,d0
 	move.l d0,a1
 	add.l d0,a1
-	move.l _GfxBase,a6
 	lea (228,sp),a0
 	moveq #0,d0
 	move.l d7,d1
@@ -12366,7 +12303,6 @@ _MAININTRO:
 	add.l d0,d0
 	move.w #84,a0
 	add.l (a5,d0.l),a0
-	move.l _GfxBase,a6
 	moveq #0,d0
 	move.l #270,d1
 	move.l a0,a1
@@ -12381,7 +12317,6 @@ _MAININTRO:
 	add.l d0,d0
 	move.l d0,a1
 	add.l d0,a1
-	move.l _GfxBase,a6
 	lea (228,sp),a0
 	moveq #0,d0
 	moveq #0,d1
@@ -12434,7 +12369,6 @@ _MAININTRO:
 	add.l d0,d0
 	move.w #84,a0
 	add.l (a5,d0.l),a0
-	move.l _GfxBase,a6
 	moveq #0,d0
 	move.l #270,d1
 	move.l a0,a1
@@ -12540,7 +12474,6 @@ _MAININTRO:
 	move.l d1,d0
 	add.l d1,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #44,a0
 	add.l (a5,d0.l),a0
 	moveq #127,d0
@@ -12553,7 +12486,6 @@ _MAININTRO:
 	move.b (a2),d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #44,a0
 	add.l (a5,d0.l),a0
 	moveq #126,d0
@@ -12571,7 +12503,6 @@ _MAININTRO:
 	move.l d1,d0
 	add.l d1,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #44,a0
 	add.l (a5,d0.l),a0
 	moveq #126,d0
@@ -12584,7 +12515,6 @@ _MAININTRO:
 	move.b (a2),d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #44,a0
 	add.l (a5,d0.l),a0
 	moveq #125,d0
@@ -12601,7 +12531,6 @@ _MAININTRO:
 	move.l d1,d0
 	add.l d1,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #44,a0
 	add.l (a5,d0.l),a0
 	moveq #125,d0
@@ -12614,7 +12543,6 @@ _MAININTRO:
 	move.b (a2),d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #44,a0
 	add.l (a5,d0.l),a0
 	moveq #124,d0
@@ -12631,7 +12559,6 @@ _MAININTRO:
 	move.l d1,d0
 	add.l d1,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #44,a0
 	add.l (a5,d0.l),a0
 	moveq #124,d0
@@ -12646,7 +12573,6 @@ _MAININTRO:
 	move.b (a2),d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #44,a0
 	add.l (a5,d0.l),a0
 	moveq #123,d0
@@ -12664,7 +12590,6 @@ _MAININTRO:
 	move.l d1,d0
 	add.l d1,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #44,a0
 	add.l (a5,d0.l),a0
 	moveq #123,d0
@@ -12728,8 +12653,7 @@ _MAININTRO:
 	add.l d1,d0
 	move.l d0,a1
 	add.l d0,a1
-	lea _GfxBase,a2
-	move.l (a2),a6
+	move.l _GfxBase,a6
 	move.l d3,a0
 	moveq #0,d0
 	moveq #0,d1
@@ -12745,7 +12669,6 @@ _MAININTRO:
 | 983 "test.c" 1
 	jsr a6@(-0x25e:W)
 #NO_APP
-	move.l (a2),a6
 	move.l d4,d0
 	move.l d5,d1
 #APP
@@ -12755,7 +12678,6 @@ _MAININTRO:
 	move.l d0,118(sp)
 	lea (12,sp),sp
 	jeq .L476
-	move.l (a2),a6
 	lea (118,sp),a0
 	move.l d0,a1
 	move.l #21000,d0
@@ -12763,7 +12685,6 @@ _MAININTRO:
 | 990 "test.c" 1
 	jsr a6@(-0x1d4:W)
 #NO_APP
-	move.l (a2),a6
 	lea (168,sp),a0
 	move.l _IMemA+4,a1
 	moveq #55,d0
@@ -13176,7 +13097,6 @@ _MAININTRO:
 	add.l d0,d0
 	move.l d0,a1
 	add.l d0,a1
-	move.l _GfxBase,a6
 	lea (228,sp),a0
 	moveq #20,d0
 	moveq #110,d1
@@ -13339,7 +13259,6 @@ _MAININTRO:
 	move.l d0,-(sp)
 	jsr (a3)
 	move.l d0,d1
-	move.l _GfxBase,a6
 	move.l d3,a1
 	move.l d2,d0
 #APP
@@ -13407,7 +13326,6 @@ _MAININTRO:
 	move.b _AScr,d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #84,a1
 	add.l (a5,d0.l),a1
 #APP
@@ -13418,7 +13336,6 @@ _MAININTRO:
 	move.b _AScr,d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #84,a1
 	add.l (a5,d0.l),a1
 	moveq #126,d0
@@ -13464,7 +13381,6 @@ _MAININTRO:
 	move.l d0,-(sp)
 	jsr (a3)
 	move.l d0,d1
-	move.l _GfxBase,a6
 	move.l d3,a1
 	move.l d2,d0
 #APP
@@ -13531,7 +13447,6 @@ _MAININTRO:
 	move.b _AScr,d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #84,a1
 	add.l (a5,d0.l),a1
 #APP
@@ -13576,7 +13491,6 @@ _MAININTRO:
 	move.l d0,-(sp)
 	jsr (a3)
 	move.l d0,d1
-	move.l _GfxBase,a6
 	move.l d3,a1
 	move.l d2,d0
 #APP
@@ -13644,7 +13558,6 @@ _MAININTRO:
 	move.b _AScr,d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #84,a1
 	add.l (a5,d0.l),a1
 #APP
@@ -13655,7 +13568,6 @@ _MAININTRO:
 	move.b _AScr,d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #84,a1
 	add.l (a5,d0.l),a1
 	moveq #127,d0
@@ -13701,7 +13613,6 @@ _MAININTRO:
 	move.l d0,-(sp)
 	jsr (a3)
 	move.l d0,d1
-	move.l _GfxBase,a6
 	move.l d3,a1
 	move.l d2,d0
 #APP
@@ -13779,7 +13690,6 @@ _MAININTRO:
 	move.b _AScr,d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #84,a1
 	add.l (a5,d0.l),a1
 #APP
@@ -13790,7 +13700,6 @@ _MAININTRO:
 	move.b _AScr,d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #84,a1
 	add.l (a5,d0.l),a1
 	moveq #125,d0
@@ -13836,7 +13745,6 @@ _MAININTRO:
 	move.l d0,-(sp)
 	jsr (a3)
 	move.l d0,d1
-	move.l _GfxBase,a6
 	move.l d3,a1
 	move.l d2,d0
 #APP
@@ -13904,7 +13812,6 @@ _MAININTRO:
 	move.b _AScr,d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #84,a1
 	add.l (a5,d0.l),a1
 #APP
@@ -13949,7 +13856,6 @@ _MAININTRO:
 	move.l d0,-(sp)
 	jsr (a3)
 	move.l d0,d1
-	move.l _GfxBase,a6
 	move.l d3,a1
 	move.l d2,d0
 #APP
@@ -14017,7 +13923,6 @@ _MAININTRO:
 	move.b _AScr,d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #84,a1
 	add.l (a5,d0.l),a1
 #APP
@@ -14028,7 +13933,6 @@ _MAININTRO:
 	move.b _AScr,d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #84,a1
 	add.l (a5,d0.l),a1
 	moveq #0,d0
@@ -14040,7 +13944,6 @@ _MAININTRO:
 	move.b _AScr,d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
 	move.w #84,a1
 	add.l (a5,d0.l),a1
 	moveq #0,d0
@@ -14133,8 +14036,8 @@ _MAININTRO:
 	move.b (a0),d0
 	btst #6,d0
 	jeq .L538
-	moveq #15,d1
-	cmp.l d7,d1
+	moveq #15,d0
+	cmp.l d7,d0
 	jcs .L538
 	move.w #360,a2
 	move.w #192,a3
@@ -14176,8 +14079,8 @@ _MAININTRO:
 	jne .L671
 	move.w #1,a4
 .L537:
-	moveq #16,d1
-	cmp.l d7,d1
+	moveq #16,d0
+	cmp.l d7,d0
 	jcs .L538
 	move.l _LData,a0
 	move.b (a0),d0
