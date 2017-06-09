@@ -152,7 +152,6 @@ _testPerft:
 	addq.l #1,d5
 	jra .L24
 .L5:
-	move.b (a4),d0
 	trap #7
 .L23:
 	pea .LC3
@@ -487,7 +486,6 @@ _main:
 	pea 100.w
 	pea .LC18
 	jsr _testEPD
-	addq.l #8,sp
 	jsr _TT_free
 	moveq #0,d0
 	move.l -108(a5),a2
@@ -509,7 +507,6 @@ _main:
 	move.l d0,-92(a5)
 	pea -104(a5)
 	jsr _think
-	addq.l #4,sp
 	jsr _TT_free
 	moveq #0,d0
 	move.l -108(a5),a2
@@ -534,7 +531,6 @@ _main:
 	move.l d0,-88(a5)
 	pea -104(a5)
 	jsr _think
-	addq.l #8,sp
 .L64:
 	jsr _TT_free
 	moveq #0,d0
@@ -559,12 +555,10 @@ _main:
 	move.l d0,-88(a5)
 	pea -104(a5)
 	jsr _think
-	addq.l #8,sp
 	jra .L64
 .L48:
 	pea -104(a5)
 	jsr _input_loop
-	addq.l #4,sp
 	jsr _TT_free
 	moveq #0,d0
 	move.l -108(a5),a2

@@ -622,8 +622,6 @@ _AlphaBeta:
 	move.l 16(a5),-(sp)
 	move.l 12(a5),-(sp)
 	jsr _Quiescence
-	move.l d0,d1
-	lea (12,sp),sp
 	movem.l -3968(a5),#23804
 	unlk a5
 	rts
@@ -867,7 +865,6 @@ _AlphaBeta:
 	move.l 8(a5),-(sp)
 	jsr _TT_RecordHash
 	addq.l #1,80(a3)
-	lea (16,sp),sp
 	move.l d4,d0
 	movem.l -3968(a5),#23804
 	unlk a5
@@ -1171,7 +1168,6 @@ _AlphaBeta:
 	move.l 8(a5),-(sp)
 	jsr _TT_RecordHash
 	addq.l #1,88(a3)
-	lea (16,sp),sp
 	move.l 16(a5),d1
 	move.l d1,d0
 	movem.l -3968(a5),#23804
@@ -1184,7 +1180,6 @@ _AlphaBeta:
 	move.l d4,-(sp)
 	move.l 8(a5),-(sp)
 	jsr _TT_RecordHash
-	lea (16,sp),sp
 	move.l d4,d0
 	movem.l -3968(a5),#23804
 	unlk a5
