@@ -2849,7 +2849,6 @@ _dummyPerft:
 	addx.l d6,d0
 	move.l d0,-18492(a5)
 	addq.l #1,-18496(a5)
-	move.l -18484(a5),d2
 	cmp.l -18496(a5),d2
 	jne .L462
 	jra .L430
@@ -2863,7 +2862,6 @@ _dummyPerft:
 	addx.l d0,d2
 	move.l d2,-18476(a5)
 	addq.l #1,-18480(a5)
-	move.l -18468(a5),d2
 	cmp.l -18480(a5),d2
 	jne .L461
 	jra .L429
@@ -2877,7 +2875,6 @@ _dummyPerft:
 	addx.l d0,d2
 	move.l d2,-18464(a5)
 	addq.l #1,-18456(a5)
-	move.l -18444(a5),d2
 	cmp.l -18456(a5),d2
 	jne .L460
 	jra .L428
@@ -2891,7 +2888,6 @@ _dummyPerft:
 	addx.l d0,d2
 	move.l d2,-18452(a5)
 	addq.l #1,-18440(a5)
-	move.l -18436(a5),d2
 	cmp.l -18440(a5),d2
 	jne .L459
 	jra .L426
@@ -7520,7 +7516,6 @@ _generateCaptureMoves:
 	lsl.w #4,d4
 	swap d4
 	clr.w d4
-	move.l d4,a0
 	move.l a5,d6
 	add.l #7936,d6
 	or.l d4,d6
@@ -7975,7 +7970,6 @@ _generateCaptureMoves:
 	lsl.w #4,d4
 	swap d4
 	clr.w d4
-	move.l d4,a0
 	move.l a5,d6
 	add.l #-7936,d6
 	or.l d4,d6
@@ -8010,7 +8004,6 @@ _generateCaptureMoves:
 	lsl.w #4,d4
 	swap d4
 	clr.w d4
-	move.l d4,a0
 	move.l a5,d6
 	add.l #4608,d6
 	or.l d4,d6
@@ -8045,7 +8038,6 @@ _generateCaptureMoves:
 	lsl.w #4,d4
 	swap d4
 	clr.w d4
-	move.l d4,a0
 	move.l a5,d6
 	add.l #3584,d6
 	or.l d4,d6
@@ -8080,7 +8072,6 @@ _generateCaptureMoves:
 	lsl.w #4,d4
 	swap d4
 	clr.w d4
-	move.l d4,a0
 	move.l a5,d6
 	add.l #-3584,d6
 	or.l d4,d6
@@ -8115,7 +8106,6 @@ _generateCaptureMoves:
 	lsl.w #4,d4
 	swap d4
 	clr.w d4
-	move.l d4,a0
 	move.l a5,d6
 	add.l #-4608,d6
 	or.l d4,d6

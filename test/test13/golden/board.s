@@ -2046,7 +2046,6 @@ _fen2board:
 	jra .L372
 .L366:
 	move.b #8,_board+128
-	move.b (a0),d1
 	cmp.b #119,d1
 	jne .L317
 	jra .L367

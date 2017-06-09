@@ -4934,7 +4934,8 @@ _GREATEFFECT:
 	move.l d1,d0
 	add.l d1,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
+	lea _GfxBase,a0
+	move.l (a0),a6
 	move.w #44,a0
 	lea _MyScreen,a1
 	add.l (a1,d0.l),a0
@@ -6158,7 +6159,8 @@ _GREATEFFECT:
 	and.l #255,d2
 	add.l d2,d2
 	add.l d2,d2
-	move.l _GfxBase,a6
+	lea _GfxBase,a2
+	move.l (a2),a6
 	move.w #84,a1
 	lea _MyScreen,a0
 	add.l (a0,d2.l),a1
@@ -6168,8 +6170,8 @@ _GREATEFFECT:
 	jsr a6@(-0x156:W)
 #NO_APP
 	moveq #0,d0
-	lea _AScr,a2
-	move.b (a2),d0
+	lea _AScr,a3
+	move.b (a3),d0
 	add.l d0,d0
 	add.l d0,d0
 	move.w #84,a1
@@ -6184,7 +6186,7 @@ _GREATEFFECT:
 	jsr a6@(-0x132:W)
 #NO_APP
 	moveq #0,d0
-	move.b (a2),d0
+	move.b (a3),d0
 	add.l d0,d0
 	add.l d0,d0
 	move.l _IntuitionBase,a6
@@ -6196,11 +6198,11 @@ _GREATEFFECT:
 #NO_APP
 	moveq #3,d0
 	sub.b _AScr,d0
-	move.b d0,(a2)
+	move.b d0,(a3)
 	and.l #255,d0
 	add.l d0,d0
 	add.l d0,d0
-	move.l _GfxBase,a6
+	move.l (a2),a6
 	move.w #84,a1
 	lea _MyScreen,a0
 	add.l (a0,d0.l),a1
@@ -6210,7 +6212,7 @@ _GREATEFFECT:
 	jsr a6@(-0x156:W)
 #NO_APP
 	moveq #0,d0
-	move.b (a2),d0
+	move.b (a3),d0
 	add.l d0,d0
 	add.l d0,d0
 	move.w #84,a1
@@ -6223,7 +6225,7 @@ _GREATEFFECT:
 	jsr a6@(-0x132:W)
 #NO_APP
 	moveq #0,d0
-	move.b (a2),d0
+	move.b (a3),d0
 	add.l d0,d0
 	add.l d0,d0
 	move.l _IntuitionBase,a6
@@ -6235,7 +6237,7 @@ _GREATEFFECT:
 #NO_APP
 	moveq #3,d0
 	sub.b _AScr,d0
-	move.b d0,(a2)
+	move.b d0,(a3)
 	move.w #12,_custom+150
 	movem.l (sp)+,#31996
 	lea (24,sp),sp
@@ -6358,7 +6360,6 @@ _GREATEFFECT:
 	move.l d0,-(sp)
 	jsr (a5)
 	move.l d0,d1
-	move.l _GfxBase,a6
 	move.l d4,a1
 	move.l d3,d0
 #APP
@@ -6478,7 +6479,6 @@ _GREATEFFECT:
 	move.l d0,-(sp)
 	jsr (a5)
 	move.l d0,d1
-	move.l _GfxBase,a6
 	move.l d4,a1
 	move.l d3,d0
 #APP
@@ -10344,9 +10344,6 @@ _MAININTRO:
 	move.l a2,d2
 	move.l a4,d3
 	moveq #49,d4
-	moveq #90,d5
-	moveq #63,d6
-	not.b d6
 #APP
 | 535 "test.c" 1
 	jsr a6@(-0x25e:W)
@@ -10752,9 +10749,6 @@ _MAININTRO:
 	move.l a2,d2
 	move.l a4,d3
 	moveq #41,d4
-	moveq #90,d5
-	moveq #63,d6
-	not.b d6
 #APP
 | 556 "test.c" 1
 	jsr a6@(-0x25e:W)
@@ -11144,8 +11138,6 @@ _MAININTRO:
 	move.l d1,d3
 	move.l #640,d4
 	moveq #75,d5
-	moveq #63,d6
-	not.b d6
 #APP
 | 631 "test.c" 1
 	jsr a6@(-0x228:W)
@@ -11296,10 +11288,7 @@ _MAININTRO:
 	lea (84,a1),a1
 	moveq #0,d2
 	move.l d1,d3
-	move.l #640,d4
 	moveq #100,d5
-	moveq #63,d6
-	not.b d6
 #APP
 | 698 "test.c" 1
 	jsr a6@(-0x228:W)
@@ -11404,7 +11393,6 @@ _MAININTRO:
 	add.l d2,d0
 	move.l d0,a1
 	add.l d0,a1
-	move.l _GfxBase,a6
 	move.w #84,a0
 	add.l (a5,d1.l),a0
 	moveq #0,d0
@@ -11414,10 +11402,7 @@ _MAININTRO:
 	lea (84,a1),a1
 	moveq #0,d2
 	move.l d1,d3
-	move.l #640,d4
 	moveq #37,d5
-	moveq #63,d6
-	not.b d6
 #APP
 | 755 "test.c" 1
 	jsr a6@(-0x228:W)
@@ -11515,7 +11500,8 @@ _MAININTRO:
 #NO_APP
 	clr.l _MyScreen+8
 .L496:
-	move.l _SysBase,a6
+	lea _SysBase,a0
+	move.l (a0),a6
 	lea _IMemA,a0
 	move.l (a0),a1
 	lea _IMemL,a0
@@ -11563,7 +11549,8 @@ _MAININTRO:
 #NO_APP
 	move.l #-16777216,d4
 .L497:
-	move.l _GfxBase,a6
+	lea _GfxBase,a0
+	move.l (a0),a6
 	move.w #44,a0
 	add.l _MyScreen+8,a0
 	moveq #0,d0
@@ -11643,12 +11630,9 @@ _MAININTRO:
 	moveq #75,d1
 	move.w #84,a1
 	add.l _MyScreen+4,a1
-	moveq #0,d2
 	moveq #75,d3
 	move.l #640,d4
 	move.l #360,d5
-	moveq #63,d6
-	not.b d6
 #APP
 | 876 "test.c" 1
 	jsr a6@(-0x228:W)
@@ -11665,9 +11649,9 @@ _MAININTRO:
 	move.l d0,d4
 	addq.l #8,sp
 	jeq .L503
-	move.l _DOSBase,a6
+	lea _DOSBase,a0
+	move.l (a0),a6
 	move.l d0,d1
-	moveq #0,d2
 	moveq #1,d3
 #APP
 | 882 "test.c" 1
@@ -12219,7 +12203,6 @@ _MAININTRO:
 	moveq #0,d0
 	moveq #-8,d1
 	moveq #0,d2
-	moveq #75,d3
 	move.l #639,d4
 	move.l #434,d5
 #APP
@@ -12237,8 +12220,6 @@ _MAININTRO:
 	move.l a0,a1
 	move.l a2,d4
 	moveq #8,d5
-	moveq #63,d6
-	not.b d6
 #APP
 | 936 "test.c" 1
 	jsr a6@(-0x228:W)
@@ -12374,8 +12355,6 @@ _MAININTRO:
 	move.l a0,a1
 	move.l #640,d4
 	moveq #8,d5
-	moveq #63,d6
-	not.b d6
 #APP
 | 954 "test.c" 1
 	jsr a6@(-0x228:W)
@@ -12653,7 +12632,8 @@ _MAININTRO:
 	add.l d1,d0
 	move.l d0,a1
 	add.l d0,a1
-	move.l _GfxBase,a6
+	lea _GfxBase,a0
+	move.l (a0),a6
 	move.l d3,a0
 	moveq #0,d0
 	moveq #0,d1
@@ -12663,8 +12643,6 @@ _MAININTRO:
 	moveq #75,d3
 	move.l #640,d4
 	move.l #360,d5
-	moveq #63,d6
-	not.b d6
 #APP
 | 983 "test.c" 1
 	jsr a6@(-0x25e:W)
