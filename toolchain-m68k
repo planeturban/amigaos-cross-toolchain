@@ -403,6 +403,7 @@ def _build(pull):
   make('{m4}', 'install')
 
   unpack('{gawk}')
+  patch('{gawk}')
   update_autotools('{sources}/{gawk}')
   configure('{gawk}', '--prefix={host}')
   make('{gawk}')
@@ -492,7 +493,7 @@ def _build(pull):
               '--prefix={prefix}',
               '--infodir={prefix}/{target}/info',
               '--mandir={prefix}/share/man',
-              '--host=i686-linux-gnu' if fill_in('{binutils}') != 'binutils-2.14' or platform.system() == 'Darwin' else '--prefix={prefix}',
+              '--host=i686-linux-gnu' if fill_in('{binutils}') != 'binutils-2.14' or platform.system() == 'Darwin' or fnmatch(platform.system(), "CYGWIN*") else '--prefix={prefix}',
               '--target=m68k-amigaos',
               from_dir='{submodules}/{binutils}')
     touch_genfiles('{submodules}/{binutils}')
