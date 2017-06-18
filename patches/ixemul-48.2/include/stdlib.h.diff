@@ -1,15 +1,22 @@
---- ixemul-48.2.orig/include/stdlib.h	2017-03-26 11:05:36.300503000 +0200
-+++ ixemul-48.2/include/stdlib.h	2017-03-26 20:43:22.476974600 +0200
+*** ixemul-48.2.orig/include/stdlib.h	2017-06-18 14:58:17.137433700 +0200
+--- ixemul-48.2/include/stdlib.h	2017-06-18 14:58:12.127328700 +0200
 ***************
-*** 49,55 ****
---- 49,58 ----
+*** 48,55 ****
+  #undef	_BSD_SIZE_T_
   #endif
   
-  #ifdef	_BSD_WCHAR_T_
-+ #ifndef _WCHAR_T_
-+ #define _WCHAR_T_
-  typedef	_BSD_WCHAR_T_	wchar_t;
-+ #endif
+! #ifdef	_BSD_WCHAR_T_
+! typedef	_BSD_WCHAR_T_	wchar_t;
+  #undef	_BSD_WCHAR_T_
+  #endif
+  
+--- 48,56 ----
+  #undef	_BSD_SIZE_T_
+  #endif
+  
+! #ifndef	__cplusplus
+! #define _WCHAR_T_
+! typedef	__WCHAR_TYPE__	wchar_t;
   #undef	_BSD_WCHAR_T_
   #endif
   
