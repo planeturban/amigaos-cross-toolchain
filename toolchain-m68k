@@ -358,6 +358,9 @@ def _build(pull):
         removemodule('{clib2}')
         removemodule('{libdebug}')
         removemodule('{libm}')
+        rmtree(path.join('{build}', '{gcc}', 'gcc/include'))
+        rmtree(path.join('{build}', '{gcc}', 'gcc/include-fixed'))
+        remove(path.join('{build}', '{gcc}', 'gcc/stmp*'))
         
     if checkstamps('{libnix}'):
       removemodule('{libnix}')
@@ -517,7 +520,7 @@ def _build(pull):
               '--enable-languages=c,c++,objc',
               '--enable-version-specific-runtime-libs',
               '--disable-libssp',
-              '--with-headers={sources}/{ixemul}/include',
+#              '--with-headers={sources}/{ixemul}/include',
               from_dir='{submodules}/{gcc}')
     touch_genfiles('{submodules}/{gcc}')
     make('{gcc}', 'all-gcc', 
