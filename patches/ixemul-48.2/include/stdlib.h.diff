@@ -10,13 +10,15 @@
   #undef	_BSD_WCHAR_T_
   #endif
   
---- 48,56 ----
+--- 48,58 ----
   #undef	_BSD_SIZE_T_
   #endif
   
 ! #ifndef	__cplusplus
-! #define _WCHAR_T_
+! #ifndef	_WCHAR_T_
+! #define	_WCHAR_T_
 ! typedef	__WCHAR_TYPE__	wchar_t;
+! #endif
   #undef	_BSD_WCHAR_T_
   #endif
   

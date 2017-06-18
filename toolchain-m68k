@@ -358,9 +358,6 @@ def _build(pull):
         removemodule('{clib2}')
         removemodule('{libdebug}')
         removemodule('{libm}')
-        rmtree(path.join('{build}', '{gcc}', 'gcc/include'))
-        rmtree(path.join('{build}', '{gcc}', 'gcc/include-fixed'))
-        remove(path.join('{build}', '{gcc}', 'gcc/stmp*'))
         
     if checkstamps('{libnix}'):
       removemodule('{libnix}')
