@@ -397,44 +397,45 @@ def _build(pull):
   unpack('python-lha', work_dir='{build}')
   python_setup('python-lha')
 
-  unpack('{m4}')
-  configure('{m4}', '--prefix={host}')
-  make('{m4}')
-  make('{m4}', 'install')
-
-  unpack('{gawk}')
-  patch('{gawk}')
-  update_autotools('{sources}/{gawk}')
-  configure('{gawk}', '--prefix={host}')
-  make('{gawk}')
-  make('{gawk}', 'install')
-
-  unpack('{flex}')
-  configure('{flex}', '--prefix={host}')
-  # flex build is broken with multiple threads
-  nt = fill_in('{numThreads}')
-  setvar(numThreads='1')
-  make('{flex}')
-  make('{flex}', 'install')
-  setvar(numThreads=nt)
-
-  unpack('{bison}')
-  update_autotools('{sources}/{bison}/config')
-  configure('{bison}', '--prefix={host}')
-  make('{bison}')
-  make('{bison}', 'install')
-
-  unpack('{texinfo}')
-  update_autotools('{sources}/{texinfo}/build-aux')
-  configure('{texinfo}', '--prefix={host}')
-  make('{texinfo}')
-  make('{texinfo}', 'install')
-
-  unpack('{autoconf}')
-  update_autotools('{sources}/{autoconf}')
-  configure('{autoconf}', '--prefix={host}')
-  make('{autoconf}')
-  make('{autoconf}', 'install')
+  if not args.mytools:
+      unpack('{m4}')
+      configure('{m4}', '--prefix={host}')
+      make('{m4}')
+      make('{m4}', 'install')
+    
+      unpack('{gawk}')
+      patch('{gawk}')
+      update_autotools('{sources}/{gawk}')
+      configure('{gawk}', '--prefix={host}')
+      make('{gawk}')
+      make('{gawk}', 'install')
+    
+      unpack('{flex}')
+      configure('{flex}', '--prefix={host}')
+      # flex build is broken with multiple threads
+      nt = fill_in('{numThreads}')
+      setvar(numThreads='1')
+      make('{flex}')
+      make('{flex}', 'install')
+      setvar(numThreads=nt)
+    
+      unpack('{bison}')
+      update_autotools('{sources}/{bison}/config')
+      configure('{bison}', '--prefix={host}')
+      make('{bison}')
+      make('{bison}', 'install')
+    
+      unpack('{texinfo}')
+      update_autotools('{sources}/{texinfo}/build-aux')
+      configure('{texinfo}', '--prefix={host}')
+      make('{texinfo}')
+      make('{texinfo}', 'install')
+    
+      unpack('{autoconf}')
+      update_autotools('{sources}/{autoconf}')
+      configure('{autoconf}', '--prefix={host}')
+      make('{autoconf}')
+      make('{autoconf}', 'install')
 
   prepare_target()
 
@@ -506,6 +507,13 @@ def _build(pull):
   unpack('{ixemul}', top_dir='ixemul')
   patch('{ixemul}')
 
+  if fill_in('{gcc}') == 'gcc-3.4.6':
+      with cwd('{archives}'):
+          fetch('gcc-3.4.6.tar.bz2', 'https://ftp.gnu.org/gnu/gcc/gcc-3.4.6/gcc-3.4.6.tar.bz2')
+      unpack('{gcc}', top_dir='gcc-3.4.6')
+      patch('{gcc}')
+      remove(path.join('{sources}', '{gcc}', 'gcc/cp/cfns.h'))
+
   with env(CC=CC, CXX=CXX, CFLAGS=FLAGS, CXXFLAGS=FLAGS):
     configure('{gcc}',
               '--prefix={prefix}',
@@ -514,12 +522,12 @@ def _build(pull):
               '--host=i686-linux-gnu' if fill_in('{gcc}') != 'gcc-6' or args.m32 else '--prefix={prefix}',
               '--build=i686-linux-gnu' if fill_in('{gcc}') != 'gcc-6' or args.m32 else '--prefix={prefix}',
               '--target=m68k-amigaos',
-              '--enable-languages=c,c++,objc',
+              '--enable-languages=c,c++,objc' if fill_in('{gcc}') != 'gcc-3.4.6' else '--enable-languages=c,c++',
               '--enable-version-specific-runtime-libs',
               '--disable-libssp',
               '--with-headers={sources}/{ixemul}/include',
-              from_dir='{submodules}/{gcc}')
-    touch_genfiles('{submodules}/{gcc}')
+              from_dir='{submodules}/{gcc}' if fill_in('{gcc}') != 'gcc-3.4.6' else '{sources}/{gcc}')
+    touch_genfiles('{submodules}/{gcc}' if fill_in('{gcc}') != 'gcc-3.4.6' else '{sources}/{gcc}')
     make('{gcc}', 'all-gcc', 
          MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul -Ofast')
     make('{gcc}', 'install-gcc',
@@ -530,22 +538,24 @@ def _build(pull):
   unpack('{libamiga}', top_dir='.')
   install_libamiga()
 
-  with env(CC=CC, CXX=CXX, CFLAGS=FLAGS, CXXFLAGS=FLAGS):
-    make('{gcc}', 'all-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul -Ofast')
-    make('{gcc}', 'install-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul -Ofast')
+  if fill_in('{gcc}') != 'gcc-3.4.6':
+    with env(CC=CC, CXX=CXX, CFLAGS=FLAGS, CXXFLAGS=FLAGS):
+      make('{gcc}', 'all-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul -Ofast')
+      make('{gcc}', 'install-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul -Ofast')
 
-  with env(CC='m68k-amigaos-gcc',
-       CPP='m68k-amigaos-gcc -E',
-       AR='m68k-amigaos-ar',
-       AS='m68k-amigaos-as',
-       RANLIB='m68k-amigaos-ranlib',
-       LD='m68k-amigaos-ld'):
-         configure('{libnix}',
+
+  configure('{libnix}',
             '--prefix={prefix}/{target}/libnix',
             '--host=i686-linux-gnu',
             '--target=m68k-amigaos',
             from_dir='{submodules}/{libnix}')
-  make('{libnix}')
+  make('{libnix}',
+       CC='m68k-amigaos-gcc',
+       CPP='m68k-amigaos-gcc -E',
+       AR='m68k-amigaos-ar',
+       AS='m68k-amigaos-as',
+       RANLIB='m68k-amigaos-ranlib',
+       LD='m68k-amigaos-ld')
   make('{libnix}', 'install')
 
   copy('{submodules}/{libnix}/sources/headers/stabs.h',
@@ -832,6 +842,7 @@ if __name__ == "__main__":
                       help='number of threads for make')
   parser.add_argument('--nodeps', action='store_true', help='disable dependency checking')
   parser.add_argument('--m32', action='store_true', help='force compiling with 32bit (add -m32)')
+  parser.add_argument('--mytools', action='store_true', help='do not build tools (m4, gawk, flex, bison, automake, autoconf, texinfo), use the installed ones')
   args = parser.parse_args()
 
   setvar(top=path.abspath(path.dirname(sys.argv[0])),
