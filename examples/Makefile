@@ -1,7 +1,7 @@
 CC = m68k-amigaos-gcc 
 CXX = m68k-amigaos-g++ 
 CFLAGS = -Os -Wall -fomit-frame-pointer 
-CXXFLAGS = -Os -Wall -fomit-frame-pointer 
+CXXFLAGS = -Os -Wall -fomit-frame-pointer  -fno-rtti -fno-exceptions
 
 BINS = hello-ks13 hello-ks20 hello-ks20.clib2 \
        hello-stdio hello-stdio.clib2 hello-stdio.nix13 \
