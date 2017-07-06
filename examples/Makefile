@@ -1,7 +1,7 @@
-CC = m68k-amigaos-gcc -g
-CXX = m68k-amigaos-g++ -g
-CFLAGS = -Os -Wall -fomit-frame-pointer
-CXXFLAGS = -Os -Wall -fomit-frame-pointer
+CC = m68k-amigaos-gcc 
+CXX = m68k-amigaos-g++ 
+CFLAGS = -Os -Wall -fomit-frame-pointer 
+CXXFLAGS = -Os -Wall -fomit-frame-pointer 
 
 BINS = hello-ks13 hello-ks20 hello-ks20.clib2 \
        hello-stdio hello-stdio.clib2 hello-stdio.nix13 \
@@ -30,7 +30,7 @@ hello-stdio.clib2: hello-stdio.c
 	$(CC) -mcrt=clib2 -m68020 $(CFLAGS) -o $@ $<
 
 hello-iostream: hello-iostream.cpp
-	$(CXX) -noixemul -m68020 $(CXXFLAGS) -o $@ $^ -Xlinker --allow-multiple-definition
+	$(CXX) -noixemul -m68020 $(CXXFLAGS) -o $@ $^ 
 
 test-ctors: test-ctors.cpp
 	$(CXX) -noixemul -m68020 $(CXXFLAGS) -D__A -c -o test-ctors-a.o $<
