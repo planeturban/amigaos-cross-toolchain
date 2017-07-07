@@ -371,6 +371,10 @@ def _build(pull):
       rmtree(path.join('{build}', '{gcc}', '{target}'))
       for f in glob(path.join('{stamps}', '{gcc}' + '-make*')):
         remove(f)
+      for f in glob(path.join('{stamps}', 'mui*')):
+        remove(f)
+      for f in glob(path.join('{stamps}', 'mmu*')):
+        remove(f)
       remove(path.join('{stamps}', 'headers-install'))
     
     if checkstamps('{clib2}'):
