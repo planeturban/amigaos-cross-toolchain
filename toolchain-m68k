@@ -540,9 +540,9 @@ def _build(pull):
               from_dir='{submodules}/{gcc}' if fill_in('{gcc}') != 'gcc-3.4.6' else '{sources}/{gcc}')
     touch_genfiles('{submodules}/{gcc}' if fill_in('{gcc}') != 'gcc-3.4.6' else '{sources}/{gcc}')
     make('{gcc}', 'all-gcc', 
-         MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul -Ofast')
+         MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul -Os')
     make('{gcc}', 'install-gcc',
-         MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul -Ofast')
+         MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul -Os')
 
   headers_install()
 
@@ -551,8 +551,8 @@ def _build(pull):
 
   if fill_in('{gcc}') != 'gcc-3.4.6':
     with env(CC=CC, CXX=CXX, CFLAGS=FLAGS, CXXFLAGS=FLAGS):
-      make('{gcc}', 'all-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul -Ofast')
-      make('{gcc}', 'install-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul -Ofast')
+      make('{gcc}', 'all-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul -Os')
+      make('{gcc}', 'install-target-libgcc', MAKEINFO='makeinfo', CFLAGS_FOR_TARGET='-noixemul -Os')
 
 
   configure('{libnix}',
@@ -667,7 +667,7 @@ def add_stubs(src):
                     libdir, 'libnix/libstubs.a')
     info('stubs: "%s" -> "%s"', obj, lib)
     cflags = list(cflags) + ['-noixemul', '-c', '-o', obj, src]
-    execute('m68k-amigaos-gcc', '-Wall', '-O3', '-fomit-frame-pointer', *cflags)
+    execute('m68k-amigaos-gcc', '-Wall', '-Os', '-fomit-frame-pointer', *cflags)
     execute('m68k-amigaos-ar', 'rs', lib, obj)
     remove(obj)
 
@@ -679,7 +679,7 @@ def add_lib(src, libname):
     lib = path.join('{prefix}/{target}/lib', libdir, libname)
     info('lib: "%s" -> "%s"', obj, lib)
     cflags = list(cflags) + ['-noixemul', '-c', '-o', obj, src]
-    execute('m68k-amigaos-gcc', '-Wall', '-O3', '-fomit-frame-pointer', *cflags)
+    execute('m68k-amigaos-gcc', '-Wall', '-Os', '-fomit-frame-pointer', *cflags)
     execute('m68k-amigaos-ar', 'rcs', lib, obj)
     remove(obj)
 

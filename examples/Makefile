@@ -2,12 +2,13 @@ CC = m68k-amigaos-gcc
 CXX = m68k-amigaos-g++ 
 CFLAGS = -Os -Wall -fomit-frame-pointer 
 CXXFLAGS = -Os -Wall -fomit-frame-pointer  -fno-rtti -fno-exceptions
+CXXFLAGSX = -Os -Wall
 
 BINS = hello-ks13 hello-ks20 hello-ks20.clib2 \
        hello-stdio hello-stdio.clib2 hello-stdio.nix13 \
        hello-mui test-mmu \
        simple.library simple.library_r simple.device \
-       test-ctors hello-iostream 
+       test-ctors hello-iostream test-exceptions
 
 all: $(BINS) $(OBJS)
 
@@ -38,6 +39,9 @@ test-ctors: test-ctors.cpp
 	$(CXX) -noixemul -m68020 $(CXXFLAGS) -c -o test-ctors.o $<
 	$(CXX) -noixemul -m68020 $(CXXFLAGS) -o $@ test-ctors*.o
 
+test-exceptions: test-exceptions.cpp
+	$(CXX) -noixemul $(CXXFLAGSX) -o $@ $^ 
+	
 hello-mui: hello-mui.c
 	$(CC) -noixemul -m68020 -msmall-code $(CFLAGS) -o $@ $< -lmui
 
