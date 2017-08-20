@@ -35,7 +35,7 @@ URLS = \
    'http://www.ibaug.de/vbcc/vbcc.tar.gz',
    'http://aminet.net/dev/asm/ira.lha',
    'http://sun.hasenbraten.de/~frank/projects/download/vdam68k.tar.gz',
-   ('http://mail.pb-owl.de/~frank/vbcc/current/vbcc_target_m68k-amigaos.lha',
+   ('http://server.owl.de/~frank/vbcc/2017-08-14/vbcc_target_m68k-amigaos.lha',
     'vclib.lha')]
 
 
@@ -343,10 +343,10 @@ def _build(pull):
     FLAGS += ' -w'
     environ['MAKEFLAGS'] = '--silent'  
 
+  mkdir(path.join('{prefix}', 'bin'))
   environ['CC'] = CC
   environ['CXX'] = CXX
   environ['PATH'] = ':'.join([path.join('{prefix}', 'bin'),
-                              path.join('{host}', 'bin'),
                               environ['PATH']])
 
   setvar(cc=environ['CC'], cxx=environ['CXX'])
