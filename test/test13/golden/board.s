@@ -226,14 +226,14 @@ _isAttacked:
 	cmp.b #2,(a1,d7.l)
 	jeq .L140
 .L41:
-	moveq #31,d1
-	add.l a0,d1
-	moveq #119,d0
-	not.b d0
-	and.l d1,d0
+	moveq #31,d0
+	add.l a0,d0
+	moveq #119,d1
+	not.b d1
+	and.l d0,d1
 	jne .L42
 	lea _board,a1
-	cmp.b #3,(a1,d1.l)
+	cmp.b #3,(a1,d0.l)
 	jeq .L140
 .L42:
 	moveq #16,d1

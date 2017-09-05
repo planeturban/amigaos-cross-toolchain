@@ -290,8 +290,8 @@ _level1_doorIntelligence:
 	move.w d3,d0
 	ext.l d0
 	jsr _object_collision
+	move.w d0,d4
 	addq.l #4,sp
-	tst.w d0
 	jeq .L51
 	tst.l 40(sp)
 	jeq .L52
@@ -331,11 +331,11 @@ _level1_doorIntelligence:
 	jge .L56
 	move.w 16(a2),d0
 	cmp.w 16(a4),d0
-	sge d0
-	ext.w d0
-	or.w #1,d0
+	sge d4
+	ext.w d4
+	or.w #1,d4
 .L56:
-	move.w d0,26(a2)
+	move.w d4,26(a2)
 	move.w 18(a2),a0
 	sub.w 18(a4),a0
 	move.l a0,d0
@@ -508,8 +508,8 @@ _enemy_intelligence:
 	move.w d3,d0
 	ext.l d0
 	jsr _object_collision
+	move.w d0,d4
 	addq.l #4,sp
-	tst.w d0
 	jeq .L98
 	tst.l 40(sp)
 	jeq .L99
@@ -545,11 +545,11 @@ _enemy_intelligence:
 	jge .L103
 	move.w 16(a2),d0
 	cmp.w 16(a4),d0
-	sge d0
-	ext.w d0
-	or.w #1,d0
+	sge d4
+	ext.w d4
+	or.w #1,d4
 .L103:
-	move.w d0,26(a2)
+	move.w d4,26(a2)
 	move.w 18(a2),a0
 	sub.w 18(a4),a0
 	move.l a0,d0

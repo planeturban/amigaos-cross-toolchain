@@ -1388,11 +1388,11 @@ _think:
 	jne .L199
 	move.l 24(a2),d6
 	move.l 28(a2),d7
-	move.l d3,d1
-	sub.l 4(a2),d1
+	move.l d3,d0
+	sub.l 4(a2),d0
 	cmp.w #0,a4
 	jne .L203
-	move.l d1,-(sp)
+	move.l d0,-(sp)
 	move.l d7,d0
 	moveq #27,d1
 	lsr.l d1,d0
@@ -1641,7 +1641,7 @@ _think:
 	lea (16,sp),sp
 	jra .L199
 .L203:
-	move.l d1,-(sp)
+	move.l d0,-(sp)
 	move.l d7,d0
 	moveq #27,d1
 	lsr.l d1,d0

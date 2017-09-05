@@ -64,22 +64,22 @@ _gfx_fillRectSmallScreen:
 	and.l d3,d5
 	jsr (a2)
 	move.l #14676032,a0
-	move.w #970,(a0)
-	clr.w 2(a0)
-	move.w #-1,4(a0)
-	move.w #-1,6(a0)
-	move.w #198,38(a0)
-	move.w #198,32(a0)
-	clr.w 34(a0)
-	clr.w 36(a0)
-	move.w d7,52(a0)
+	move.w #970,(a0)+
+	clr.w (a0)+
+	move.w #-1,(a0)+
+	move.w #-1,(a0)+
+	move.w #198,30(a0)
+	move.w #198,24(a0)
+	clr.w 26(a0)
+	clr.w 28(a0)
+	move.w d7,44(a0)
 	tst.l d5
 	sne d0
 	ext.w d0
-	move.w d0,50(a0)
-	move.l a5,8(a0)
-	move.l a5,20(a0)
-	move.w d2,24(a0)
+	move.w d0,42(a0)
+	move.l a5,(a0)
+	move.l a5,12(a0)
+	move.w d2,16(a0)
 	jsr (a2)
 	move.l #14676032,a0
 	move.w #970,(a0)
@@ -173,22 +173,22 @@ _gfx_fillRectSmallScreen:
 	lsl.l d4,d5
 	and.l d3,d5
 	jsr (a2)
-	move.w #970,(a3)
-	clr.w 2(a3)
-	move.w #-1,4(a3)
-	move.w #-1,6(a3)
-	move.w #198,38(a3)
-	move.w #198,32(a3)
-	clr.w 34(a3)
-	clr.w 36(a3)
-	move.w d7,52(a3)
+	move.w #970,(a3)+
+	clr.w (a3)+
+	move.w #-1,(a3)+
+	move.w #-1,(a3)+
+	move.w #198,30(a3)
+	move.w #198,24(a3)
+	clr.w 26(a3)
+	clr.w 28(a3)
+	move.w d7,44(a3)
 	tst.l d5
 	sne d0
 	ext.w d0
-	move.w d0,50(a3)
-	move.l a5,8(a3)
-	move.l a5,20(a3)
-	move.w d2,24(a3)
+	move.w d0,42(a3)
+	move.l a5,(a3)
+	move.l a5,12(a3)
+	move.w d2,16(a3)
 	lea (40,a5),a5
 	addq.l #1,d4
 	moveq #5,d1

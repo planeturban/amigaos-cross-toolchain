@@ -9960,9 +9960,9 @@ _MAININTRO:
 	clr.l (a2)
 	clr.l 4(a2)
 	lea _SMemA+4,a0
+	clr.l (a0)+
+	clr.l (a0)+
 	clr.l (a0)
-	clr.l 4(a0)
-	clr.l 8(a0)
 	clr.l _IMemA
 	clr.l _IMemA+4
 	jsr _LOADSOUNDS

@@ -152,6 +152,7 @@ _testPerft:
 	addq.l #1,d5
 	jra .L24
 .L5:
+	move.b (a4),d0
 	trap #7
 .L23:
 	pea .LC3

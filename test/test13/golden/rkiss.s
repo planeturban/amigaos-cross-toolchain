@@ -97,8 +97,8 @@ _rand64:
 _rkissSeed:
 	lea (-32,sp),sp
 	movem.l #16188,-(sp)
-	move.l 76(sp),a5
-	cmp.w #0,a5
+	move.l 76(sp),a1
+	cmp.w #0,a1
 	jeq .L6
 	clr.l _a
 	move.l #-236298515,_a+4
@@ -108,7 +108,7 @@ _rkissSeed:
 	move.l #-723440521,_c+4
 	clr.l _b
 	move.l #-723440521,_b+4
-	cmp.w #0,a5
+	cmp.w #0,a1
 	jle .L2
 	clr.l d2
 	move.l #-723440521,d3
@@ -118,13 +118,13 @@ _rkissSeed:
 	move.l d3,d1
 	clr.l d6
 	move.l #-236298515,d7
-	sub.l a1,a1
-	move.l a1,a0
+	sub.l a2,a2
+	move.l a2,a0
 	move.l d6,48(sp)
 	move.l d7,52(sp)
 	move.l d2,40(sp)
 	move.l d3,44(sp)
-	move.l a5,68(sp)
+	move.l a1,68(sp)
 .L4:
 	move.l d1,d2
 	moveq #25,d3

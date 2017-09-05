@@ -31,10 +31,10 @@ _gfx_screenWidthBitBlitNoMask:
 	lsl.w d1,d0
 	or.w #2544,d0
 	move.l #14676032,a1
-	move.w d0,(a1)
+	move.w d0,(a1)+
 	lsl.w d1,d3
-	move.w d3,2(a1)
-	clr.w 6(a1)
+	move.w d3,(a1)
+	clr.w 4(a1)
 	move.w d2,a0
 	moveq #15,d0
 	add.l a0,d0
@@ -44,16 +44,16 @@ _gfx_screenWidthBitBlitNoMask:
 	add.w d0,d1
 	moveq #40,d2
 	sub.w d1,d2
+	move.w d2,34(a1)
 	move.w d2,36(a1)
-	move.w d2,38(a1)
-	move.l d5,16(a1)
-	move.l a2,20(a1)
+	move.l d5,14(a1)
+	move.l a2,18(a1)
 	move.w d4,d1
 	add.w d4,d1
 	add.w d1,d1
 	add.w d4,d1
 	lsl.w #6,d1
 	or.w d1,d0
-	move.w d0,24(a1)
+	move.w d0,22(a1)
 	movem.l (sp)+,#3324
 	rts

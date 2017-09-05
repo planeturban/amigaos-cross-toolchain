@@ -205,18 +205,18 @@ _move_to_san:
 	jeq .L66
 	lea _buffer.2847,a2
 	lea _buffer.2847,a0
+	clr.b (a0)+
+	clr.b (a0)+
+	clr.b (a0)+
+	clr.b (a0)+
+	clr.b (a0)+
+	clr.b (a0)+
+	clr.b (a0)+
+	clr.b (a0)+
+	clr.b (a0)+
+	clr.b (a0)+
+	clr.b (a0)+
 	clr.b (a0)
-	clr.b 1(a0)
-	clr.b 2(a0)
-	clr.b 3(a0)
-	clr.b 4(a0)
-	clr.b 5(a0)
-	clr.b 6(a0)
-	clr.b 7(a0)
-	clr.b 8(a0)
-	clr.b 9(a0)
-	clr.b 10(a0)
-	clr.b 11(a0)
 	move.l d1,d7
 	clr.w d7
 	swap d7
@@ -577,9 +577,10 @@ _moveToUCI:
 	cmp.l d2,d0
 	jeq .L87
 	jge .L94
-	subq.l #6,d2
+	moveq #6,d0
+	cmp.l d2,d0
 	jeq .L90
-	subq.l #1,d2
+	subq.l #7,d2
 	jne .L86
 	move.b #113,_buffer.2880+4
 .L86:
@@ -694,9 +695,10 @@ _printMoveList:
 .L111:
 	cmp.l d2,d0
 	jge .L110
-	subq.l #6,d2
+	moveq #6,d0
+	cmp.l d2,d0
 	jeq .L102
-	subq.l #1,d2
+	subq.l #7,d2
 	jne .L98
 	pea .LC17
 	jsr (a3)
@@ -5629,9 +5631,10 @@ _printLine:
 	cmp.l d2,d0
 	jeq .L844
 	jge .L891
-	subq.l #6,d2
+	moveq #6,d0
+	cmp.l d2,d0
 	jeq .L845
-	subq.l #1,d2
+	subq.l #7,d2
 	jne .L843
 	pea .LC10
 	jsr (a2)
@@ -5712,9 +5715,10 @@ _printLine:
 	cmp.l d2,d0
 	jeq .L849
 	jge .L892
-	subq.l #6,d2
+	moveq #6,d0
+	cmp.l d2,d0
 	jeq .L852
-	subq.l #1,d2
+	subq.l #7,d2
 	jne .L848
 	pea .LC10
 	move.l d5,a0
@@ -5970,9 +5974,10 @@ _printLine:
 	cmp.l d3,d0
 	jeq .L866
 	jge .L895
-	subq.l #6,d3
+	moveq #6,d0
+	cmp.l d3,d0
 	jeq .L869
-	subq.l #1,d3
+	subq.l #7,d3
 	jne .L865
 	pea .LC10
 	move.l d2,a0
@@ -6759,9 +6764,10 @@ _Divide:
 	cmp.l d4,d0
 	jeq .L968
 	jge .L995
-	subq.l #6,d4
+	moveq #6,d0
+	cmp.l d4,d0
 	jeq .L971
-	subq.l #1,d4
+	subq.l #7,d4
 	jne .L967
 	pea .LC10
 	move.l 62(sp),a1
@@ -7051,11 +7057,11 @@ _generatePawnCaptureMoves:
 	jeq .L1002
 	moveq #0,d0
 	move.b d1,d0
-	moveq #8,d7
-	and.l d7,d1
+	moveq #8,d5
+	and.l d5,d1
 	cmp.l d3,d1
 	jeq .L1002
-	cmp.l d3,d7
+	cmp.l d3,d5
 	jeq .L1038
 	tst.l d3
 	jne .L1014
@@ -8353,13 +8359,13 @@ _generateKingCaptureMoves:
 	and.l d3,d4
 	jne .L1252
 	lea _board,a1
-	move.b (a1,d3.l),d6
+	move.b (a1,d3.l),d4
 	jeq .L1252
-	moveq #8,d4
-	and.l d6,d4
-	cmp.l a5,d4
+	moveq #8,d6
+	and.l d4,d6
+	cmp.l a5,d6
 	jeq .L1252
-	and.l #255,d6
+	and.l #255,d4
 	move.l d1,a2
 	add.l d1,a2
 	add.l d1,a2
@@ -8368,14 +8374,14 @@ _generateKingCaptureMoves:
 	lea (a0,a2.l),a2
 	lsl.l #8,d3
 	or.l d2,d3
-	move.l d6,d4
-	lsl.w #4,d4
-	swap d4
-	clr.w d4
-	or.l d4,d3
+	move.l d4,d6
+	lsl.w #4,d6
+	swap d6
+	clr.w d6
+	or.l d6,d3
 	move.l d3,(a2)
-	lsl.l #4,d6
-	move.l d6,a1
+	lsl.l #4,d4
+	move.l d4,a1
 	add.l d5,a1
 	add.l a1,a1
 	add.l a1,a1
@@ -8394,7 +8400,7 @@ _generateKingCaptureMoves:
 	jne .L1239
 	lea _board,a1
 	move.b (a1,d4.l),d3
-	move.w d3,a2
+	move.w d3,a1
 	jne .L1282
 .L1239:
 	moveq #-15,d4
@@ -8416,7 +8422,7 @@ _generateKingCaptureMoves:
 	jne .L1241
 	lea _board,a1
 	move.b (a1,d4.l),d3
-	move.w d3,a2
+	move.w d3,a1
 	jne .L1284
 .L1241:
 	move.l d0,d4
@@ -8427,7 +8433,7 @@ _generateKingCaptureMoves:
 	jne .L1242
 	lea _board,a1
 	move.b (a1,d4.l),d3
-	move.w d3,a2
+	move.w d3,a1
 	jne .L1285
 .L1242:
 	moveq #15,d4
@@ -8438,7 +8444,7 @@ _generateKingCaptureMoves:
 	jne .L1243
 	lea _board,a1
 	move.b (a1,d4.l),d3
-	move.w d3,a2
+	move.w d3,a1
 	jne .L1286
 .L1243:
 	moveq #16,d4
@@ -8586,11 +8592,11 @@ _generateKingCaptureMoves:
 	jra .L1240
 .L1282:
 	moveq #8,d3
-	move.l a2,d7
+	move.l a1,d7
 	and.l d7,d3
 	cmp.l a5,d3
 	jeq .L1239
-	move.w a2,d3
+	move.w a1,d3
 	moveq #0,d6
 	move.b d3,d6
 	move.l d1,a2
@@ -8621,11 +8627,11 @@ _generateKingCaptureMoves:
 	jra .L1239
 .L1285:
 	moveq #8,d3
-	move.l a2,d7
+	move.l a1,d7
 	and.l d7,d3
 	cmp.l a5,d3
 	jeq .L1242
-	move.w a2,d3
+	move.w a1,d3
 	moveq #0,d6
 	move.b d3,d6
 	move.l d1,a2
@@ -8656,11 +8662,11 @@ _generateKingCaptureMoves:
 	jra .L1242
 .L1284:
 	moveq #8,d3
-	move.l a2,d7
+	move.l a1,d7
 	and.l d7,d3
 	cmp.l a5,d3
 	jeq .L1241
-	move.w a2,d3
+	move.w a1,d3
 	moveq #0,d6
 	move.b d3,d6
 	move.l d1,a2
@@ -8691,11 +8697,11 @@ _generateKingCaptureMoves:
 	jra .L1241
 .L1286:
 	moveq #8,d3
-	move.l a2,d7
+	move.l a1,d7
 	and.l d7,d3
 	cmp.l a5,d3
 	jeq .L1243
-	move.w a2,d3
+	move.w a1,d3
 	moveq #0,d6
 	move.b d3,d6
 	move.l d1,a2
@@ -8746,13 +8752,13 @@ _generateKnightCaptureMoves:
 	and.l d3,d4
 	jne .L1303
 	lea _board,a1
-	move.b (a1,d3.l),d6
+	move.b (a1,d3.l),d4
 	jeq .L1303
-	moveq #8,d4
-	and.l d6,d4
-	cmp.l a5,d4
+	moveq #8,d6
+	and.l d4,d6
+	cmp.l a5,d6
 	jeq .L1303
-	and.l #255,d6
+	and.l #255,d4
 	move.l d1,a2
 	add.l d1,a2
 	add.l d1,a2
@@ -8761,14 +8767,14 @@ _generateKnightCaptureMoves:
 	lea (a0,a2.l),a2
 	lsl.l #8,d3
 	or.l d2,d3
-	move.l d6,d4
-	lsl.w #4,d4
-	swap d4
-	clr.w d4
-	or.l d4,d3
+	move.l d4,d6
+	lsl.w #4,d6
+	swap d6
+	clr.w d6
+	or.l d6,d3
 	move.l d3,(a2)
-	lsl.l #4,d6
-	move.l d6,a1
+	lsl.l #4,d4
+	move.l d4,a1
 	add.l d5,a1
 	add.l a1,a1
 	add.l a1,a1
@@ -8787,7 +8793,7 @@ _generateKnightCaptureMoves:
 	jne .L1290
 	lea _board,a1
 	move.b (a1,d4.l),d3
-	move.w d3,a2
+	move.w d3,a1
 	jne .L1333
 .L1290:
 	moveq #-18,d4
@@ -8809,7 +8815,7 @@ _generateKnightCaptureMoves:
 	jne .L1292
 	lea _board,a1
 	move.b (a1,d4.l),d3
-	move.w d3,a2
+	move.w d3,a1
 	jne .L1335
 .L1292:
 	moveq #14,d4
@@ -8820,7 +8826,7 @@ _generateKnightCaptureMoves:
 	jne .L1293
 	lea _board,a1
 	move.b (a1,d4.l),d3
-	move.w d3,a2
+	move.w d3,a1
 	jne .L1336
 .L1293:
 	moveq #18,d4
@@ -8831,7 +8837,7 @@ _generateKnightCaptureMoves:
 	jne .L1294
 	lea _board,a1
 	move.b (a1,d4.l),d3
-	move.w d3,a2
+	move.w d3,a1
 	jne .L1337
 .L1294:
 	moveq #31,d4
@@ -8979,11 +8985,11 @@ _generateKnightCaptureMoves:
 	jra .L1291
 .L1333:
 	moveq #8,d3
-	move.l a2,d7
+	move.l a1,d7
 	and.l d7,d3
 	cmp.l a5,d3
 	jeq .L1290
-	move.w a2,d3
+	move.w a1,d3
 	moveq #0,d6
 	move.b d3,d6
 	move.l d1,a2
@@ -9014,11 +9020,11 @@ _generateKnightCaptureMoves:
 	jra .L1290
 .L1336:
 	moveq #8,d3
-	move.l a2,d7
+	move.l a1,d7
 	and.l d7,d3
 	cmp.l a5,d3
 	jeq .L1293
-	move.w a2,d3
+	move.w a1,d3
 	moveq #0,d6
 	move.b d3,d6
 	move.l d1,a2
@@ -9049,11 +9055,11 @@ _generateKnightCaptureMoves:
 	jra .L1293
 .L1335:
 	moveq #8,d3
-	move.l a2,d7
+	move.l a1,d7
 	and.l d7,d3
 	cmp.l a5,d3
 	jeq .L1292
-	move.w a2,d3
+	move.w a1,d3
 	moveq #0,d6
 	move.b d3,d6
 	move.l d1,a2
@@ -9084,11 +9090,11 @@ _generateKnightCaptureMoves:
 	jra .L1292
 .L1337:
 	moveq #8,d3
-	move.l a2,d7
+	move.l a1,d7
 	and.l d7,d3
 	cmp.l a5,d3
 	jeq .L1294
-	move.w a2,d3
+	move.w a1,d3
 	moveq #0,d6
 	move.b d3,d6
 	move.l d1,a2

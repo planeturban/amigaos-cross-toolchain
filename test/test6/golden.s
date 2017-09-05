@@ -951,20 +951,20 @@ _object_restoreBackground:
 	subq.l #8,sp
 	movem.l #16190,-(sp)
 	move.l a0,a5
-	move.l _object_activeList,a4
+	move.l _object_activeList,a2
 	jsr _gfx_setupRenderTile
 	lea _gfx_quickRenderTile,a6
-	cmp.w #0,a4
+	cmp.w #0,a2
 	jeq .L178
 .L190:
-	tst.w 88(a4)
+	tst.w 88(a2)
 	jne .L183
-	move.l 68(a4),a0
+	move.l 68(a2),a0
 	move.w 4(a0),d0
 	jne .L199
 .L183:
-	move.l 8(a4),a4
-	cmp.w #0,a4
+	move.l 8(a2),a2
+	cmp.w #0,a2
 	jne .L190
 .L178:
 	movem.l (sp)+,#31996
@@ -1002,7 +1002,7 @@ _object_restoreBackground:
 	add.l a3,a3
 	add.l #_level,a3
 	lsl.w #4,d1
-	move.l a4,48(sp)
+	move.l a2,48(sp)
 	move.w d1,a4
 .L185:
 	move.l a3,a2
@@ -1030,9 +1030,9 @@ _object_restoreBackground:
 	lea (32,a3),a3
 	cmp.l 44(sp),d6
 	jle .L185
-	move.l 48(sp),a4
-	move.l 8(a4),a4
-	cmp.w #0,a4
+	move.l 48(sp),a2
+	move.l 8(a2),a2
+	cmp.w #0,a2
 	jne .L190
 	jra .L178
 .L200:
