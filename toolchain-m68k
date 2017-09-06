@@ -8,6 +8,7 @@ from logging import info, getLogger
 from os import environ
 import os
 import argparse
+from argparse import RawTextHelpFormatter
 import logging
 import platform
 import re
@@ -807,18 +808,6 @@ def test():
     execute('make', 'clean')
     execute('make')
 
-def __help_actions():
-  print ('\n'
-        'build:       download, update and build the tool chain (use --threads n to speed up the build)\n'
-        'xbuild:      build the tool chain (use --threads n to speed up the build)\n'
-        'clean:       remove the build artifacts\n'
-        'update:      updates the submodules using git\n'
-        'download:    download the archives\n'
-        'list-sdk:    list the available sdks\n'
-        'install-sdk: install the specified sdk\n'
-        'test:        build the example files\n')
-
-
 if __name__ == "__main__":
   logging.basicConfig(level=logging.DEBUG, format='%(levelname)s: %(message)s')
 
@@ -832,14 +821,20 @@ if __name__ == "__main__":
   if platform.machine() not in ['i686', 'x86_64']:
     panic('Build on %s architecture not supported!', platform.machine())
 
-  if sys.argv[1] == '--help':
-    __help_actions()
-
-  parser = argparse.ArgumentParser(description='Build cross toolchain.')
+  parser = argparse.ArgumentParser(description='Build cross toolchain.', formatter_class=RawTextHelpFormatter)
   parser.add_argument('action',
                       choices=['build', 'xbuild', 'list-sdk', 'install-sdk', 'clean',
                                'test', 'update', 'download'],
-                      default='build', help='perform an action')
+                      default='build', help='\n'
+                              'build:       download, update and build the tool chain (use --threads n to speed up the build)\n'
+                              'xbuild:      build the tool chain (use --threads n to speed up the build)\n'
+                              'clean:       remove the build artifacts\n'
+                              'update:      updates the submodules using git\n'
+                              'download:    download the archives\n'
+                              'list-sdk:    list the available sdks\n'
+                              'install-sdk: install the specified sdk\n'
+                              'test:        build mui and mmu sdk, then build the example files\n'
+                              '\n')
   parser.add_argument('args', metavar='ARGS', type=str, nargs='*',
                       help='action arguments')
   parser.add_argument('--binutils', choices=['2.9.1', '2.14'], default='2.14',
@@ -860,7 +855,7 @@ if __name__ == "__main__":
          binutils_ver=args.binutils,
          gcc_ver=args.gcc,
          numThreads=args.threads)
-
+  
   setvar(m4='m4-1.4.17',
          gawk='gawk-3.1.8',
          flex='flex-2.5.4',
