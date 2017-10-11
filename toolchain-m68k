@@ -525,6 +525,7 @@ def _build(pull):
       unpack('{gcc}', top_dir='gcc-3.4.6')
       patch('{gcc}')
       remove(path.join('{sources}', '{gcc}', 'gcc/cp/cfns.h'))
+      remove(path.join('{sources}', '{gcc}', 'gcc/c-parse.c'))
 
   with env(CC=CC, CXX=CXX, CFLAGS=FLAGS, CXXFLAGS=FLAGS):
     configure('{gcc}',
