@@ -518,6 +518,7 @@ def _build(pull):
 
   unpack('{ixemul}', top_dir='ixemul')
   patch('{ixemul}')
+  copytree('{sources}/{ixemul}/include/', '{prefix}/{target}/sys-include')
 
   if fill_in('{gcc}') == 'gcc-3.4.6':
       with cwd('{archives}'):
