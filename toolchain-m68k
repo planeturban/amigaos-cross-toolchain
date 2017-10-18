@@ -126,7 +126,10 @@ def install_tools():
 def install_libamiga():
   info('installing libamiga')
 
-  copytree('{sources}/{libamiga}/lib', '{prefix}/{target}/libnix/lib')
+  if fill_in('{gcc}') == 'gcc-3.4.6':
+      copytree('{sources}/{libamiga}/lib', '{prefix}/{target}/lib')
+  else:    
+      copytree('{sources}/{libamiga}/lib', '{prefix}/{target}/libnix/lib')
 
 
 @recipe('{clib2}-install')
