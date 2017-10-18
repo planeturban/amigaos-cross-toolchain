@@ -1,0 +1,11 @@
+--- gcc-3.4.6/gcc/cp/Make-lang.in	1970-01-01 01:00:01.000000000 +0100
++++ gcc-3.4.6-patched/gcc/cp/Make-lang.in	1970-01-01 01:00:01.000000000 +0100
+@@ -94,6 +94,8 @@
+ $(srcdir)/cp/cfns.h: $(srcdir)/cp/cfns.gperf
+ 	gperf -o -C -E -k '1-6,$$' -j1 -D -N 'libc_name_p' -L ANSI-C \
+ 		$(srcdir)/cp/cfns.gperf > $(srcdir)/cp/cfns.h
++	sed -i -- 's/__attribute__ ((__gnu_inline__))//g' $(srcdir)/cp/cfns.h
++	sed -i -- 's/__inline//g' $(srcdir)/cp/cfns.h
+ 
+ gtype-cp.h gt-cp-call.h gt-cp-decl.h gt-cp-decl2.h : s-gtype; @true
+ gt-cp-pt.h gt-cp-repo.h gt-cp-parser.h gt-cp-method.h : s-gtype; @true

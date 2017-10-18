@@ -147,7 +147,7 @@ Boston, MA 02111-1307, USA.  */
     "%{!resident:%{fbaserel:libnix/nbcrt0.o%s}%{!fbaserel:libnix/ncrt0.o%s}}}"
 
 #define ENDFILE_SPEC							\
-  "%{noixemul:-lstubs}"
+  "%{noixemul:-lstubs -lnix13}"
 
 /* Automatically search libamiga.a for AmigaOS specific functions.  Note
    that we first search the standard C library to resolve as much as

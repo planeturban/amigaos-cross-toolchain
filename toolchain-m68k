@@ -559,7 +559,7 @@ def _build(pull):
 
 
   configure('{libnix}',
-            '--prefix={prefix}/{target}/libnix',
+            '--prefix={prefix}/{target}/libnix' if fill_in('{gcc}') == 'gcc-6' else '--prefix={prefix}/{target}',
             '--host=i686-linux-gnu',
             '--target=m68k-amigaos',
             from_dir='{submodules}/{libnix}')
