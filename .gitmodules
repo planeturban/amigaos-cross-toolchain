@@ -32,3 +32,6 @@
 [submodule "submodules/libnix"]
 	path = submodules/libnix
 	url = https://github.com/bebbo/libnix
+[submodule "submodules/ixemul"]
+	path = submodules/ixemul
+	url = https://github.com/bebbo/ixemul
