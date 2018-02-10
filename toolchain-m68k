@@ -261,16 +261,10 @@ def shallowCheckout(murl, mpath, mbranch):
   if path.exists(path.join(mpath, '.git')):
     return 
   
-  if '/bebbo/' in murl:
-      if mbranch == None:
-        execute('git', 'clone', murl, '--depth', '1', mpath)
-      else:
-        execute('git', 'clone', murl, '--depth', '1', '-b', mbranch, mpath)
+  if mbranch == None:
+    execute('git', 'clone', murl, mpath)
   else:
-      if mbranch == None:
-        execute('git', 'clone', murl, mpath)
-      else:
-        execute('git', 'clone', murl, '-b', mbranch, mpath)
+    execute('git', 'clone', murl, '-b', mbranch, mpath)
    
 
 def update():
