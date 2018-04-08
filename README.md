@@ -118,6 +118,10 @@ Install cygwin via setup.exe and add wget. Then open cygwin shell and:
     install apt-cyg /bin
     apt-cyg install gcc-core gcc-g++ python git perl-Pod-Simple gperf patch automake make makedepend bison flex libncurses-devel python-devel gettext-devel libgmp-devel libmpc-devel libmpfr-devel
 
+##### Ubuntu running on the Windows 10 Linux subsystem
+
+    sudo apt-get install gcc-core gcc-g++ flex python git perl-Pod-Simple gperf patch automake make makedepend bison flex libncurses-devel python-devel gettext-devel libgmp-devel libmpc-devel libmpfr-devel
+
 ##### Ubuntu 16.04 LTS 32-bit (gcc 5.4.0)
    
     sudo apt-get install git gcc g++ python-dev gperf patch automake make bison libncurses-dev gettext libgmp-dev libmpc-dev libmpfr-dev
