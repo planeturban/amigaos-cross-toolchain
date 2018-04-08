@@ -1,3 +1,6 @@
+PLEASE USE amiga-gcc
+===
+
 AmigaOS cross compiler for Linux / Windows
 ===
 
